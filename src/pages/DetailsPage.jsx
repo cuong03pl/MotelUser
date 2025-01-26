@@ -1,0 +1,363 @@
+import React, { useRef } from "react";
+import { Link } from "react-router-dom";
+import RecentPosts from "../conponents/RecentPosts/RecentPosts";
+import Tags from "../conponents/Tags/Tags";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+export default function DetailsPage() {
+  return (
+    <div className=" max-w-[1000px] m-auto ">
+      <div className="grid grid-cols-3 gap-4">
+        <div className="col-span-2">
+          <div className=" flex flex-col gap-4">
+            <div className="p-3 bg-white rounded-lg shadow-xl">
+              <div className="max-h-[260px] h-[260px] w-full">
+                <Swiper
+                  className="mySwiper h-full"
+                  spaceBetween={30}
+                  centeredSlides={true}
+                  autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                  }}
+                  pagination={{
+                    clickable: true,
+                  }}
+                  navigation={true}
+                  modules={[Autoplay, Pagination, Navigation]}
+                >
+                  <SwiperSlide className="w-full h-full">
+                    <img
+                      className="w-full h-full"
+                      src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/01/13/467c5f9bf67d4a23136c2_1736742102.jpg"
+                      alt=""
+                    />
+                  </SwiperSlide>
+                  <SwiperSlide className="w-full h-full">
+                    <img
+                      className="w-full h-full"
+                      src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/01/13/467c5f9bf67d4a23136c2_1736742102.jpg"
+                      alt=""
+                    />
+                  </SwiperSlide>
+                  <SwiperSlide className="w-full h-full">
+                    <img
+                      className="w-full h-full"
+                      src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/01/13/467c5f9bf67d4a23136c2_1736742102.jpg"
+                      alt=""
+                    />
+                  </SwiperSlide>
+                  <SwiperSlide className="w-full h-full">
+                    <img
+                      className="w-full h-full"
+                      src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/01/13/467c5f9bf67d4a23136c2_1736742102.jpg"
+                      alt=""
+                    />
+                  </SwiperSlide>
+                </Swiper>
+              </div>
+              <div className="py-5 ">
+                <h3 className="text-red font-semibold">
+                  Ký Túc Xá - Quận 10 - Giá Sinh Viên
+                </h3>
+                <div className="flex items-center gap-2 py-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="w-[13px] h-[13px]"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  <span className="text-[13px]">
+                    52 Đường Nguyễn Giản Thanh, Phường 15, Quận 10, Hồ Chí Minh
+                  </span>
+                </div>
+                <div class="mb-2 flex items-center">
+                  <span class="text-green font-medium  text-[16px]">
+                    5 triệu/tháng
+                  </span>
+                  <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
+                  <span className="text-[13px]">
+                    40 m<sup>2</sup>
+                  </span>
+                  <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
+                  <Link
+                    class="text-body text-[13px]"
+                    title="Cho thuê phòng trọ Quận 12, Hồ Chí Minh"
+                  >
+                    Quận 12, Hồ Chí Minh
+                  </Link>
+                </div>
+              </div>
+              <div className="border-b border-solid border-[#cdcccc]"></div>
+              {/* Description */}
+              <div className="py-5">
+                <h4 className="font-medium text-[18px]">Thông tin mô tả</h4>
+                <div className="text-[14px]">
+                  Chào mừng bạn đến với HAPPYHOUSE ‍️ FREE TRỌN GÓI (điện, nước,
+                  wifi, dọn vệ sinh hằng ngày) - Toà nhà rộng rãi, sạch sẽ lại
+                  còn thoáng mát hiện đại - Đội ngũ quản lý chuyên nghiệp trực
+                  24/7 , hỗ trợ ngay trực tiếp các vấn đề ️ Trang bị phòng học
+                  tập Phòng game Phòng ngủ rộng rãi ‍‍ Phòng bếp thỏa sức đam mê
+                  nấu nướng ‍️ VỊ TRÍ - Thuận lợi qua các trường ĐH Tài Chính,
+                  maketting, FPT ,… - Gần các trung tâm ăn uống Hoàng Văn Thụ,..
+                  ———————————- 17/1A Hồ Văn Huê, Phường 9, Phú Nhuận HCM 52
+                  Nguyễn Giản Thanh, P15, Q10 HCM 163/8 Thành Thái, P14, Q10 HCM
+                  60 Nguyễn Tri Phương , P6, Q5 HCM
+                </div>
+              </div>
+              <div className="border-b border-solid border-[#cdcccc]"></div>
+              <div className="py-5">
+                <div className="flex gap-3 items-center">
+                  <div className="border border-solid border-[#ccc] p-1 rounded-full">
+                    <img
+                      className="w-[100px] h-[100px]"
+                      src="https://phongtro123.com/images/default-user.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div className="">
+                    <span className="text-[16px] font-semibold">
+                      Lưu Nguyễn Thế Duy
+                    </span>
+                    <div class="my-2 flex items-center">
+                      <span className="text-[13px]">3 tin đăng</span>
+                      <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
+                      <span className="text-[13px]">
+                        Tham gia từ: 18/10/2024
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center justify-center gap-2 bg-green px-3 py-2 rounded-2xl text-white">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          className="w-[16px] h-[16px]"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M1.5 4.5a3 3 0 0 1 3-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 0 1-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 0 0 6.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 0 1 1.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 0 1-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5Z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                        <span className="text-[14px]"> 0866094994</span>
+                      </div>
+                      <div className="flex items-center justify-center gap-2 bg-blue px-3 py-2 rounded-2xl text-white">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          className="w-[16px] h-[16px]"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z"
+                          />
+                        </svg>
+
+                        <span className="text-[14px]">Nhắn Zalo</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="mt-5">
+            <Tags></Tags>
+          </div>
+        </div>
+        <div className="w-full">
+          <div className="bg-white p-3">
+            <div className="flex flex-col gap-3 items-center">
+              <div className="border border-solid border-[#ccc] p-1 rounded-full">
+                <img
+                  className="w-[100px] h-[100px]"
+                  src="https://phongtro123.com/images/default-user.svg"
+                  alt=""
+                />
+              </div>
+              <div className=" flex flex-col items-center w-full">
+                <span className="text-[16px] font-semibold">
+                  Lưu Nguyễn Thế Duy
+                </span>
+                <div class="my-2 flex items-center">
+                  <span className="text-[13px]">3 tin đăng</span>
+                  <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
+                  <span className="text-[13px]">Tham gia từ: 18/10/2024</span>
+                </div>
+                <div className="flex flex-col items-center gap-3 w-full">
+                  <div className="flex w-full items-center justify-center gap-2 bg-green px-3 py-2 rounded-2xl text-white">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="w-[18px] h-[18px]"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M1.5 4.5a3 3 0 0 1 3-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 0 1-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 0 0 6.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 0 1 1.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 0 1-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5Z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <span className="text-[18px]"> 0866094994</span>
+                  </div>
+                  <div className="flex items-center justify-center gap-2 bg-blue px-3 py-2 rounded-2xl text-white w-full">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      className="w-[18px] h-[18px]"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z"
+                      />
+                    </svg>
+
+                    <span className="text-[18px]">Nhắn Zalo</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="bg-white mt-5 p-3">
+            <RecentPosts />
+          </div>
+          <div className="bg-white mt-5 p-3">
+            <div className="mb-4">
+              <div className="mb-2 font-medium">Bài viết mới</div>
+              <div className="flex items-center gap-2">
+                <div className="">
+                  <div className="flex items-center">
+                    <div className="">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="w-[12px] h-[12px] text-red"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                    <Link className="text-[14px] text-[#055699] line-clamp-2 hover:text-red">
+                      Cho thuê căn hộ ngay trung tâm quận hải châu.
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="bg-white mt-5 p-3 rounded-md">
+        <h3 className="font-semibold">Tin đăng cùng khu vực </h3>
+        <div className="grid grid-cols-4 gap-4 py-3">
+          <div className="">
+            <img
+              className="rounded-lg"
+              src="https://pt123.cdn.static123.com/images/thumbs/450x300/fit/2025/01/24/z5945596990786-788b6de6f8c774d466ebd2b6b97e3cc9_1737685699.jpg"
+              alt=""
+            />
+            <div className="pt-[10px]">
+              <Link className="uppercase text-[14px] font-semibold text-[#055699] line-clamp-2">
+                CHO THUÊ KÝ TÚC XÁ CAO CẤP GIÁ RẺ QUẬN 10
+              </Link>
+              <div class="mb-2 flex items-center">
+                <span class="text-green font-medium  text-[13px]">
+                  5 triệu/tháng
+                </span>
+                <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
+                <span className="text-[13px]">
+                  40 m<sup>2</sup>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="">
+            <img
+              className="rounded-lg"
+              src="https://pt123.cdn.static123.com/images/thumbs/450x300/fit/2025/01/24/z5945596990786-788b6de6f8c774d466ebd2b6b97e3cc9_1737685699.jpg"
+              alt=""
+            />
+            <div className="pt-[10px]">
+              <Link className="uppercase text-[14px] font-semibold text-[#055699] line-clamp-2">
+                CHO THUÊ KÝ TÚC XÁ CAO CẤP GIÁ RẺ QUẬN 10
+              </Link>
+              <div class="mb-2 flex items-center">
+                <span class="text-green font-medium  text-[13px]">
+                  5 triệu/tháng
+                </span>
+                <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
+                <span className="text-[13px]">
+                  40 m<sup>2</sup>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="">
+            <img
+              className="rounded-lg"
+              src="https://pt123.cdn.static123.com/images/thumbs/450x300/fit/2025/01/24/z5945596990786-788b6de6f8c774d466ebd2b6b97e3cc9_1737685699.jpg"
+              alt=""
+            />
+            <div className="pt-[10px]">
+              <Link className="uppercase text-[14px] font-semibold text-[#055699] line-clamp-2">
+                CHO THUÊ KÝ TÚC XÁ CAO CẤP GIÁ RẺ QUẬN 10
+              </Link>
+              <div class="mb-2 flex items-center">
+                <span class="text-green font-medium  text-[13px]">
+                  5 triệu/tháng
+                </span>
+                <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
+                <span className="text-[13px]">
+                  40 m<sup>2</sup>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="">
+            <img
+              className="rounded-lg"
+              src="https://pt123.cdn.static123.com/images/thumbs/450x300/fit/2025/01/24/z5945596990786-788b6de6f8c774d466ebd2b6b97e3cc9_1737685699.jpg"
+              alt=""
+            />
+            <div className="pt-[10px]">
+              <Link className="uppercase text-[14px] font-semibold text-[#055699] line-clamp-2">
+                CHO THUÊ KÝ TÚC XÁ CAO CẤP GIÁ RẺ QUẬN 10
+              </Link>
+              <div class="mb-2 flex items-center">
+                <span class="text-green font-medium  text-[13px]">
+                  5 triệu/tháng
+                </span>
+                <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
+                <span className="text-[13px]">
+                  40 m<sup>2</sup>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
