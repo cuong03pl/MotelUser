@@ -2,6 +2,7 @@ import routes from "../config/routes";
 import DetailsPage from "../pages/DetailsPage";
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
+import CreatePage from "../pages/Manage/CreatePage";
 import RegisterPage from "../pages/RegisterPage";
 
 export const publicRoutes = [
@@ -20,5 +21,10 @@ export const publicRoutes = [
   {
     path: routes.details,
     component: <DetailsPage />,
+  },
+  {
+    path: routes.manage_create,
+    component: <CreatePage />,
+    manage: true,
   },
 ];

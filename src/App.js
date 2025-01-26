@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import { publicRoutes } from "./routes/routes";
 import DefaultLayout from "./layouts/DefaultLayout/DefaultLayout";
 import { Fragment } from "react";
+import ManageLayout from "./layouts/ManageLayout/ManageLayout";
 
 function App() {
   return (
@@ -14,6 +15,8 @@ function App() {
           let Layout = DefaultLayout;
           if (route.layout === null) {
             Layout = Fragment;
+          } else if (route.manage === true) {
+            Layout = ManageLayout;
           }
           return (
             <Route

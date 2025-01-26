@@ -233,6 +233,59 @@ export default function DetailsPage() {
                     <span className="text-[18px]">Nhắn Zalo</span>
                   </div>
                 </div>
+                <div class="flex gap-5 items-center py-3 w-full justify-between">
+                  <div class="flex items-center space-x-1 cursor-pointer">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      className="w-[16px] h-[16px]"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
+                      />
+                    </svg>
+                    <span class="text-[14px]">Lưu tin</span>
+                  </div>
+                  <div class="flex items-center space-x-1 cursor-pointer">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="w-[16px] h-[16px]"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M15.75 4.5a3 3 0 1 1 .825 2.066l-8.421 4.679a3.002 3.002 0 0 1 0 1.51l8.421 4.679a3 3 0 1 1-.729 1.31l-8.421-4.678a3 3 0 1 1 0-4.132l8.421-4.679a3 3 0 0 1-.096-.755Z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+
+                    <span class="text-[14px]">Chia sẻ</span>
+                  </div>
+                  <div class="flex items-center space-x-1 cursor-pointer">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      className="w-[16px] h-[16px]"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"
+                      />
+                    </svg>
+
+                    <span class="text-[14px]">Báo xấu</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
