@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Navbar() {
   return (
-    <div class="bg-white p-4 h-screen">
+    <div class="bg-white p-4 h-screen fixed mt-[48px]">
       <div class="flex flex-col items-center">
         <img
           alt="User profile picture"

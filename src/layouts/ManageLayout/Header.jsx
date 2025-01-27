@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
-    <nav class="bg-blue text-white py-2">
+    <nav class="bg-blue text-white py-2 fixed w-full h-[48px]">
       <div class="container mx-auto flex items-center justify-between">
         <div class="flex items-center space-x-4">
           <img
