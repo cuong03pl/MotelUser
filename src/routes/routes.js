@@ -3,6 +3,7 @@ import DetailsPage from "../pages/DetailsPage";
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
 import CreatePage from "../pages/Manage/CreatePage";
+import PostsPage from "../pages/Manage/PostsPage";
 import ProfilePage from "../pages/Manage/ProfilePage";
 import RegisterPage from "../pages/RegisterPage";
 
@@ -31,6 +32,11 @@ export const publicRoutes = [
   {
     path: routes.profile,
     component: <ProfilePage />,
+    manage: true,
+  },
+  {
+    path: routes.posts,
+    component: <PostsPage />,
     manage: true,
   },
 ];

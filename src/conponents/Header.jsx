@@ -112,9 +112,12 @@ export default function Header() {
           >
             Sign In
           </Link>
-          <button class="px-4 py-2 text-sm rounded font-semibold text-white border-2 border-[#1d294f] bg-[#1d294f] transition-all ease-in-out duration-300 hover:bg-transparent hover:text-[#1d294f]">
+          <Link
+            to={"/manage/create"}
+            class="px-4 py-2 text-sm rounded font-semibold text-white border-2 border-[#1d294f] bg-[#1d294f] transition-all ease-in-out duration-300 hover:bg-transparent hover:text-[#1d294f]"
+          >
             Đăng bài
-          </button>
+          </Link>
 
           <button id="toggleOpen" class="lg:hidden">
             <svg

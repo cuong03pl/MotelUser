@@ -3,16 +3,18 @@ import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
-    <nav class="bg-blue text-white py-2 fixed w-full h-[48px]">
+    <nav class="bg-blue text-white py-2 fixed w-full h-[48px] z-99999">
       <div class="container mx-auto flex items-center justify-between">
         <div class="flex items-center space-x-4">
-          <img
-            alt="Phongtro123.com logo"
-            class="h-8"
-            height="50"
-            src="https://phongtro123.com/images/logo-phongtro-white.svg"
-            width="150"
-          />
+          <Link to={"/"}>
+            <img
+              alt="Phongtro123.com logo"
+              class="h-8"
+              height="50"
+              src="https://phongtro123.com/images/logo-phongtro-white.svg"
+              width="150"
+            />
+          </Link>
         </div>
         <div class="flex items-center space-x-6 text-sm"></div>
         <div class="flex items-center space-x-4 text-sm">
@@ -37,7 +39,7 @@ export default function Header() {
           </div>
           <Link
             class="bg-red text-white px-3 py-1 rounded hover:bg-red-700"
-            to={""}
+            to={"/manage/create"}
           >
             Đăng tin
           </Link>

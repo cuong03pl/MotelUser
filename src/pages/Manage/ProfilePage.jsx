@@ -2,8 +2,8 @@ import React from "react";
 
 export default function ProfilePage() {
   return (
-    <div className="max-w-[1000px] m-auto my-[100px]">
-      <div class="bg-white p-8 rounded-lg shadow-md w-full min-w-[600px]">
+    <div className="max-w-[1000px] m-auto my-[100px] flex flex-col items-center">
+      <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-[600px]">
         <div class="flex items-center mb-6">
           <img
             alt="Profile picture placeholder"
