@@ -4,11 +4,14 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setUser } from "../features/user/userSlice";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isShowPass, setIsShowPass] = useState(false);
-
+  const dispatch = useDispatch();
   const schema = yup
     .object({
       email: yup
@@ -41,18 +44,19 @@ export default function LoginPage() {
       pauseOnHover: false,
     });
   const handleLogin = async () => {
-    // await axios
-    //   .post("https://localhost:7224/api/Auth/login", {
-    //     email,
-    //     password,
-    //   })
-    //   .then((res) => {
-    //     if (res.data) {
-    //       window.location.href = "/";
-    //     } else {
-    //       notifyInvalid();
-    //     }
-    //   });
+    await axios
+      .post("https://localhost:7224/api/Auth/login", {
+        email,
+        password,
+      })
+      .then((res) => {
+        if (res.data) {
+          dispatch(setUser(res.data));
+          window.location.href = "/";
+        } else {
+          notifyInvalid();
+        }
+      });
   };
 
   return (

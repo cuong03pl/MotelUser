@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
-import { categories, provinces } from "../../config/data_create";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function CreatePage() {
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [selectedProvince, setSelectedProvince] = useState({});
   const [selectedDistrict, setSelectedDistrict] = useState({});
   const [selectedWard, setSelectedWard] = useState({});
@@ -28,6 +30,13 @@ export default function CreatePage() {
     "Không chung chủ": false,
     "Có hầm để xe": false,
   });
+  const [images, setImages] = useState([]);
+
+  const handleFileChange = (event) => {
+    const files = Array.from(event.target.files);
+    const newImages = files.map((file) => URL.createObjectURL(file));
+    setImages((prev) => [...prev, ...newImages].slice(0, 20));
+  };
   useEffect(() => {
     const fetchProvinces = async () => {
       const response = await fetch("https://provinces.open-api.vn/api/p");
@@ -79,7 +88,19 @@ export default function CreatePage() {
       fetchDistricts();
     }
   }, [selectedDistrict]);
+  useEffect(() => {
+    const fetchProvinces = async () => {
+      await axios.get("https://localhost:7224/api/Categories").then((res) =>
+        setCategories(
+          res.data.map((data) => {
+            return { value: data?.id, label: data?.name };
+          })
+        )
+      );
+    };
 
+    fetchProvinces();
+  }, []);
   const handleCheckboxChange = (feature) => {
     setSelectedFeatures((prevFeatures) => ({
       ...prevFeatures,
@@ -87,25 +108,64 @@ export default function CreatePage() {
     }));
   };
 
-  const handleSubmit = () => {
-    const formData = {
-      province: selectedProvince,
-      district: selectedDistrict,
-      ward: selectedWard,
-      infoMore: selectedInfoMore,
-      category: selectedCategory,
-      title,
-      description,
-      price,
-      area,
-      video,
-      fullname,
-      phone,
-      selectedFeatures,
-    };
+  const handleSubmit = async () => {
+    const formData = new FormData();
 
-    console.log("Data: ", formData);
+    formData.append("Title", title);
+    formData.append("Description", description);
+    formData.append("Price", price);
+    formData.append("Area", area);
+    formData.append("VideoURL", video);
+    formData.append("OwnerId", "1b1bf072-cce7-44cb-ad23-359a92128603"); // Thay bằng ID thực tế
+    formData.append("Available", true);
+    formData.append("Is_Browse", 0);
+    formData.append("CategoryId", selectedCategory?.value);
+
+    formData.append("Location.Province", selectedProvince?.label || "");
+    formData.append("Location.District", selectedDistrict?.label || "");
+    formData.append("Location.Ward", selectedWard?.label || "");
+    formData.append("Location.AddressLine", selectedInfoMore || "");
+
+    if (selectedFeatures) {
+      Object.entries(selectedFeatures).forEach(([key, value]) => {
+        formData.append(`Amenities[${key}]`, value);
+      });
+    }
+    const imagePromises = images.map(async (imageUrl) => {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      const file = new File([blob], `image-${Date.now()}.png`, {
+        type: blob.type,
+      });
+      return file;
+    });
+
+    const imageFiles = await Promise.all(imagePromises);
+    imageFiles.forEach((file) => {
+      formData.append("imageFiles", file);
+    });
+    const errorNotify = (message) =>
+      toast.error(message, {
+        position: "bottom-right",
+        pauseOnHover: false,
+      });
+    const successNotify = (message) =>
+      toast.success(message, {
+        position: "bottom-right",
+        pauseOnHover: false,
+      });
+    axios
+      .post("https://localhost:7224/api/Posts", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((res) => {
+        successNotify("Thêm bài viết thành công. Vui lòng đợi xét duyệt");
+      })
+      .catch((err) => {
+        errorNotify("Thêm thất bại");
+      });
   };
+
   return (
     <div className=" max-w-[1000px] m-auto my-[100px] flex flex-col items-center">
       <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-[800px]">
@@ -302,24 +362,41 @@ export default function CreatePage() {
         </div>
       </div>
 
-      <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-[800px] mt-5">
-        <h2 class="text-xl font-semibold mb-4">Hình ảnh</h2>
-        <div class="border-2 border-dashed border-blue bg-[#e7f0fe] p-6 rounded-lg flex flex-col items-center justify-center">
+      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-[800px] mt-5">
+        <h2 className="text-xl font-semibold mb-4">Hình ảnh</h2>
+        <label className="border-2 border-dashed border-blue bg-[#e7f0fe] p-6 rounded-lg flex flex-col items-center justify-center cursor-pointer">
           <img
-            alt="Upload icon with a camera and an upward arrow"
-            class="mb-2"
+            alt="Upload icon"
+            className="mb-2"
             height="50"
             src="https://storage.googleapis.com/a1aa/image/dLOmljRUWL4JL9qXwMDctlsIu2EKwbqRymKeQUMDQgx0ffRoA.jpg"
             width="50"
           />
-          <p class="text-blue-600">Tải ảnh từ thiết bị</p>
-        </div>
-        <ul class="mt-4 text-gray-600 text-sm list-disc list-inside">
+          <p className="text-blue-600">Tải ảnh từ thiết bị</p>
+          <input
+            type="file"
+            multiple
+            accept="image/*"
+            className="hidden"
+            onChange={handleFileChange}
+          />
+        </label>
+        <ul className="mt-4 text-gray-600 text-sm list-disc list-inside">
           <li>Tải lên tối đa 20 ảnh trong một bài đăng</li>
           <li>Dung lượng ảnh tối đa 10MB</li>
           <li>Hình ảnh phải liên quan đến phòng trọ, nhà cho thuê</li>
           <li>Không chèn văn bản, số điện thoại lên ảnh</li>
         </ul>
+        <div className="mt-4 grid grid-cols-4 gap-2">
+          {images.map((img, index) => (
+            <img
+              key={index}
+              src={img}
+              alt={`Uploaded ${index}`}
+              className="w-full h-24 object-cover rounded"
+            />
+          ))}
+        </div>
       </div>
       <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-[800px] mt-5">
         <h2 class="text-xl font-semibold mb-4">Video</h2>
