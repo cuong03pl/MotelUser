@@ -4,6 +4,7 @@ import routes from "../config/routes";
 import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
+import DropdownUser from "./DropdownUser/DropdownUser";
 export default function Header() {
   const [user, setUser] = useState({});
   const dispatch = useDispatch();
@@ -188,17 +189,7 @@ export default function Header() {
                 Quản lý
               </Link>
             </div>
-            <div class="flex items-center space-x-1">
-              <img
-                alt="User avatar"
-                class="h-6 w-6 rounded-full"
-                height="30"
-                src={user?.avatar}
-                width="30"
-              />
-              <span className="text-[14px]">{user?.fullName}</span>
-              <i class="fas fa-chevron-down"></i>
-            </div>
+            <DropdownUser user={user} />
           </div>
         )}
       </div>

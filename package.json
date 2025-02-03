@@ -6,6 +6,7 @@
     "@hookform/resolvers": "^3.10.0",
     "@reduxjs/toolkit": "^2.5.1",
     "@tailwindcss/line-clamp": "^0.4.4",
+    "@tippyjs/react": "^4.2.6",
     "axios": "^1.7.9",
     "cra-template": "1.2.0",
     "jwt-decode": "^4.0.0",
