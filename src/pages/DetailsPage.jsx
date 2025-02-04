@@ -1,13 +1,28 @@
-import React, { useRef } from "react";
-import { Link } from "react-router-dom";
-import RecentPosts from "../conponents/RecentPosts/RecentPosts";
-import Tags from "../conponents/Tags/Tags";
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import RecentPosts from "../components/RecentPosts/RecentPosts";
+import Tags from "../components/Tags/Tags";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import axios from "axios";
+import { convertTime } from "../utils/convertTime";
 export default function DetailsPage() {
+  const { id } = useParams();
+  const [post, setPost] = useState({});
+  useEffect(() => {
+    const fetchAPI = async () => {
+      await axios.get(`https://localhost:7224/api/Posts/${id}`).then((res) => {
+        console.log(res);
+        setPost(res?.data);
+      });
+    };
+
+    fetchAPI();
+  }, [id]);
+
   return (
     <div className=" max-w-[1000px] m-auto ">
       <div className="grid grid-cols-3 gap-4">
@@ -29,40 +44,21 @@ export default function DetailsPage() {
                   navigation={true}
                   modules={[Autoplay, Pagination, Navigation]}
                 >
-                  <SwiperSlide className="w-full h-full">
-                    <img
-                      className="w-full h-full"
-                      src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/01/13/467c5f9bf67d4a23136c2_1736742102.jpg"
-                      alt=""
-                    />
-                  </SwiperSlide>
-                  <SwiperSlide className="w-full h-full">
-                    <img
-                      className="w-full h-full"
-                      src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/01/13/467c5f9bf67d4a23136c2_1736742102.jpg"
-                      alt=""
-                    />
-                  </SwiperSlide>
-                  <SwiperSlide className="w-full h-full">
-                    <img
-                      className="w-full h-full"
-                      src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/01/13/467c5f9bf67d4a23136c2_1736742102.jpg"
-                      alt=""
-                    />
-                  </SwiperSlide>
-                  <SwiperSlide className="w-full h-full">
-                    <img
-                      className="w-full h-full"
-                      src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/01/13/467c5f9bf67d4a23136c2_1736742102.jpg"
-                      alt=""
-                    />
-                  </SwiperSlide>
+                  {post?.imageUrls?.map((img, index) => {
+                    return (
+                      <SwiperSlide className="w-full h-full">
+                        <img
+                          className="w-full h-full object-contain"
+                          src={`https://localhost:7224/${img}`}
+                          alt=""
+                        />
+                      </SwiperSlide>
+                    );
+                  })}
                 </Swiper>
               </div>
               <div className="py-5 ">
-                <h3 className="text-red font-semibold">
-                  Ký Túc Xá - Quận 10 - Giá Sinh Viên
-                </h3>
+                <h3 className="text-red font-semibold">{post?.title}</h3>
                 <div className="flex items-center gap-2 py-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -77,23 +73,21 @@ export default function DetailsPage() {
                     />
                   </svg>
                   <span className="text-[13px]">
-                    52 Đường Nguyễn Giản Thanh, Phường 15, Quận 10, Hồ Chí Minh
+                    {post?.location?.addressLine}, {post?.location?.ward},{" "}
+                    {post?.location?.district}, {post?.location?.province}
                   </span>
                 </div>
                 <div class="mb-2 flex items-center">
                   <span class="text-green font-medium  text-[16px]">
-                    5 triệu/tháng
+                    {post?.price} triệu/tháng
                   </span>
                   <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
                   <span className="text-[13px]">
-                    40 m<sup>2</sup>
+                    {post?.area} m<sup>2</sup>
                   </span>
                   <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
-                  <Link
-                    class="text-body text-[13px]"
-                    title="Cho thuê phòng trọ Quận 12, Hồ Chí Minh"
-                  >
-                    Quận 12, Hồ Chí Minh
+                  <Link class="text-body text-[13px]">
+                    {post?.location?.district}, {post?.location?.province}
                   </Link>
                 </div>
               </div>
@@ -101,18 +95,7 @@ export default function DetailsPage() {
               {/* Description */}
               <div className="py-5">
                 <h4 className="font-medium text-[18px]">Thông tin mô tả</h4>
-                <div className="text-[14px]">
-                  Chào mừng bạn đến với HAPPYHOUSE ‍️ FREE TRỌN GÓI (điện, nước,
-                  wifi, dọn vệ sinh hằng ngày) - Toà nhà rộng rãi, sạch sẽ lại
-                  còn thoáng mát hiện đại - Đội ngũ quản lý chuyên nghiệp trực
-                  24/7 , hỗ trợ ngay trực tiếp các vấn đề ️ Trang bị phòng học
-                  tập Phòng game Phòng ngủ rộng rãi ‍‍ Phòng bếp thỏa sức đam mê
-                  nấu nướng ‍️ VỊ TRÍ - Thuận lợi qua các trường ĐH Tài Chính,
-                  maketting, FPT ,… - Gần các trung tâm ăn uống Hoàng Văn Thụ,..
-                  ———————————- 17/1A Hồ Văn Huê, Phường 9, Phú Nhuận HCM 52
-                  Nguyễn Giản Thanh, P15, Q10 HCM 163/8 Thành Thái, P14, Q10 HCM
-                  60 Nguyễn Tri Phương , P6, Q5 HCM
-                </div>
+                <div dangerouslySetInnerHTML={{ __html: post?.description }} />
               </div>
               <div className="border-b border-solid border-[#cdcccc]"></div>
               <div className="py-5">
@@ -120,19 +103,19 @@ export default function DetailsPage() {
                   <div className="border border-solid border-[#ccc] p-1 rounded-full">
                     <img
                       className="w-[100px] h-[100px]"
-                      src="https://phongtro123.com/images/default-user.svg"
+                      src={post?.user?.avatar}
                       alt=""
                     />
                   </div>
                   <div className="">
                     <span className="text-[16px] font-semibold">
-                      Lưu Nguyễn Thế Duy
+                      {post?.user?.fullName}
                     </span>
                     <div class="my-2 flex items-center">
                       <span className="text-[13px]">3 tin đăng</span>
                       <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
                       <span className="text-[13px]">
-                        Tham gia từ: 18/10/2024
+                        Tham gia từ: {convertTime(post?.user?.createdOn)}
                       </span>
                     </div>
                     <div className="flex items-center gap-3">
@@ -149,7 +132,9 @@ export default function DetailsPage() {
                             clip-rule="evenodd"
                           />
                         </svg>
-                        <span className="text-[14px]"> 0866094994</span>
+                        <span className="text-[14px]">
+                          {post?.user?.phoneNumber}
+                        </span>
                       </div>
                       <div className="flex items-center justify-center gap-2 bg-blue px-3 py-2 rounded-2xl text-white">
                         <svg
@@ -185,18 +170,21 @@ export default function DetailsPage() {
               <div className="border border-solid border-[#ccc] p-1 rounded-full">
                 <img
                   className="w-[100px] h-[100px]"
-                  src="https://phongtro123.com/images/default-user.svg"
+                  src={post?.user?.avatar}
                   alt=""
                 />
               </div>
               <div className=" flex flex-col items-center w-full">
                 <span className="text-[16px] font-semibold">
-                  Lưu Nguyễn Thế Duy
+                  {post?.user?.fullName}
                 </span>
                 <div class="my-2 flex items-center">
                   <span className="text-[13px]">3 tin đăng</span>
                   <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
-                  <span className="text-[13px]">Tham gia từ: 18/10/2024</span>
+                  <span className="text-[13px]">
+                    {" "}
+                    Tham gia từ: {convertTime(post?.user?.createdOn)}
+                  </span>
                 </div>
                 <div className="flex flex-col items-center gap-3 w-full">
                   <div className="flex w-full items-center justify-center gap-2 bg-green px-3 py-2 rounded-2xl text-white">
@@ -212,7 +200,9 @@ export default function DetailsPage() {
                         clip-rule="evenodd"
                       />
                     </svg>
-                    <span className="text-[18px]"> 0866094994</span>
+                    <span className="text-[18px]">
+                      {post?.user?.phoneNumber}{" "}
+                    </span>
                   </div>
                   <div className="flex items-center justify-center gap-2 bg-blue px-3 py-2 rounded-2xl text-white w-full">
                     <svg

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import DropdownUser from "./DropdownUser/DropdownUser";
+import { setUserId } from "../features/user/userSlice";
 export default function Header() {
   const [user, setUser] = useState({});
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ export default function Header() {
   useEffect(() => {
     const fetchAPI = async () => {
       const user_data = jwtDecode(token);
-
+      dispatch(setUserId(user_data?.sub));
       await axios
         .get(`https://localhost:7224/api/Users/${user_data?.sub}`)
         .then((res) => {

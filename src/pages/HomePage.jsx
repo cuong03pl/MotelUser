@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Tags from "../conponents/Tags/Tags";
-import RecentPosts from "../conponents/RecentPosts/RecentPosts";
+import Tags from "../components/Tags/Tags";
+import RecentPosts from "../components/RecentPosts/RecentPosts";
+import Posts from "../components/Posts/Posts";
 
 export default function HomePage() {
   return (
@@ -34,85 +35,7 @@ export default function HomePage() {
               </li>
             </ul>
           </div>
-          <div className="mt-5 flex flex-col gap-4">
-            <div className="p-3 bg-white rounded-lg shadow-xl">
-              <div className="max-h-[260px] h-[260px] w-full">
-                <img
-                  className="w-full h-full"
-                  src="https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2025/01/13/467c5f9bf67d4a23136c2_1736742102.jpg"
-                  alt=""
-                />
-              </div>
-              <div className="">
-                <h3 class=" text-uppercase mb-2">
-                  <Link
-                    to={"/details"}
-                    className=" line-clamp-2 uppercase text-red text-[13px] font-medium py-2"
-                  >
-                    Chính chủ cho thuê căn 2PN, 1WC, nội thất mới, thoáng mát
-                    tại Tân Thới Hiệp quận 12
-                  </Link>
-                </h3>
-                <div class="mb-2 flex items-center">
-                  <span class="text-green font-medium  text-[13px]">
-                    5 triệu/tháng
-                  </span>
-                  <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
-                  <span className="text-[13px]">
-                    40 m<sup>2</sup>
-                  </span>
-                  <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
-                  <Link
-                    class="text-body text-[13px]"
-                    title="Cho thuê phòng trọ Quận 12, Hồ Chí Minh"
-                  >
-                    Quận 12, Hồ Chí Minh
-                  </Link>
-                </div>
-                <div className="mb-4 text-[13px] text-[#6C757D]">
-                  Địa chỉ: 113/62 khu phố 3, phường Tân Thới Hiệp, quận 12Gần
-                  công viên phần mềm Quang Trung, nhà máy bia HeinekenDiện tích
-                  40m22 phòng ngủ, 1 phòng khách, 1…
-                </div>
-                <div className="flex justify-between">
-                  <div className="flex gap-2 items-center">
-                    <img
-                      className="w-[40px] h-[40px]"
-                      src="https://phongtro123.com/images/default-user.svg"
-                      alt=""
-                    />
-                    <div className="flex flex-col">
-                      <span className="font-normal text-[14px]">
-                        Vũ Cao Hưng
-                      </span>
-                      <span className="font-normal text-[12px]">Hôm nay</span>
-                    </div>
-                  </div>
-                  <div className=" flex items-center gap-4">
-                    <div className="p-2 bg-green text-white text-[12px] rounded-lg">
-                      0339066926
-                    </div>
-                    <div className="">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="size-6"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <Posts />
           <div className="mt-5">
             <Tags></Tags>
           </div>

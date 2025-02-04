@@ -2,7 +2,22 @@ import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+import ReactQuill from "react-quill";
+import { useSelector } from "react-redux";
+const modules = {
+  toolbar: [
+    [{ font: [] }],
+    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+    ["bold", "italic", "underline", "strike"],
+    [{ color: [] }, { background: [] }],
+    [{ script: "sub" }, { script: "super" }],
+    ["blockquote", "code-block"],
+    [{ list: "ordered" }, { list: "bullet" }],
+    [{ indent: "-1" }, { indent: "+1" }, { align: [] }],
+    ["link", "image", "video"],
+    ["clean"],
+  ],
+};
 export default function CreatePage() {
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
@@ -31,6 +46,7 @@ export default function CreatePage() {
     "Có hầm để xe": false,
   });
   const [images, setImages] = useState([]);
+  const user_id = useSelector((state) => state?.user?.user_id);
 
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
@@ -110,13 +126,12 @@ export default function CreatePage() {
 
   const handleSubmit = async () => {
     const formData = new FormData();
-
     formData.append("Title", title);
     formData.append("Description", description);
     formData.append("Price", price);
     formData.append("Area", area);
     formData.append("VideoURL", video);
-    formData.append("OwnerId", "1b1bf072-cce7-44cb-ad23-359a92128603"); // Thay bằng ID thực tế
+    formData.append("OwnerId", user_id);
     formData.append("Available", true);
     formData.append("Is_Browse", 0);
     formData.append("CategoryId", selectedCategory?.value);
@@ -273,11 +288,12 @@ export default function CreatePage() {
             >
               Nội dung mô tả <span className="text-red-500">*</span>
             </label>
-            <textarea
-              id="description"
-              onChange={(e) => setDescription(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg p-2 h-32 outline-none"
-            ></textarea>
+            <ReactQuill
+              modules={modules}
+              value={description}
+              onChange={setDescription}
+              theme="snow"
+            />
             <p className="text-gray-500 text-sm mt-1">
               (Tối thiểu 50 ký tự, tối đa 5000 ký tự)
             </p>
