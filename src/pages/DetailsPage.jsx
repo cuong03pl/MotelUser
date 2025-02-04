@@ -12,17 +12,30 @@ import { convertTime } from "../utils/convertTime";
 export default function DetailsPage() {
   const { id } = useParams();
   const [post, setPost] = useState({});
+  const [countPost, setCountPost] = useState(0);
+
   useEffect(() => {
     const fetchAPI = async () => {
       await axios.get(`https://localhost:7224/api/Posts/${id}`).then((res) => {
-        console.log(res);
         setPost(res?.data);
       });
     };
 
     fetchAPI();
   }, [id]);
-
+  // get count post
+  useEffect(() => {
+    const fetchAPI = async () => {
+      await axios
+        .get(`https://localhost:7224/api/Users/countPost/${post?.ownerId}`)
+        .then((res) => {
+          setCountPost(res?.data);
+        });
+    };
+    if (post.ownerId) {
+      fetchAPI();
+    }
+  }, [post]);
   return (
     <div className=" max-w-[1000px] m-auto ">
       <div className="grid grid-cols-3 gap-4">
@@ -112,7 +125,7 @@ export default function DetailsPage() {
                       {post?.user?.fullName}
                     </span>
                     <div class="my-2 flex items-center">
-                      <span className="text-[13px]">3 tin đăng</span>
+                      <span className="text-[13px]">{countPost} tin đăng</span>
                       <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
                       <span className="text-[13px]">
                         Tham gia từ: {convertTime(post?.user?.createdOn)}
@@ -179,7 +192,7 @@ export default function DetailsPage() {
                   {post?.user?.fullName}
                 </span>
                 <div class="my-2 flex items-center">
-                  <span className="text-[13px]">3 tin đăng</span>
+                  <span className="text-[13px]">{countPost} tin đăng</span>
                   <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
                   <span className="text-[13px]">
                     {" "}

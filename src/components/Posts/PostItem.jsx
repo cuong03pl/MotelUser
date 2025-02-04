@@ -48,7 +48,7 @@ export default function PostItem({ data }) {
           <div className="flex gap-2 items-center">
             <img
               className="w-[40px] h-[40px]"
-              src="https://phongtro123.com/images/default-user.svg"
+              src={data?.user?.avatar}
               alt=""
             />
             <div className="flex flex-col">
