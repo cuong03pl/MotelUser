@@ -34,7 +34,7 @@ export default function RecentPosts() {
               />
               <div className="">
                 <Link
-                  to={`/details/${post?.id}`}
+                  to={`/details/${post?.slug}`}
                   className="text-[13px] text-[#055699] line-clamp-2"
                 >
                   {post?.title}

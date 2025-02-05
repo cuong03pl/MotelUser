@@ -9,6 +9,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import axios from "axios";
 import { convertTime } from "../utils/convertTime";
+import News from "../components/News/News";
 export default function DetailsPage() {
   const { id } = useParams();
   const [post, setPost] = useState({});
@@ -295,34 +296,7 @@ export default function DetailsPage() {
           <div className="bg-white mt-5 p-3">
             <RecentPosts />
           </div>
-          <div className="bg-white mt-5 p-3">
-            <div className="mb-4">
-              <div className="mb-2 font-medium">Bài viết mới</div>
-              <div className="flex items-center gap-2">
-                <div className="">
-                  <div className="flex items-center">
-                    <div className="">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className="w-[12px] h-[12px] text-red"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z"
-                          clip-rule="evenodd"
-                        />
-                      </svg>
-                    </div>
-                    <Link className="text-[14px] text-[#055699] line-clamp-2 hover:text-red">
-                      Cho thuê căn hộ ngay trung tâm quận hải châu.
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <News />
         </div>
       </div>
       <div className="bg-white mt-5 p-3 rounded-md">

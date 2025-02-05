@@ -8,6 +8,7 @@ import DropdownUser from "./DropdownUser/DropdownUser";
 import { setUserId } from "../features/user/userSlice";
 export default function Header() {
   const [user, setUser] = useState({});
+  const [categories, setCategories] = useState([]);
   const dispatch = useDispatch();
   const token = useSelector((state) => state?.user?.user_token);
   useEffect(() => {
@@ -24,6 +25,16 @@ export default function Header() {
       fetchAPI();
     }
   }, [token]);
+  useEffect(() => {
+    const fetchAPI = async () => {
+      await axios.get(`https://localhost:7224/api/Categories`).then((res) => {
+        console.log(res);
+
+        setCategories(res.data);
+      });
+    };
+    fetchAPI();
+  }, []);
   return (
     <header class=" border-b px-4 sm:px-10 bg-white font-sans min-h-[70px] tracking-wide relative z-50">
       <div class="flex flex-wrap items-center gap-4 w-full max-w-6xl mx-auto h-[60px]">
@@ -196,26 +207,18 @@ export default function Header() {
       </div>
       <div className="border-t border-solid border-[#ccc]">
         <ul className=" flex justify-center items-center gap-5">
-          <li className="hover:text-[#E51F40]  cursor-pointer">
-            <Link className="py-4 px-2 block" to={"/"}>
-              Phòng trọ
-            </Link>
-          </li>
-          <li className="hover:text-[#E51F40]  cursor-pointer">
-            <Link className="py-4 px-2 block" to={"/"}>
-              Phòng trọ
-            </Link>
-          </li>
-          <li className="hover:text-[#E51F40]  cursor-pointer">
-            <Link className="py-4 px-2 block" to={"/"}>
-              Phòng trọ
-            </Link>
-          </li>
-          <li className="hover:text-[#E51F40]  cursor-pointer">
-            <Link className="py-4 px-2 block" to={"/"}>
-              Phòng trọ
-            </Link>
-          </li>
+          {categories?.map((category, index) => {
+            return (
+              <li key={index} className="hover:text-[#E51F40]  cursor-pointer">
+                <Link
+                  className="py-4 px-2 block"
+                  to={`/category/${category?.slug}`}
+                >
+                  {category?.name}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </header>

@@ -17,7 +17,7 @@ export default function PostItem({ data }) {
       <div className="">
         <h3 class=" text-uppercase mb-2">
           <Link
-            to={`/details/${data?.id}`}
+            to={`/details/${data?.slug}`}
             className=" line-clamp-2 uppercase text-red text-[13px] font-medium py-2"
           >
             {data?.title}

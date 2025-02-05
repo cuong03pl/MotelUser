@@ -5,6 +5,7 @@ import LoginPage from "../pages/LoginPage";
 import CreatePage from "../pages/Manage/CreatePage";
 import PostsPage from "../pages/Manage/PostsPage";
 import ProfilePage from "../pages/Manage/ProfilePage";
+import NewsPage from "../pages/NewsPage";
 import RegisterPage from "../pages/RegisterPage";
 
 export const publicRoutes = [
@@ -23,6 +24,10 @@ export const publicRoutes = [
   {
     path: routes.details,
     component: <DetailsPage />,
+  },
+  {
+    path: routes.news,
+    component: <NewsPage />,
   },
   {
     path: routes.manage_create,

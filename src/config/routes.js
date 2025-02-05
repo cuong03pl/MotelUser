@@ -6,6 +6,8 @@ const routes = {
   manage_create: "/manage/create",
   profile: "/manage/profile",
   posts: "/manage/posts",
+  news: "/news/:id",
+  category: "/category/:id",
 };
 
 export default routes;
