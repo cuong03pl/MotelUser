@@ -1,4 +1,5 @@
 import routes from "../config/routes";
+import CategoryPage from "../pages/CategoryPage";
 import DetailsPage from "../pages/DetailsPage";
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
@@ -28,6 +29,10 @@ export const publicRoutes = [
   {
     path: routes.news,
     component: <NewsPage />,
+  },
+  {
+    path: routes.category,
+    component: <CategoryPage />,
   },
   {
     path: routes.manage_create,

@@ -7,7 +7,7 @@ const routes = {
   profile: "/manage/profile",
   posts: "/manage/posts",
   news: "/news/:id",
-  category: "/category/:id",
+  category: "/category/:slug",
 };
 
 export default routes;

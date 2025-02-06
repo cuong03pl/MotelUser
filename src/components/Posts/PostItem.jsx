@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import { convertTime } from "../../utils/convertTime";
 
 export default function PostItem({ data }) {
-  console.log(data);
-
   return (
     <div className="p-3 bg-white rounded-lg shadow-xl">
       <div className="max-h-[260px] h-[260px] w-full">
@@ -61,9 +59,12 @@ export default function PostItem({ data }) {
             </div>
           </div>
           <div className=" flex items-center gap-4">
-            <div className="p-2 bg-green text-white text-[12px] rounded-lg">
+            <a
+              href={`tel/${data?.user?.phoneNumber}`}
+              className="p-2 bg-green text-white text-[12px] rounded-lg"
+            >
               {data?.user?.phoneNumber}
-            </div>
+            </a>
             <div className="">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

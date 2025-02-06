@@ -23,8 +23,6 @@ export default function RecentPosts() {
       <div className="mb-2 font-medium">Tin mới đăng</div>
       <div className="flex flex-col items-center gap-2">
         {latestPosts?.map((post, index) => {
-          console.log(post);
-
           return (
             <div className="flex gap-2 items-center">
               <img

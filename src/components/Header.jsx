@@ -28,8 +28,6 @@ export default function Header() {
   useEffect(() => {
     const fetchAPI = async () => {
       await axios.get(`https://localhost:7224/api/Categories`).then((res) => {
-        console.log(res);
-
         setCategories(res.data);
       });
     };

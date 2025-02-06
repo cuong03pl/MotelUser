@@ -146,9 +146,12 @@ export default function DetailsPage() {
                             clip-rule="evenodd"
                           />
                         </svg>
-                        <span className="text-[14px]">
+                        <a
+                          href={`tel:${post?.user?.phoneNumber}`}
+                          className="text-[14px]"
+                        >
                           {post?.user?.phoneNumber}
-                        </span>
+                        </a>
                       </div>
                       <div className="flex items-center justify-center gap-2 bg-blue px-3 py-2 rounded-2xl text-white">
                         <svg
@@ -166,7 +169,12 @@ export default function DetailsPage() {
                           />
                         </svg>
 
-                        <span className="text-[14px]">Nhắn Zalo</span>
+                        <a
+                          href={`https://zalo.me/${post?.user?.phoneNumber}`}
+                          className="text-[14px]"
+                        >
+                          Nhắn Zalo
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -214,9 +222,12 @@ export default function DetailsPage() {
                         clip-rule="evenodd"
                       />
                     </svg>
-                    <span className="text-[18px]">
+                    <a
+                      href={`tel:${post?.user?.phoneNumber}`}
+                      className="text-[18px]"
+                    >
                       {post?.user?.phoneNumber}{" "}
-                    </span>
+                    </a>
                   </div>
                   <div className="flex items-center justify-center gap-2 bg-blue px-3 py-2 rounded-2xl text-white w-full">
                     <svg
@@ -234,7 +245,12 @@ export default function DetailsPage() {
                       />
                     </svg>
 
-                    <span className="text-[18px]">Nhắn Zalo</span>
+                    <a
+                      href={`https://zalo.me/${post?.user?.phoneNumber}`}
+                      className="text-[18px]"
+                    >
+                      Nhắn Zalo
+                    </a>
                   </div>
                 </div>
                 <div class="flex gap-5 items-center py-3 w-full justify-between">
