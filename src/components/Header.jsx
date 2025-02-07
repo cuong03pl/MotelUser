@@ -11,6 +11,7 @@ export default function Header() {
   const [categories, setCategories] = useState([]);
   const dispatch = useDispatch();
   const token = useSelector((state) => state?.user?.user_token);
+
   useEffect(() => {
     const fetchAPI = async () => {
       const user_data = jwtDecode(token);
@@ -122,50 +123,29 @@ export default function Header() {
           </div>
         </div>
 
-        {!user && (
-          <ul class="lg:flex lg:items-center ml-auto max-lg:block lg:space-x-8">
-            <li class="max-lg:border-b max-lg:py-3 max-lg:mt-2">
-              <Link
-                to={routes.register}
-                class="hover:text-[#007bff] text-gray-600 block font-bold text-[15px]"
-              >
-                Sign Up
-              </Link>
-            </li>
-
-            <li>
-              <Link
-                to={"/login"}
-                class="hover:text-[#007bff] text-gray-600 block font-bold text-[15px]"
-              >
-                Sign In
-              </Link>
-            </li>
-            <li>
-              <Link
-                to={"/manage/create"}
-                class="px-4 py-2 text-sm rounded font-semibold text-white border-2 border-[#1d294f] bg-[#1d294f] transition-all ease-in-out duration-300 hover:bg-transparent hover:text-[#1d294f]"
-              >
-                Đăng bài
-              </Link>
-              <button id="toggleOpen" class="lg:hidden">
-                <svg
-                  class="w-7 h-7"
-                  fill="#000"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
+        {!user ||
+          (!token && (
+            <ul class="lg:flex lg:items-center ml-auto max-lg:block lg:space-x-8">
+              <li class="max-lg:border-b max-lg:py-3 max-lg:mt-2">
+                <Link
+                  to={routes.register}
+                  class="hover:text-[#007bff] text-gray-600 block font-bold text-[15px]"
                 >
-                  <path
-                    fill-rule="evenodd"
-                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-              </button>
-            </li>
-          </ul>
-        )}
-        {user && (
+                  Sign Up
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  to={"/login"}
+                  class="hover:text-[#007bff] text-gray-600 block font-bold text-[15px]"
+                >
+                  Sign In
+                </Link>
+              </li>
+            </ul>
+          ))}
+        {user && token && (
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1">
               <svg
@@ -200,6 +180,28 @@ export default function Header() {
               </Link>
             </div>
             <DropdownUser user={user} />
+            <li>
+              <Link
+                to={"/manage/create"}
+                class="px-4 py-2 text-sm rounded font-semibold text-white border-2 border-[#1d294f] bg-[#1d294f] transition-all ease-in-out duration-300 hover:bg-transparent hover:text-[#1d294f]"
+              >
+                Đăng bài
+              </Link>
+              <button id="toggleOpen" class="lg:hidden">
+                <svg
+                  class="w-7 h-7"
+                  fill="#000"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </button>
+            </li>
           </div>
         )}
       </div>

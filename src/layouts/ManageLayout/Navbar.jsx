@@ -1,8 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import routes from "../../config/routes";
+import { useDispatch } from "react-redux";
+import { logOut } from "../../features/user/userSlice";
 
 export default function Navbar() {
+  const dispatch = useDispatch();
   return (
     <div class="bg-white p-4 h-screen fixed mt-[48px] w-[250px]">
       <div class="flex flex-col items-center">
@@ -69,7 +72,10 @@ export default function Navbar() {
               <span className="text-[14px]">Quản lý tài khoản</span>
             </Link>
           </li>
-          <li class="flex items-center text-gray-700 gap-3">
+          <li
+            onClick={() => dispatch(logOut())}
+            class="flex items-center text-gray-700 gap-3 cursor-pointer"
+          >
             <svg
               className="w-[18px] h-[18px]"
               xmlns="http://www.w3.org/2000/svg"
