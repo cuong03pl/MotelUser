@@ -12,7 +12,8 @@ import { convertTime } from "../utils/convertTime";
 import News from "../components/News/News";
 export default function DetailsPage() {
   const { id } = useParams();
-  const [post, setPost] = useState({});
+  const [post, setPost] = useState(null);
+  const [relatePosts, setRelatePosts] = useState([]);
   const [countPost, setCountPost] = useState(0);
 
   useEffect(() => {
@@ -24,8 +25,33 @@ export default function DetailsPage() {
 
     fetchAPI();
   }, [id]);
+
+  useEffect(() => {
+    if (!post?.id) return;
+
+    const fetchAPI = async () => {
+      try {
+        const res = await axios.get(
+          `https://localhost:7224/api/Posts/GetPostsByProvinceSlug/${post?.id}`,
+          {
+            params: {
+              page: 1,
+              pageSize: 10,
+            },
+          }
+        );
+        setRelatePosts(res?.data?.data);
+      } catch (error) {
+        console.error("Error fetching related posts:", error);
+      }
+    };
+
+    fetchAPI();
+  }, [post?.id]);
+
   // get count post
   useEffect(() => {
+    if (!post?.ownerId) return;
     const fetchAPI = async () => {
       await axios
         .get(`https://localhost:7224/api/Users/countPost/${post?.ownerId}`)
@@ -33,9 +59,7 @@ export default function DetailsPage() {
           setCountPost(res?.data);
         });
     };
-    if (post.ownerId) {
-      fetchAPI();
-    }
+    fetchAPI();
   }, [post]);
   return (
     <div className=" max-w-[1000px] m-auto ">
@@ -316,92 +340,77 @@ export default function DetailsPage() {
         </div>
       </div>
       <div className="bg-white mt-5 p-3 rounded-md">
-        <h3 className="font-semibold">Tin đăng cùng khu vực </h3>
-        <div className="grid grid-cols-4 gap-4 py-3">
-          <div className="">
-            <img
-              className="rounded-lg"
-              src="https://pt123.cdn.static123.com/images/thumbs/450x300/fit/2025/01/24/z5945596990786-788b6de6f8c774d466ebd2b6b97e3cc9_1737685699.jpg"
-              alt=""
-            />
-            <div className="pt-[10px]">
-              <Link className="uppercase text-[14px] font-semibold text-[#055699] line-clamp-2">
-                CHO THUÊ KÝ TÚC XÁ CAO CẤP GIÁ RẺ QUẬN 10
-              </Link>
-              <div class="mb-2 flex items-center">
-                <span class="text-green font-medium  text-[13px]">
-                  5 triệu/tháng
-                </span>
-                <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
-                <span className="text-[13px]">
-                  40 m<sup>2</sup>
-                </span>
-              </div>
-            </div>
+        <div className="justify-between flex items-center">
+          <h3 className="font-semibold">Tin đăng cùng khu vực </h3>
+          <div className="flex gap-2">
+            <button className="swiper-button-prev !static !mt-0 !h-[40px] !w-[40px] bg-white border border-[#ccc] border-solid rounded-lg !text-red">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 320 512"
+                className="!w-[20px] !h-[20px]"
+              >
+                <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" />
+              </svg>
+            </button>
+            <button className="swiper-button-next !static !mt-0 !h-[40px] !w-[40px] bg-white border border-[#ccc] border-solid rounded-lg !text-red">
+              <svg
+                className="!w-[20px] !h-[20px]"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 320 512"
+              >
+                <path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" />
+              </svg>
+            </button>
           </div>
-          <div className="">
-            <img
-              className="rounded-lg"
-              src="https://pt123.cdn.static123.com/images/thumbs/450x300/fit/2025/01/24/z5945596990786-788b6de6f8c774d466ebd2b6b97e3cc9_1737685699.jpg"
-              alt=""
-            />
-            <div className="pt-[10px]">
-              <Link className="uppercase text-[14px] font-semibold text-[#055699] line-clamp-2">
-                CHO THUÊ KÝ TÚC XÁ CAO CẤP GIÁ RẺ QUẬN 10
-              </Link>
-              <div class="mb-2 flex items-center">
-                <span class="text-green font-medium  text-[13px]">
-                  5 triệu/tháng
-                </span>
-                <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
-                <span className="text-[13px]">
-                  40 m<sup>2</sup>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className="">
-            <img
-              className="rounded-lg"
-              src="https://pt123.cdn.static123.com/images/thumbs/450x300/fit/2025/01/24/z5945596990786-788b6de6f8c774d466ebd2b6b97e3cc9_1737685699.jpg"
-              alt=""
-            />
-            <div className="pt-[10px]">
-              <Link className="uppercase text-[14px] font-semibold text-[#055699] line-clamp-2">
-                CHO THUÊ KÝ TÚC XÁ CAO CẤP GIÁ RẺ QUẬN 10
-              </Link>
-              <div class="mb-2 flex items-center">
-                <span class="text-green font-medium  text-[13px]">
-                  5 triệu/tháng
-                </span>
-                <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
-                <span className="text-[13px]">
-                  40 m<sup>2</sup>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className="">
-            <img
-              className="rounded-lg"
-              src="https://pt123.cdn.static123.com/images/thumbs/450x300/fit/2025/01/24/z5945596990786-788b6de6f8c774d466ebd2b6b97e3cc9_1737685699.jpg"
-              alt=""
-            />
-            <div className="pt-[10px]">
-              <Link className="uppercase text-[14px] font-semibold text-[#055699] line-clamp-2">
-                CHO THUÊ KÝ TÚC XÁ CAO CẤP GIÁ RẺ QUẬN 10
-              </Link>
-              <div class="mb-2 flex items-center">
-                <span class="text-green font-medium  text-[13px]">
-                  5 triệu/tháng
-                </span>
-                <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
-                <span className="text-[13px]">
-                  40 m<sup>2</sup>
-                </span>
-              </div>
-            </div>
-          </div>
+        </div>
+        <div className="mt-2">
+          <Swiper
+            className=" h-full py-3"
+            spaceBetween={30}
+            slidesPerView={4}
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
+            navigation={{
+              prevEl: ".swiper-button-prev",
+              nextEl: ".swiper-button-next",
+            }}
+            modules={[Navigation]}
+          >
+            {relatePosts?.map((res, index) => {
+              return (
+                <SwiperSlide className="w-full h-full">
+                  <div className="">
+                    <img
+                      className="rounded-lg object-contain h-[174px] w-[232px] "
+                      src={`https://localhost:7224/${res?.imageUrls[0]}`}
+                      alt=""
+                    />
+                    <div className="pt-[10px]">
+                      <Link
+                        to={`/details/${res?.slug}`}
+                        className="uppercase text-[14px] font-semibold text-[#055699] line-clamp-2"
+                      >
+                        {res?.title}
+                      </Link>
+                      <div class="mb-2 flex items-center">
+                        <span class="text-green font-medium  text-[13px]">
+                          {res?.price} triệu/tháng
+                        </span>
+                        <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
+                        <span className="text-[13px]">
+                          {res?.area} m<sup>2</sup>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
         </div>
       </div>
     </div>
