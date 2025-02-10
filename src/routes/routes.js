@@ -1,6 +1,7 @@
 import routes from "../config/routes";
 import CategoryPage from "../pages/CategoryPage";
 import DetailsPage from "../pages/DetailsPage";
+import FavouritePage from "../pages/FavouritePage";
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
 import CreatePage from "../pages/Manage/CreatePage";
@@ -33,6 +34,10 @@ export const publicRoutes = [
   {
     path: routes.category,
     component: <CategoryPage />,
+  },
+  {
+    path: routes.favourite,
+    component: <FavouritePage />,
   },
   {
     path: routes.manage_create,

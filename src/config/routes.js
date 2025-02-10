@@ -8,6 +8,7 @@ const routes = {
   posts: "/manage/posts",
   news: "/news/:id",
   category: "/category/:slug",
+  favourite: "/favourite",
 };
 
 export default routes;

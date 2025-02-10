@@ -10,12 +10,15 @@ import "swiper/css/navigation";
 import axios from "axios";
 import { convertTime } from "../utils/convertTime";
 import News from "../components/News/News";
+import Favourite from "../components/Favourite/Favourite";
+import { useSelector } from "react-redux";
 export default function DetailsPage() {
   const { id } = useParams();
   const [post, setPost] = useState(null);
   const [relatePosts, setRelatePosts] = useState([]);
   const [countPost, setCountPost] = useState(0);
-
+  const [favourited, setFavourited] = useState(false);
+  const user_id = useSelector((state) => state?.user?.user_id);
   useEffect(() => {
     const fetchAPI = async () => {
       await axios.get(`https://localhost:7224/api/Posts/${id}`).then((res) => {
@@ -61,6 +64,49 @@ export default function DetailsPage() {
     };
     fetchAPI();
   }, [post]);
+
+  // check favourite
+  useEffect(() => {
+    if (!user_id || !post?.id) return;
+
+    const fetchAPI = async () => {
+      try {
+        const res = await axios.get(
+          `https://localhost:7224/api/Users/CheckFavorite`,
+          {
+            params: {
+              userId: user_id,
+              postId: post?.id,
+            },
+          }
+        );
+
+        setFavourited(res?.data); // Chỉ cần cập nhật giá trị từ API
+      } catch (error) {
+        console.error("Error checking favorite:", error);
+      }
+    };
+
+    fetchAPI();
+  }, [post?.id]); // Chỉ theo dõi `post?.id`
+
+  const handleFavotite = async () => {
+    try {
+      const res = await axios.post(
+        `https://localhost:7224/api/Users/AddFavoritePost`,
+        null,
+        {
+          params: {
+            userId: user_id,
+            postId: post?.id,
+          },
+        }
+      );
+      setFavourited((prev) => !prev);
+    } catch (error) {
+      console.error("Error fetching related posts:", error);
+    }
+  };
   return (
     <div className=" max-w-[1000px] m-auto ">
       <div className="grid grid-cols-3 gap-4">
@@ -278,23 +324,11 @@ export default function DetailsPage() {
                   </div>
                 </div>
                 <div class="flex gap-5 items-center py-3 w-full justify-between">
-                  <div class="flex items-center space-x-1 cursor-pointer">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      className="w-[16px] h-[16px]"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
-                      />
-                    </svg>
-                    <span class="text-[14px]">Lưu tin</span>
-                  </div>
+                  <Favourite
+                    onFavorite={handleFavotite}
+                    favourited={favourited}
+                  />
+
                   <div class="flex items-center space-x-1 cursor-pointer">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

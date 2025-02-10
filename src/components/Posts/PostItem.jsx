@@ -1,8 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { convertTime } from "../../utils/convertTime";
+import Favourite from "../Favourite/Favourite";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 export default function PostItem({ data }) {
+  const [favourited, setFavourited] = useState(false);
+  const user_id = useSelector((state) => state?.user?.user_id);
+  useEffect(() => {
+    if (!user_id || !data?.id) return;
+
+    const fetchAPI = async () => {
+      try {
+        const res = await axios.get(
+          `https://localhost:7224/api/Users/CheckFavorite`,
+          {
+            params: {
+              userId: user_id,
+              postId: data?.id,
+            },
+          }
+        );
+
+        setFavourited(res?.data); // Chỉ cần cập nhật giá trị từ API
+      } catch (error) {
+        console.error("Error checking favorite:", error);
+      }
+    };
+
+    fetchAPI();
+  }, [data?.id]);
+
+  const handleFavotite = async () => {
+    try {
+      const res = await axios.post(
+        `https://localhost:7224/api/Users/AddFavoritePost`,
+        null,
+        {
+          params: {
+            userId: user_id,
+            postId: data?.id,
+          },
+        }
+      );
+      setFavourited((prev) => !prev);
+    } catch (error) {
+      console.error("Error fetching related posts:", error);
+    }
+  };
   return (
     <div className="p-3 bg-white rounded-lg shadow-xl">
       <div className="max-h-[260px] h-[260px] w-full">
@@ -65,22 +111,11 @@ export default function PostItem({ data }) {
             >
               {data?.user?.phoneNumber}
             </a>
-            <div className="">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="size-6"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
-                />
-              </svg>
-            </div>
+            <Favourite
+              favourited={favourited}
+              onFavorite={handleFavotite}
+              onlyIcon={true}
+            />
           </div>
         </div>
       </div>

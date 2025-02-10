@@ -1,11 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Tags from "../components/Tags/Tags";
 import RecentPosts from "../components/RecentPosts/RecentPosts";
 import Posts from "../components/Posts/Posts";
 import News from "../components/News/News";
+import axios from "axios";
 
 export default function HomePage() {
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    const fetchAPI = async () => {
+      try {
+        let url = "https://localhost:7224/api/Posts";
+        let params = {
+          page: 1,
+          pageSize: 10,
+        };
+        const res = await axios.get(url, { params });
+        setPosts(res?.data?.data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+
+    fetchAPI();
+  }, []);
   return (
     <div className="flex max-w-[1000px] m-auto ">
       <div className="grid grid-cols-3 gap-4">
@@ -36,7 +55,7 @@ export default function HomePage() {
               </li>
             </ul>
           </div>
-          <Posts />
+          <Posts posts={posts} />
           <div className="mt-5">
             <Tags></Tags>
           </div>

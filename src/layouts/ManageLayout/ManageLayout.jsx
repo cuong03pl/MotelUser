@@ -16,8 +16,6 @@ export default function ManageLayout({ children }) {
     const publicPages = [routes.manage_create, routes.profile, routes.posts];
 
     if (publicPages.includes(location.pathname)) {
-      console.log(token);
-
       if (isTokenExpired(token) || token === "") {
         navigate("/login");
         dispatch(logOut());

@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import RecentPosts from "../components/RecentPosts/RecentPosts";
 import News from "../components/News/News";
-import { Link, useParams } from "react-router-dom";
-import Posts from "../components/Posts/Posts";
 import Tags from "../components/Tags/Tags";
+import Posts from "../components/Posts/Posts";
+import { Link } from "react-router-dom";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
-export default function CategoryPage() {
-  const { slug } = useParams();
+export default function FavouritePage() {
   const [posts, setPosts] = useState([]);
+  const user_id = useSelector((state) => state?.user?.user_id);
   useEffect(() => {
     const fetchAPI = async () => {
       try {
@@ -16,16 +17,16 @@ export default function CategoryPage() {
           page: 1,
           pageSize: 10,
         };
-        const url = `https://localhost:7224/api/Posts/GetPostsByCategory/${slug}`;
+        const url = `https://localhost:7224/api/Users/GetUserFavorite/${user_id}`;
         const res = await axios.get(url, { params });
-        setPosts(res?.data?.data);
+        setPosts(res?.data);
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
     };
 
     fetchAPI();
-  }, [slug]);
+  }, []);
   return (
     <div className="flex max-w-[1000px] m-auto ">
       <div className="grid grid-cols-3 gap-4">
