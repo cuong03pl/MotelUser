@@ -36,19 +36,12 @@ export default function Header() {
   }, []);
   return (
     <header class=" border-b px-4 sm:px-10 bg-white font-sans min-h-[70px] tracking-wide relative z-50">
-      <div class="flex flex-wrap items-center gap-4 w-full max-w-6xl mx-auto h-[60px]">
+      <div class="flex flex-wrap items-center gap-4 w-full mx-auto h-[60px]">
         <Link to={"/"} class="max-sm:hidden">
           <img
             src="https://readymadeui.com/readymadeui.svg"
             alt="logo"
             class="w-36"
-          />
-        </Link>
-        <Link to={"/"} class="hidden max-sm:block">
-          <img
-            src="https://readymadeui.com/readymadeui-short.svg"
-            alt="logo"
-            class="w-9"
           />
         </Link>
 
@@ -85,38 +78,6 @@ export default function Header() {
                     alt="logo"
                     class="w-36"
                   />
-                </a>
-              </li>
-              <li class="max-lg:border-b max-lg:py-3">
-                <a
-                  href="javascript:void(0)"
-                  class="hover:text-[#007bff] text-[#007bff] block font-bold text-[15px]"
-                >
-                  Home
-                </a>
-              </li>
-              <li class="max-lg:border-b max-lg:py-3">
-                <a
-                  href="javascript:void(0)"
-                  class="hover:text-[#007bff] text-gray-600 block font-bold text-[15px]"
-                >
-                  Shop
-                </a>
-              </li>
-              <li class="max-lg:border-b max-lg:py-3">
-                <a
-                  href="javascript:void(0)"
-                  class="hover:text-[#007bff] text-gray-600 block font-bold text-[15px]"
-                >
-                  Sale
-                </a>
-              </li>
-              <li class="max-lg:border-b max-lg:py-3">
-                <a
-                  href="javascript:void(0)"
-                  class="hover:text-[#007bff] text-gray-600 block font-bold text-[15px]"
-                >
-                  Manage
                 </a>
               </li>
             </ul>

@@ -1,12 +1,35 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { publicRoutes } from "./routes/routes";
 import DefaultLayout from "./layouts/DefaultLayout/DefaultLayout";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import ManageLayout from "./layouts/ManageLayout/ManageLayout";
+import { useDispatch, useSelector } from "react-redux";
+import routes from "./config/routes";
+import { isTokenExpired } from "./utils/checkTokenExpired";
+import { logOut } from "./features/user/userSlice";
 
 function App() {
+  const navigate = useNavigate();
+  const token = useSelector((state) => state.user?.user_token);
+  const dispatch = useDispatch();
+  const location = useLocation();
+  useEffect(() => {
+    const publicPages = [
+      routes.manage_create,
+      routes.profile,
+      routes.posts,
+      routes.favourite,
+    ];
+
+    if (publicPages.includes(location.pathname)) {
+      if (isTokenExpired(token) || token === "") {
+        navigate("/login");
+        dispatch(logOut());
+      }
+    }
+  }, [navigate, token]);
   return (
     <div className="bg-[#f1f5f9]">
       <Routes>

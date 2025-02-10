@@ -8,6 +8,7 @@ import axios from "axios";
 export default function PostItem({ data }) {
   const [favourited, setFavourited] = useState(false);
   const user_id = useSelector((state) => state?.user?.user_id);
+
   useEffect(() => {
     if (!user_id || !data?.id) return;
 
@@ -111,11 +112,13 @@ export default function PostItem({ data }) {
             >
               {data?.user?.phoneNumber}
             </a>
-            <Favourite
-              favourited={favourited}
-              onFavorite={handleFavotite}
-              onlyIcon={true}
-            />
+            {user_id && (
+              <Favourite
+                favourited={favourited}
+                onFavorite={handleFavotite}
+                onlyIcon={true}
+              />
+            )}
           </div>
         </div>
       </div>
