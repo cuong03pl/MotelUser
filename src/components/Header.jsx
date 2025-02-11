@@ -6,6 +6,7 @@ import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import DropdownUser from "./DropdownUser/DropdownUser";
 import { setUserId } from "../features/user/userSlice";
+import { FilterIcon } from "./Icon/Icon";
 export default function Header() {
   const [user, setUser] = useState({});
   const [categories, setCategories] = useState([]);
@@ -69,9 +70,9 @@ export default function Header() {
             </svg>
           </button>
 
-          <div class="lg:!flex lg:flex-auto max-lg:fixed max-lg:bg-white max-lg:w-1/2 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-6 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50">
-            <ul class="lg:flex lg:gap-x-8 max-lg:space-y-2">
-              <li class="mb-6 hidden max-lg:block">
+          <div class="lg:!flex lg:flex-auto items-center max-lg:fixed max-lg:bg-white max-lg:w-1/2 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-6 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50">
+            <ul class="lg:flex items-center lg:gap-x-8 max-lg:space-y-2">
+              <li class=" hidden max-lg:block">
                 <a href="javascript:void(0)">
                   <img
                     src="https://readymadeui.com/readymadeui.svg"
@@ -79,6 +80,12 @@ export default function Header() {
                     class="w-36"
                   />
                 </a>
+              </li>
+              <li class="  max-lg:block">
+                <button className="flex items-center gap-2 border border-[#ddd] rounded-3xl px-[10px] py-[5px]">
+                  <FilterIcon className="w-[20px] h-[20px]" />
+                  <span> Bộ lọc</span>
+                </button>
               </li>
             </ul>
           </div>

@@ -12,6 +12,12 @@ import { convertTime } from "../utils/convertTime";
 import News from "../components/News/News";
 import Favourite from "../components/Favourite/Favourite";
 import { useSelector } from "react-redux";
+import Modal from "react-modal";
+import CustomModal from "../components/Modal/Modal";
+import ShareModal from "../components/Modal/ShareModal";
+import ReportModal from "../components/Modal/ReportModal";
+
+Modal.setAppElement("#root");
 export default function DetailsPage() {
   const { id } = useParams();
   const [post, setPost] = useState(null);
@@ -19,6 +25,8 @@ export default function DetailsPage() {
   const [countPost, setCountPost] = useState(0);
   const [favourited, setFavourited] = useState(false);
   const user_id = useSelector((state) => state?.user?.user_id);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
   useEffect(() => {
     const fetchAPI = async () => {
       await axios.get(`https://localhost:7224/api/Posts/${id}`).then((res) => {
@@ -88,7 +96,7 @@ export default function DetailsPage() {
     };
 
     fetchAPI();
-  }, [post?.id]); // Chỉ theo dõi `post?.id`
+  }, [post?.id]);
 
   const handleFavotite = async () => {
     try {
@@ -106,6 +114,13 @@ export default function DetailsPage() {
     } catch (error) {
       console.error("Error fetching related posts:", error);
     }
+  };
+
+  const handleOpenModal = (Component) => {
+    if (typeof Component == "function") {
+      setModalContent(<Component onClose={handleOpenModal} />);
+    }
+    setIsModalOpen((prev) => !prev);
   };
   return (
     <div className=" max-w-[1000px] m-auto ">
@@ -329,7 +344,10 @@ export default function DetailsPage() {
                     favourited={favourited}
                   />
 
-                  <div class="flex items-center space-x-1 cursor-pointer">
+                  <div
+                    onClick={() => handleOpenModal(ShareModal)}
+                    class="flex items-center space-x-1 cursor-pointer"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -345,7 +363,10 @@ export default function DetailsPage() {
 
                     <span class="text-[14px]">Chia sẻ</span>
                   </div>
-                  <div class="flex items-center space-x-1 cursor-pointer">
+                  <div
+                    onClick={() => handleOpenModal(ReportModal)}
+                    class="flex items-center space-x-1 cursor-pointer"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -447,6 +468,11 @@ export default function DetailsPage() {
           </Swiper>
         </div>
       </div>
+      <CustomModal
+        content={modalContent}
+        isOpen={isModalOpen}
+        onClose={handleOpenModal}
+      ></CustomModal>
     </div>
   );
 }
