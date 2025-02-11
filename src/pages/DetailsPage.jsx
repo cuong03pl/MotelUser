@@ -118,7 +118,9 @@ export default function DetailsPage() {
 
   const handleOpenModal = (Component) => {
     if (typeof Component == "function") {
-      setModalContent(<Component onClose={handleOpenModal} />);
+      setModalContent(
+        <Component onClose={handleOpenModal} postId={post?.id} />
+      );
     }
     setIsModalOpen((prev) => !prev);
   };
