@@ -8,7 +8,9 @@ import ManageLayout from "./layouts/ManageLayout/ManageLayout";
 import { useDispatch, useSelector } from "react-redux";
 import routes from "./config/routes";
 import { isTokenExpired } from "./utils/checkTokenExpired";
-import { logOut } from "./features/user/userSlice";
+import { logOut, setUser, setUserId } from "./features/user/userSlice";
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 
 function App() {
   const navigate = useNavigate();
@@ -30,6 +32,20 @@ function App() {
       }
     }
   }, [navigate, token]);
+
+  useEffect(() => {
+    const fetchAPI = async () => {
+      const user_data = jwtDecode(token);
+      await axios
+        .get(`https://localhost:7224/api/Users/${user_data?.sub}`)
+        .then((res) => {
+          dispatch(setUser(res?.data));
+        });
+    };
+    if (token) {
+      fetchAPI();
+    }
+  }, []);
   return (
     <div className="bg-[#f1f5f9]">
       <Routes>

@@ -1,7 +1,11 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function Header() {
+  const user = useSelector((state) => state?.user?.user_data);
+
   return (
     <nav class="bg-blue text-white py-2 fixed w-full h-[48px] z-99999">
       <div class="container mx-auto flex items-center justify-between">
@@ -31,10 +35,10 @@ export default function Header() {
               alt="User avatar"
               class="h-6 w-6 rounded-full"
               height="30"
-              src="https://storage.googleapis.com/a1aa/image/bMoVT8EEk2qrH5IONRC38ZWsTo9BFitLQzFq8mKm2ArBeeIUA.jpg"
+              src={user?.avatar}
               width="30"
             />
-            <span>Hoàng Kim Cương</span>
+            <span>{user?.fullName}</span>
             <i class="fas fa-chevron-down"></i>
           </div>
           <Link

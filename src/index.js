@@ -8,13 +8,14 @@ import { Provider } from "react-redux";
 import { store, persistor } from "./app/store";
 import { PersistGate } from "redux-persist/integration/react";
 import "react-quill/dist/quill.snow.css";
-
+import { ToastContainer } from "react-toastify";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
+          <ToastContainer />
           <App />
         </BrowserRouter>
       </PersistGate>

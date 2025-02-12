@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 export default function ReportModal({ onClose, postId }) {
   const [reason, setReason] = useState("");
   const [note, setNote] = useState("");
-  const userId = useSelector((state) => state?.user?.user_id);
+  const user = useSelector((state) => state?.user?.user_data);
 
   const handleReport = () => {
     axios
@@ -17,7 +17,7 @@ export default function ReportModal({ onClose, postId }) {
           reason,
           note,
           postId,
-          userId,
+          userId: user?.id,
         },
         {
           headers: { "Content-Type": "application/json" },

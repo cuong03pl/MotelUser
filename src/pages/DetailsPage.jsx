@@ -24,7 +24,7 @@ export default function DetailsPage() {
   const [relatePosts, setRelatePosts] = useState([]);
   const [countPost, setCountPost] = useState(0);
   const [favourited, setFavourited] = useState(false);
-  const user_id = useSelector((state) => state?.user?.user_id);
+  const user = useSelector((state) => state?.user?.user_data);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   useEffect(() => {
@@ -75,7 +75,7 @@ export default function DetailsPage() {
 
   // check favourite
   useEffect(() => {
-    if (!user_id || !post?.id) return;
+    if (!user || !post?.id) return;
 
     const fetchAPI = async () => {
       try {
@@ -83,7 +83,7 @@ export default function DetailsPage() {
           `https://localhost:7224/api/Users/CheckFavorite`,
           {
             params: {
-              userId: user_id,
+              userId: user?.id,
               postId: post?.id,
             },
           }
@@ -105,7 +105,7 @@ export default function DetailsPage() {
         null,
         {
           params: {
-            userId: user_id,
+            userId: user?.id,
             postId: post?.id,
           },
         }

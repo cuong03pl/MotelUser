@@ -7,10 +7,10 @@ import axios from "axios";
 
 export default function PostItem({ data }) {
   const [favourited, setFavourited] = useState(false);
-  const user_id = useSelector((state) => state?.user?.user_id);
+  const user = useSelector((state) => state?.user?.user_data);
 
   useEffect(() => {
-    if (!user_id || !data?.id) return;
+    if (!user || !data?.id) return;
 
     const fetchAPI = async () => {
       try {
@@ -18,7 +18,7 @@ export default function PostItem({ data }) {
           `https://localhost:7224/api/Users/CheckFavorite`,
           {
             params: {
-              userId: user_id,
+              userId: user?.id,
               postId: data?.id,
             },
           }
@@ -40,7 +40,7 @@ export default function PostItem({ data }) {
         null,
         {
           params: {
-            userId: user_id,
+            userId: user?.id,
             postId: data?.id,
           },
         }
@@ -112,7 +112,7 @@ export default function PostItem({ data }) {
             >
               {data?.user?.phoneNumber}
             </a>
-            {user_id && (
+            {user && (
               <Favourite
                 favourited={favourited}
                 onFavorite={handleFavotite}

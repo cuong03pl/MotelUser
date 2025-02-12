@@ -5,30 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import DropdownUser from "./DropdownUser/DropdownUser";
-import { setUserId } from "../features/user/userSlice";
 import { FilterIcon } from "./Icon/Icon";
 import CustomModal from "./Modal/Modal";
 import FilterModal from "./Modal/FilterModal";
 export default function Header() {
-  const [user, setUser] = useState({});
   const [categories, setCategories] = useState([]);
-  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const token = useSelector((state) => state?.user?.user_token);
-  useEffect(() => {
-    const fetchAPI = async () => {
-      const user_data = jwtDecode(token);
-      dispatch(setUserId(user_data?.sub));
-      await axios
-        .get(`https://localhost:7224/api/Users/${user_data?.sub}`)
-        .then((res) => {
-          setUser(res.data);
-        });
-    };
-    if (token) {
-      fetchAPI();
-    }
-  }, [token]);
+  const user = useSelector((state) => state?.user?.user_data);
+
   useEffect(() => {
     const fetchAPI = async () => {
       await axios.get(`https://localhost:7224/api/Categories`).then((res) => {
@@ -99,29 +83,28 @@ export default function Header() {
           </div>
         </div>
 
-        {!user ||
-          (!token && (
-            <ul class="lg:flex lg:items-center ml-auto max-lg:block lg:space-x-8">
-              <li class="max-lg:border-b max-lg:py-3 max-lg:mt-2">
-                <Link
-                  to={routes.register}
-                  class="hover:text-[#007bff] text-gray-600 block font-bold text-[15px]"
-                >
-                  Sign Up
-                </Link>
-              </li>
+        {!user && (
+          <ul class="lg:flex lg:items-center ml-auto max-lg:block lg:space-x-8">
+            <li class="max-lg:border-b max-lg:py-3 max-lg:mt-2">
+              <Link
+                to={routes.register}
+                class="hover:text-[#007bff] text-gray-600 block font-bold text-[15px]"
+              >
+                Sign Up
+              </Link>
+            </li>
 
-              <li>
-                <Link
-                  to={"/login"}
-                  class="hover:text-[#007bff] text-gray-600 block font-bold text-[15px]"
-                >
-                  Sign In
-                </Link>
-              </li>
-            </ul>
-          ))}
-        {user && token && (
+            <li>
+              <Link
+                to={"/login"}
+                class="hover:text-[#007bff] text-gray-600 block font-bold text-[15px]"
+              >
+                Sign In
+              </Link>
+            </li>
+          </ul>
+        )}
+        {user && (
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1">
               <svg

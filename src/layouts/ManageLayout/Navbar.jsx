@@ -1,11 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import routes from "../../config/routes";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../features/user/userSlice";
 
 export default function Navbar() {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state?.user?.user_data);
+
   return (
     <div class="bg-white p-4 h-screen fixed mt-[48px] w-[250px]">
       <div class="flex flex-col items-center">
@@ -13,13 +15,12 @@ export default function Navbar() {
           alt="User profile picture"
           class="rounded-full mb-2"
           height="100"
-          src="https://storage.googleapis.com/a1aa/image/LQ6No79wBe2UH6ILYJ3H34LPhVrJ1JTzSeZN07fHJRkwn7RoA.jpg"
+          src={user?.avatar}
           width="100"
         />
         <div class="text-center">
-          <p class="font-semibold">Hoàng Kim Cương</p>
-          <p class="text-gray-500">0523674507</p>
-          <p class="text-gray-500">Mã tài khoản: 149235</p>
+          <p class="font-semibold">{user?.fullName}</p>
+          <p class="text-gray-500">{user?.phoneNumber}</p>
         </div>
       </div>
       <div class="mt-6">

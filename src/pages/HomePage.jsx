@@ -56,15 +56,12 @@ export default function HomePage() {
   };
 
   const handleFilter = () => {
-    console.log(123);
-
     const params = {
       minPrice,
       maxPrice,
       minArea,
       maxArea,
     };
-    console.log(params);
 
     const cleanedParams = Object.fromEntries(
       Object.entries(params).filter(([_, v]) => v != null && v !== "")

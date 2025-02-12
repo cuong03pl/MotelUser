@@ -46,7 +46,7 @@ export default function CreatePage() {
     "Có hầm để xe": false,
   });
   const [images, setImages] = useState([]);
-  const user_id = useSelector((state) => state?.user?.user_id);
+  const user = useSelector((state) => state?.user?.user_data);
 
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
@@ -131,7 +131,7 @@ export default function CreatePage() {
     formData.append("Price", price);
     formData.append("Area", area);
     formData.append("VideoURL", video);
-    formData.append("OwnerId", user_id);
+    formData.append("OwnerId", user?.id);
     formData.append("Available", true);
     formData.append("Is_Browse", 0);
     formData.append("CategoryId", selectedCategory?.value);

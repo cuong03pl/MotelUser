@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 
 export default function FavouritePage() {
   const [posts, setPosts] = useState([]);
-  const user_id = useSelector((state) => state?.user?.user_id);
+  const user = useSelector((state) => state?.user?.user_data);
   useEffect(() => {
     const fetchAPI = async () => {
       try {
@@ -17,7 +17,7 @@ export default function FavouritePage() {
           page: 1,
           pageSize: 10,
         };
-        const url = `https://localhost:7224/api/Users/GetUserFavorite/${user_id}`;
+        const url = `https://localhost:7224/api/Users/GetUserFavorite/${user?.id}`;
         const res = await axios.get(url, { params });
         setPosts(res?.data);
       } catch (error) {
