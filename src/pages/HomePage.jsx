@@ -18,8 +18,15 @@ export default function HomePage() {
       try {
         let url = "https://localhost:7224/api/Posts";
         let params = {
-          page: page,
+          page,
           pageSize: 5,
+          minPrice: searchParams.get("minPrice") || null,
+          maxPrice: searchParams.get("maxPrice") || null,
+          minArea: searchParams.get("minArea") || null,
+          maxArea: searchParams.get("maxArea") || null,
+          categoryId: searchParams.get("categoryId") || null,
+          provinceSlug: searchParams.get("provinceSlug") || null,
+          districtSlug: searchParams.get("districtSlug") || null,
         };
         const res = await axios.get(url, { params });
         setTotalPage(res?.data?.totalPages);
@@ -30,17 +37,17 @@ export default function HomePage() {
     };
 
     fetchAPI();
-  }, [page]);
+  }, [searchParams]);
   useEffect(() => {
     const pageParam = Number(searchParams.get("page")) || 1;
-    setSearchParams({ page: Number(pageParam) });
 
     if (page !== pageParam) {
       setPage(pageParam);
     }
   }, [searchParams]);
   const handlePageClick = (event) => {
-    setSearchParams({ page: event.selected + 1 });
+    const currentParams = Object.fromEntries(searchParams.entries());
+    setSearchParams({ ...currentParams, page: event.selected + 1 });
   };
   return (
     <div className="flex max-w-[1000px] m-auto ">

@@ -10,8 +10,6 @@ export default function ReportModal({ onClose, postId }) {
   const userId = useSelector((state) => state?.user?.user_id);
 
   const handleReport = () => {
-    console.log(postId);
-
     axios
       .post(
         "https://localhost:7224/api/Reports",
@@ -26,7 +24,6 @@ export default function ReportModal({ onClose, postId }) {
         }
       )
       .then((res) => {
-        console.log(res);
         onClose();
         setNote("");
         setReason("");

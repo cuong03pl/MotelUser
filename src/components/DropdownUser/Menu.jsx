@@ -2,9 +2,7 @@ import React from "react";
 import { LogoutIcon } from "../Icon/Icon";
 import { Link } from "react-router-dom";
 
-const handleLogout = () => {
-  console.log(123);
-};
+const handleLogout = () => {};
 const MENU_ITEMS = [
   {
     title: "Đăng xuất",

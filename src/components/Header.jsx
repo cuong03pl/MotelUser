@@ -7,12 +7,14 @@ import axios from "axios";
 import DropdownUser from "./DropdownUser/DropdownUser";
 import { setUserId } from "../features/user/userSlice";
 import { FilterIcon } from "./Icon/Icon";
+import CustomModal from "./Modal/Modal";
+import FilterModal from "./Modal/FilterModal";
 export default function Header() {
   const [user, setUser] = useState({});
   const [categories, setCategories] = useState([]);
   const dispatch = useDispatch();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const token = useSelector((state) => state?.user?.user_token);
-
   useEffect(() => {
     const fetchAPI = async () => {
       const user_data = jwtDecode(token);
@@ -35,6 +37,9 @@ export default function Header() {
     };
     fetchAPI();
   }, []);
+  const handleOpenModal = () => {
+    setIsModalOpen((prev) => !prev);
+  };
   return (
     <header class=" border-b px-4 sm:px-10 bg-white font-sans min-h-[70px] tracking-wide relative z-50">
       <div class="flex flex-wrap items-center gap-4 w-full mx-auto h-[60px]">
@@ -82,7 +87,10 @@ export default function Header() {
                 </a>
               </li>
               <li class="  max-lg:block">
-                <button className="flex items-center gap-2 border border-[#ddd] rounded-3xl px-[10px] py-[5px]">
+                <button
+                  onClick={handleOpenModal}
+                  className="flex items-center gap-2 border border-[#ddd] rounded-3xl px-[10px] py-[5px]"
+                >
                   <FilterIcon className="w-[20px] h-[20px]" />
                   <span> Bộ lọc</span>
                 </button>
@@ -189,6 +197,11 @@ export default function Header() {
           })}
         </ul>
       </div>
+      <CustomModal
+        content={<FilterModal onClose={handleOpenModal} />}
+        isOpen={isModalOpen}
+        onClose={handleOpenModal}
+      />
     </header>
   );
 }
