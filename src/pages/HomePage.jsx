@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Tags from "../components/Tags/Tags";
 import RecentPosts from "../components/RecentPosts/RecentPosts";
 import Posts from "../components/Posts/Posts";
@@ -8,11 +8,16 @@ import axios from "axios";
 import ReactPaginate from "react-paginate";
 
 export default function HomePage() {
+  const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const initialPage = Number(searchParams.get("page")) || 1;
   const [page, setPage] = useState(initialPage);
   const [totalPages, setTotalPage] = useState(1);
+  const [maxPrice, setMaxPrice] = useState(null);
+  const [minPrice, setMinPrice] = useState(null);
+  const [minArea, setMinArea] = useState(null);
+  const [maxArea, setMaxArea] = useState(null);
   useEffect(() => {
     const fetchAPI = async () => {
       try {
@@ -48,6 +53,24 @@ export default function HomePage() {
   const handlePageClick = (event) => {
     const currentParams = Object.fromEntries(searchParams.entries());
     setSearchParams({ ...currentParams, page: event.selected + 1 });
+  };
+
+  const handleFilter = () => {
+    console.log(123);
+
+    const params = {
+      minPrice,
+      maxPrice,
+      minArea,
+      maxArea,
+    };
+    console.log(params);
+
+    const cleanedParams = Object.fromEntries(
+      Object.entries(params).filter(([_, v]) => v != null && v !== "")
+    );
+    const queryString = new URLSearchParams(cleanedParams).toString();
+    navigate(`?${queryString}`, { replace: true });
   };
   return (
     <div className="flex max-w-[1000px] m-auto ">
@@ -138,6 +161,8 @@ export default function HomePage() {
                     className="outline-none border-none w-full"
                     type="text"
                     placeholder="Giá thuê tối thiểu "
+                    value={minPrice}
+                    onChange={(e) => setMinPrice(e.target.value)}
                   />
                 </div>
                 -
@@ -146,6 +171,8 @@ export default function HomePage() {
                     className="outline-none border-none w-full"
                     type="text"
                     placeholder="Giá thuê tối đa "
+                    value={maxPrice}
+                    onChange={(e) => setMaxPrice(e.target.value)}
                   />
                 </div>
               </div>
@@ -158,6 +185,8 @@ export default function HomePage() {
                     className="outline-none border-none w-full"
                     type="text"
                     placeholder="Diện tích tối thiểu "
+                    value={minArea}
+                    onChange={(e) => setMinArea(e.target.value)}
                   />
                 </div>
                 -
@@ -166,11 +195,16 @@ export default function HomePage() {
                     className="outline-none border-none w-full"
                     type="text"
                     placeholder="Diện tích tối đa "
+                    value={maxArea}
+                    onChange={(e) => setMaxArea(e.target.value)}
                   />
                 </div>
               </div>
             </div>
-            <button className="w-full bg-blue text py-2 font-medium text-white rounded-lg flex items-center justify-center">
+            <button
+              onClick={handleFilter}
+              className="w-full bg-blue text py-2 font-medium text-white rounded-lg flex items-center justify-center"
+            >
               Áp dụng
             </button>
           </div>
