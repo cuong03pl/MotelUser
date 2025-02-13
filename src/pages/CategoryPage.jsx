@@ -33,7 +33,9 @@ export default function CategoryPage() {
           <div className="text-[20px] font-medium mb-2">
             Kênh thông tin Phòng trọ số 1 Việt Nam
           </div>
-          <div className="text-[12px] mb-3">Có 69.307 tin đăng cho thuê</div>
+          <div className="text-[12px] mb-3">
+            Có {posts.length} tin đăng cho thuê
+          </div>
           <div className="">
             <ul className="flex items-center gap-5">
               <li>
@@ -62,51 +64,6 @@ export default function CategoryPage() {
           </div>
         </div>
         <div className="">
-          <div className="bg-white p-3">
-            <div className="mb-4">
-              <div className="mb-2 font-medium">Giá thuê</div>
-              <div className="flex items-center gap-2">
-                <div className="border-solid border-silver border p-2 rounded-lg">
-                  <input
-                    className="outline-none border-none w-full"
-                    type="text"
-                    placeholder="Giá thuê tối thiểu "
-                  />
-                </div>
-                -
-                <div className="border-solid border-silver border p-2 rounded-lg">
-                  <input
-                    className="outline-none border-none w-full"
-                    type="text"
-                    placeholder="Giá thuê tối đa "
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="mb-4">
-              <div className="mb-2">Diện tích</div>
-              <div className="flex items-center gap-2">
-                <div className="border-solid border-silver border p-2 rounded-lg">
-                  <input
-                    className="outline-none border-none w-full"
-                    type="text"
-                    placeholder="Diện tích tối thiểu "
-                  />
-                </div>
-                -
-                <div className="border-solid border-silver border p-2 rounded-lg">
-                  <input
-                    className="outline-none border-none w-full"
-                    type="text"
-                    placeholder="Diện tích tối đa "
-                  />
-                </div>
-              </div>
-            </div>
-            <button className="w-full bg-blue text py-2 font-medium text-white rounded-lg flex items-center justify-center">
-              Áp dụng
-            </button>
-          </div>
           <div className="bg-white mt-5 p-3">
             <RecentPosts />
           </div>

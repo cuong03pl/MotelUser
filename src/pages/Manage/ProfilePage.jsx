@@ -42,8 +42,8 @@ export default function ProfilePage() {
             width="64"
           />
           <div>
-            <h2 class="text-xl font-semibold">Hoàng Kim Cường</h2>
-            <p class="text-gray-600">0523674507</p>
+            <h2 class="text-xl font-semibold">{user?.fullName}</h2>
+            <p class="text-gray-600">{user?.phoneNumber}</p>
           </div>
         </div>
         {/* <button class="flex items-center justify-center w-full py-2 mb-6 border border-gray-300 rounded-lg text-gray-700">

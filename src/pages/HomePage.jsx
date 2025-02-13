@@ -6,18 +6,15 @@ import Posts from "../components/Posts/Posts";
 import News from "../components/News/News";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
+import Filter from "../components/Filter/Filter";
 
 export default function HomePage() {
-  const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const initialPage = Number(searchParams.get("page")) || 1;
   const [page, setPage] = useState(initialPage);
   const [totalPages, setTotalPage] = useState(1);
-  const [maxPrice, setMaxPrice] = useState(null);
-  const [minPrice, setMinPrice] = useState(null);
-  const [minArea, setMinArea] = useState(null);
-  const [maxArea, setMaxArea] = useState(null);
+  const [totalPost, setTotalPost] = useState(0);
   useEffect(() => {
     const fetchAPI = async () => {
       try {
@@ -34,6 +31,7 @@ export default function HomePage() {
           districtSlug: searchParams.get("districtSlug") || null,
         };
         const res = await axios.get(url, { params });
+
         setTotalPage(res?.data?.totalPages);
         setPosts(res?.data?.data);
       } catch (error) {
@@ -50,25 +48,25 @@ export default function HomePage() {
       setPage(pageParam);
     }
   }, [searchParams]);
+  useEffect(() => {
+    const fetchAPI = async () => {
+      try {
+        const res = await axios.get(
+          "https://localhost:7224/api/Posts/GetCount"
+        );
+        setTotalPost(res?.data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+
+    fetchAPI();
+  }, []);
   const handlePageClick = (event) => {
     const currentParams = Object.fromEntries(searchParams.entries());
     setSearchParams({ ...currentParams, page: event.selected + 1 });
   };
 
-  const handleFilter = () => {
-    const params = {
-      minPrice,
-      maxPrice,
-      minArea,
-      maxArea,
-    };
-
-    const cleanedParams = Object.fromEntries(
-      Object.entries(params).filter(([_, v]) => v != null && v !== "")
-    );
-    const queryString = new URLSearchParams(cleanedParams).toString();
-    navigate(`?${queryString}`, { replace: true });
-  };
   return (
     <div className="flex max-w-[1000px] m-auto ">
       <div className="grid grid-cols-3 gap-4">
@@ -76,7 +74,7 @@ export default function HomePage() {
           <div className="text-[20px] font-medium mb-2">
             Kênh thông tin Phòng trọ số 1 Việt Nam
           </div>
-          <div className="text-[12px] mb-3">Có 69.307 tin đăng cho thuê</div>
+
           <div className="">
             <ul className="flex items-center gap-5">
               <li>
@@ -149,62 +147,7 @@ export default function HomePage() {
           </div>
         </div>
         <div className="">
-          <div className="bg-white p-3">
-            <div className="mb-4">
-              <div className="mb-2 font-medium">Giá thuê</div>
-              <div className="flex items-center gap-2">
-                <div className="border-solid border-silver border p-2 rounded-lg">
-                  <input
-                    className="outline-none border-none w-full"
-                    type="text"
-                    placeholder="Giá thuê tối thiểu "
-                    value={minPrice}
-                    onChange={(e) => setMinPrice(e.target.value)}
-                  />
-                </div>
-                -
-                <div className="border-solid border-silver border p-2 rounded-lg">
-                  <input
-                    className="outline-none border-none w-full"
-                    type="text"
-                    placeholder="Giá thuê tối đa "
-                    value={maxPrice}
-                    onChange={(e) => setMaxPrice(e.target.value)}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="mb-4">
-              <div className="mb-2">Diện tích</div>
-              <div className="flex items-center gap-2">
-                <div className="border-solid border-silver border p-2 rounded-lg">
-                  <input
-                    className="outline-none border-none w-full"
-                    type="text"
-                    placeholder="Diện tích tối thiểu "
-                    value={minArea}
-                    onChange={(e) => setMinArea(e.target.value)}
-                  />
-                </div>
-                -
-                <div className="border-solid border-silver border p-2 rounded-lg">
-                  <input
-                    className="outline-none border-none w-full"
-                    type="text"
-                    placeholder="Diện tích tối đa "
-                    value={maxArea}
-                    onChange={(e) => setMaxArea(e.target.value)}
-                  />
-                </div>
-              </div>
-            </div>
-            <button
-              onClick={handleFilter}
-              className="w-full bg-blue text py-2 font-medium text-white rounded-lg flex items-center justify-center"
-            >
-              Áp dụng
-            </button>
-          </div>
+          <Filter />
           <div className="bg-white mt-5 p-3">
             <RecentPosts />
           </div>
