@@ -4,9 +4,13 @@ import routes from "../../config/routes";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { convertTime } from "../../utils/convertTime";
+import { toast } from "react-toastify";
+import Post from "../../components/Manage/Post/Post";
 
 export default function PostsPage() {
   const [posts, setPosts] = useState([]);
+
+  const [isReload, setIsReload] = useState(false);
   const user = useSelector((state) => state?.user?.user_data);
   useEffect(() => {
     const fetchAPI = async () => {
@@ -18,8 +22,20 @@ export default function PostsPage() {
     };
 
     fetchAPI();
-  }, [user]);
+  }, [isReload]);
 
+  const successNotify = (message) =>
+    toast.success(message, {
+      position: "bottom-right",
+      pauseOnHover: false,
+    });
+  const handleDelete = async (id, handleOpenModalDelete) => {
+    await axios.delete(`https://localhost:7224/api/Posts/${id}`).then((res) => {
+      successNotify("Xóa thành công");
+      setIsReload(isReload ? false : true);
+      handleOpenModalDelete();
+    });
+  };
   return (
     <div className="max-w-[1000px] m-auto py-[100px]  h-full">
       {posts && (
@@ -43,50 +59,7 @@ export default function PostsPage() {
             </div>
           </div>
           <div className="flex flex-col gap-4">
-            {posts?.map((data, index) => {
-              return (
-                <div className="p-3 bg-white rounded-lg shadow-xl flex items-center gap-5">
-                  <div className="">
-                    <h3 class=" text-uppercase mb-2">
-                      <Link
-                        to={`/details/${data?.slug}`}
-                        className=" line-clamp-2 uppercase text-red text-[13px] font-medium py-2"
-                      >
-                        {data?.title}
-                      </Link>
-                    </h3>
-                    <div class="mb-2 flex items-center">
-                      <span class="text-green font-medium  text-[13px]">
-                        {data?.price} triệu/tháng
-                      </span>
-                      <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
-                      <span className="text-[13px]">
-                        {data?.area} m<sup>2</sup>
-                      </span>
-                      <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
-                      <Link
-                        class="text-body text-[13px]"
-                        title="Cho thuê phòng trọ Quận 12, Hồ Chí Minh"
-                      >
-                        {data?.location?.addressLine}, {data?.location?.ward},{" "}
-                        {data?.location?.district}, {data?.location?.province}
-                      </Link>
-                    </div>
-                    <div className="mb-4 text-[13px] text-[#6C757D] line-clamp-3">
-                      {data?.description.replace(/<[^>]+>/g, "")}
-                    </div>
-                  </div>
-                  <div className="">
-                    <Link
-                      class="bg-red text-white px-3 py-1 rounded hover:bg-red-700"
-                      to={`/manage/posts/${data?.slug}`}
-                    >
-                      Xem
-                    </Link>
-                  </div>
-                </div>
-              );
-            })}
+            <Post posts={posts} onDelete={handleDelete} />
           </div>
         </>
       )}
