@@ -5,6 +5,7 @@ import FavouritePage from "../pages/FavouritePage";
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
 import CreatePage from "../pages/Manage/CreatePage";
+import PostDetailPage from "../pages/Manage/PostDetailPage";
 import PostsPage from "../pages/Manage/PostsPage";
 import ProfilePage from "../pages/Manage/ProfilePage";
 import NewsPage from "../pages/NewsPage";
@@ -52,6 +53,11 @@ export const publicRoutes = [
   {
     path: routes.posts,
     component: <PostsPage />,
+    manage: true,
+  },
+  {
+    path: routes.post_detail,
+    component: <PostDetailPage />,
     manage: true,
   },
 ];

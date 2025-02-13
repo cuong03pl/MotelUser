@@ -47,7 +47,7 @@ function App() {
     }
   }, []);
   return (
-    <div className="bg-[#f1f5f9]">
+    <div className="bg-[#f1f5f9] min-h-screen">
       <Routes>
         {publicRoutes.map((route, index) => {
           let Comp = route.component;

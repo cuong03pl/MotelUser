@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 const modules = {
   toolbar: [
     [{ font: [] }],
@@ -18,7 +19,7 @@ const modules = {
     ["clean"],
   ],
 };
-export default function CreatePage() {
+export default function PostDetailPage() {
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
@@ -46,6 +47,12 @@ export default function CreatePage() {
     "Có hầm để xe": false,
   });
   const [images, setImages] = useState([]);
+  const [post, setPost] = useState({});
+  const [selectedProvinceId, setSelectedProvinceId] = useState(null);
+  const [selectedDistrictId, setSelectedDistrictId] = useState(null);
+  const [selectedWardId, setSelectedWardId] = useState(null);
+  const { id } = useParams();
+
   const user = useSelector((state) => state?.user?.user_data);
 
   const handleFileChange = (event) => {
@@ -70,7 +77,7 @@ export default function CreatePage() {
   useEffect(() => {
     const fetchDistricts = async () => {
       const response = await fetch(
-        `https://provinces.open-api.vn/api/p/${selectedProvince?.code}?depth=2`
+        `https://provinces.open-api.vn/api/p/${selectedProvinceId}?depth=2`
       );
       const data = await response.json();
 
@@ -81,15 +88,14 @@ export default function CreatePage() {
       }));
       setDistricts(districtOptions);
     };
-
-    if (selectedProvince?.code) {
+    if (selectedProvinceId) {
       fetchDistricts();
     }
-  }, [selectedProvince]);
+  }, [selectedProvinceId]);
   useEffect(() => {
     const fetchDistricts = async () => {
       const response = await fetch(
-        `https://provinces.open-api.vn/api/d/${selectedDistrict?.code}?depth=2`
+        `https://provinces.open-api.vn/api/d/${selectedDistrictId}?depth=2`
       );
       const data = await response.json();
       const wardOptions = data?.wards.map((ward) => ({
@@ -100,19 +106,19 @@ export default function CreatePage() {
       setWards(wardOptions);
     };
 
-    if (selectedDistrict?.code) {
+    if (selectedDistrictId) {
       fetchDistricts();
     }
-  }, [selectedDistrict]);
+  }, [selectedDistrictId, selectedDistrict]);
   useEffect(() => {
     const fetchProvinces = async () => {
-      await axios.get("https://localhost:7224/api/Categories").then((res) =>
+      await axios.get("https://localhost:7224/api/Categories").then((res) => {
         setCategories(
           res.data.map((data) => {
             return { value: data?.id, label: data?.name };
           })
-        )
-      );
+        );
+      });
     };
 
     fetchProvinces();
@@ -132,17 +138,33 @@ export default function CreatePage() {
     formData.append("Area", area);
     formData.append("VideoURL", video);
     formData.append("OwnerId", user?.id);
-    formData.append("Available", true);
-    formData.append("Is_Browse", 0);
-    formData.append("CategoryId", selectedCategory?.value);
+    formData.append("Available", post?.available);
+    formData.append("Is_Browse", post?.is_Browse);
+    formData.append("CategoryId", selectedCategory.value || selectedCategory);
 
-    formData.append("Location.Province", selectedProvince?.label || "");
-    formData.append("Location.District", selectedDistrict?.label || "");
-    formData.append("Location.Ward", selectedWard?.label || "");
+    formData.append(
+      "Location.Province",
+      selectedProvince?.label || post?.location?.province
+    );
+    formData.append(
+      "Location.District",
+      selectedDistrict?.label || post?.location?.district
+    );
+    formData.append(
+      "Location.Ward",
+      selectedWard?.label || post?.location?.ward
+    );
     formData.append("Location.AddressLine", selectedInfoMore || "");
-    formData.append("Location.ProvinceId", selectedProvince?.code);
-    formData.append("Location.DistrictId", selectedDistrict?.code);
-    formData.append("Location.WardId", selectedWard?.code);
+
+    formData.append(
+      "Location.ProvinceId",
+      selectedProvince?.code || selectedProvinceId
+    );
+    formData.append(
+      "Location.DistrictId",
+      selectedDistrict?.code || selectedDistrictId
+    );
+    formData.append("Location.WardId", selectedWard?.code || selectedWardId);
     if (selectedFeatures) {
       Object.entries(selectedFeatures).forEach(([key, value]) => {
         formData.append(`Amenities[${key}]`, value);
@@ -161,6 +183,7 @@ export default function CreatePage() {
     imageFiles.forEach((file) => {
       formData.append("imageFiles", file);
     });
+
     const errorNotify = (message) =>
       toast.error(message, {
         position: "bottom-right",
@@ -172,17 +195,36 @@ export default function CreatePage() {
         pauseOnHover: false,
       });
     axios
-      .post("https://localhost:7224/api/Posts", formData, {
+      .put(`https://localhost:7224/api/Posts/${post?.id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((res) => {
-        successNotify("Thêm bài viết thành công. Vui lòng đợi xét duyệt");
+        successNotify("Sửa bài viết thành công. Vui lòng đợi xét duyệt");
       })
       .catch((err) => {
         errorNotify("Thêm thất bại");
       });
   };
+  useEffect(() => {
+    const fetchAPI = async () => {
+      await axios.get(`https://localhost:7224/api/Posts/${id}`).then((res) => {
+        setSelectedCategory(res?.data?.categoryId);
+        setDescription(res?.data?.description);
+        setTitle(res?.data?.title);
+        setPrice(res?.data?.price);
+        setArea(res?.data?.area);
+        setSelectedProvinceId(res?.data?.location?.provinceId);
+        setSelectedDistrictId(res?.data?.location?.districtId);
+        setSelectedWardId(res?.data?.location?.wardId);
+        setSelectedInfoMore(res?.data?.location?.addressLine);
+        setSelectedFeatures(res?.data?.amenities);
+        setImages(res?.data?.imageUrls);
+        setPost(res?.data);
+      });
+    };
 
+    fetchAPI();
+  }, [id]);
   return (
     <div className=" max-w-[1000px] m-auto my-[100px] flex flex-col items-center">
       <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-[800px]">
@@ -194,30 +236,44 @@ export default function CreatePage() {
             </label>
             <Select
               placeholder="-- Chọn Tỉnh/Thành Phố --"
-              onChange={(e) => setSelectedProvince(e)}
+              onChange={(e) => {
+                setSelectedProvince(e);
+                setSelectedProvinceId(e.code);
+              }}
               options={provinces}
+              value={provinces.filter(
+                (data) => data?.code === selectedProvinceId
+              )}
             />
           </div>
           <div>
             <label for="district" className="block mb-2">
               Quận/Huyện <span className="text-red-500">*</span>
             </label>
-
             <Select
               placeholder="-- Chọn quận huyện --"
-              onChange={(e) => setSelectedDistrict(e)}
+              onChange={(e) => {
+                setSelectedDistrict(e);
+                setSelectedDistrictId(e.code);
+              }}
               options={districts}
+              value={districts.filter(
+                (data) => data?.code === selectedDistrictId
+              )}
             />
           </div>
           <div>
             <label for="ward" className="block mb-2">
               Phường/Xã
             </label>
-
             <Select
               placeholder="-- Chọn phường xã --"
-              onChange={(e) => setSelectedWard(e)}
+              onChange={(e) => {
+                setSelectedWard(e);
+                setSelectedWardId(e.code);
+              }}
               options={wards}
+              value={wards.filter((data) => data?.code === selectedWardId)}
             />
           </div>
           <div>
@@ -227,28 +283,12 @@ export default function CreatePage() {
             <input
               type="text"
               id="house-number"
+              value={selectedInfoMore}
               onChange={(e) => setSelectedInfoMore(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded outline-none"
               placeholder="Nhập thông tin thêm"
             />
           </div>
-        </div>
-        <div>
-          <label for="address" className="block mb-2">
-            Địa chỉ
-          </label>
-          <input
-            type="text"
-            id="address"
-            className="w-full p-2 border border-gray-300 rounded bg-gray-100 outline-none"
-            placeholder="Địa chỉ"
-            value={`${`${selectedInfoMore},` || ""}${
-              selectedWard?.value ? ` ${selectedWard.value}, ` : ""
-            }${selectedDistrict?.value ? `${selectedDistrict.value}, ` : ""}${
-              selectedProvince?.value ? `${selectedProvince.value} ` : ""
-            }`}
-            readOnly
-          />
         </div>
       </div>
 
@@ -267,6 +307,11 @@ export default function CreatePage() {
               placeholder="-- Chọn loại chuyên mục --"
               onChange={(e) => setSelectedCategory(e)}
               options={categories}
+              value={categories?.filter(
+                (data) =>
+                  data?.value === selectedCategory ||
+                  data?.value === selectedCategory?.value
+              )}
             />
           </div>
           <div className="mb-4">
@@ -274,6 +319,7 @@ export default function CreatePage() {
               Tiêu đề <span className="text-red-500">*</span>
             </label>
             <textarea
+              value={title}
               type="text"
               id="title"
               onChange={(e) => setTitle(e.target.value)}
@@ -308,6 +354,7 @@ export default function CreatePage() {
               <input
                 type="text"
                 id="price"
+                value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 className="w-full border border-gray-300 rounded-l-lg p-2 outline-none"
               />
@@ -327,6 +374,7 @@ export default function CreatePage() {
               <input
                 type="text"
                 id="area"
+                value={area}
                 onChange={(e) => setArea(e.target.value)}
                 className="w-full border border-gray-300 rounded-l-lg p-2 outline-none"
               />
@@ -342,8 +390,8 @@ export default function CreatePage() {
         <h2 className="text-xl font-semibold mb-4">Đặc điểm nổi bật</h2>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            {Object.keys(selectedFeatures)
-              .slice(0, 4)
+            {Object?.keys(selectedFeatures)
+              ?.slice(0, 4)
               .map((feature) => (
                 <label
                   key={feature}
@@ -382,38 +430,17 @@ export default function CreatePage() {
 
       <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-[800px] mt-5">
         <h2 className="text-xl font-semibold mb-4">Hình ảnh</h2>
-        <label className="border-2 border-dashed border-blue bg-[#e7f0fe] p-6 rounded-lg flex flex-col items-center justify-center cursor-pointer">
-          <img
-            alt="Upload icon"
-            className="mb-2"
-            height="50"
-            src="https://storage.googleapis.com/a1aa/image/dLOmljRUWL4JL9qXwMDctlsIu2EKwbqRymKeQUMDQgx0ffRoA.jpg"
-            width="50"
-          />
-          <p className="text-blue-600">Tải ảnh từ thiết bị</p>
-          <input
-            type="file"
-            multiple
-            accept="image/*"
-            className="hidden"
-            onChange={handleFileChange}
-          />
-        </label>
-        <ul className="mt-4 text-gray-600 text-sm list-disc list-inside">
-          <li>Tải lên tối đa 20 ảnh trong một bài đăng</li>
-          <li>Dung lượng ảnh tối đa 10MB</li>
-          <li>Hình ảnh phải liên quan đến phòng trọ, nhà cho thuê</li>
-          <li>Không chèn văn bản, số điện thoại lên ảnh</li>
-          <li>
-            Tải lên đúng hình ảnh, vì sau khi đăng không thể chỉnh sửa ảnh
-          </li>
-        </ul>
+
+        <p className="text-red italic">
+          Để tránh đảm bảo hình ảnh chính xác chúng tôi không cho phép bạn chỉnh
+          sửa hình ảnh
+        </p>
         <div className="mt-4 grid grid-cols-4 gap-2">
           {images.map((img, index) => (
             <img
               key={index}
-              src={img}
               alt={`Uploaded ${index}`}
+              src={`https://localhost:7224${img}`}
               className="w-full h-24 object-cover rounded"
             />
           ))}

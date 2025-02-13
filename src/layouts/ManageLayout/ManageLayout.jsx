@@ -10,7 +10,7 @@ export default function ManageLayout({ children }) {
         <div className="min-w-[250px]">
           <Navbar />
         </div>
-        <div className="w-full">{children}</div>
+        <div className="w-full bg-transparent">{children}</div>
       </div>
     </div>
   );
