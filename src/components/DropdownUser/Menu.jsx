@@ -1,18 +1,18 @@
 import React from "react";
-import { LogoutIcon } from "../Icon/Icon";
+import { LogoutIcon, ProfileIcon } from "../Icon/Icon";
 import { Link } from "react-router-dom";
 
 const handleLogout = () => {};
 const MENU_ITEMS = [
   {
+    title: "Đổi thông tin",
+    icon: <ProfileIcon className="w-4 h-4" />,
+    to: "/manage/profile",
+  },
+  {
     title: "Đăng xuất",
     icon: <LogoutIcon className="w-4 h-4" />,
     onClick: handleLogout,
-  },
-  {
-    title: "Đổi mật khẩu",
-    icon: <LogoutIcon className="w-4 h-4" />,
-    to: "/manage/profile",
   },
 ];
 

@@ -91,53 +91,52 @@ export default function HomePage() {
             </ul>
           </div>
           <Posts posts={posts} />
-          <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t   ">
-            <span class="flex  mt-2 sm:mt-auto sm:justify-center">
-              <ReactPaginate
-                nextLabel={
-                  <svg
-                    class="w-4 h-4 fill-current"
-                    aria-hidden="true"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                      clip-rule="evenodd"
-                      fill-rule="evenodd"
-                    ></path>
-                  </svg>
-                }
-                previousLabel={
-                  <svg
-                    class="w-4 h-4 fill-current"
-                    aria-hidden="true"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                      clip-rule="evenodd"
-                      fill-rule="evenodd"
-                    ></path>
-                  </svg>
-                }
-                breakLabel="..."
-                pageCount={totalPages}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={5}
-                onPageChange={handlePageClick}
-                initialPage={page > 0 ? page - 1 : 0}
-                containerClassName="inline-flex items-center space-x-2"
-                pageClassName="px-3 py-1 rounded-md  h-[40px] flex items-center text-[16px] cursor-pointer"
-                activeClassName="bg-purple-600 text-white"
-                previousClassName="px-3 py-1  rounded-l-md h-[40px] flex items-center text-[16px] cursor-pointer"
-                nextClassName="px-3 py-1  rounded-r-md h-[40px] flex items-center text-[16px] cursor-pointer"
-                pageLinkClassName="px-3 py-1 h-[40px]  flex items-center"
-              />
-            </span>
-          </div>
-          {/* <div className="mt-5">
-            <Tags></Tags>
-          </div> */}
+          {totalPages > 0 && (
+            <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t   ">
+              <span class="flex  mt-2 sm:mt-auto sm:justify-center">
+                <ReactPaginate
+                  nextLabel={
+                    <svg
+                      class="w-4 h-4 fill-current"
+                      aria-hidden="true"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                        clip-rule="evenodd"
+                        fill-rule="evenodd"
+                      ></path>
+                    </svg>
+                  }
+                  previousLabel={
+                    <svg
+                      class="w-4 h-4 fill-current"
+                      aria-hidden="true"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                        fill-rule="evenodd"
+                      ></path>
+                    </svg>
+                  }
+                  breakLabel="..."
+                  pageCount={totalPages}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  onPageChange={handlePageClick}
+                  initialPage={page > 0 ? page - 1 : 0}
+                  containerClassName="inline-flex items-center space-x-2"
+                  pageClassName="px-3 py-1 rounded-md  h-[40px] flex items-center text-[16px] cursor-pointer"
+                  activeClassName="bg-purple-600 text-white"
+                  previousClassName="px-3 py-1  rounded-l-md h-[40px] flex items-center text-[16px] cursor-pointer"
+                  nextClassName="px-3 py-1  rounded-r-md h-[40px] flex items-center text-[16px] cursor-pointer"
+                  pageLinkClassName="px-3 py-1 h-[40px]  flex items-center"
+                />
+              </span>
+            </div>
+          )}
         </div>
         <div className="">
           <Filter />

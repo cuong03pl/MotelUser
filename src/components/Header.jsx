@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import routes from "../config/routes";
 import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
@@ -12,7 +12,7 @@ export default function Header() {
   const [categories, setCategories] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const user = useSelector((state) => state?.user?.user_data);
-
+  const { slug } = useParams();
   useEffect(() => {
     const fetchAPI = async () => {
       await axios.get(`https://localhost:7224/api/Categories`).then((res) => {
@@ -25,13 +25,15 @@ export default function Header() {
     setIsModalOpen((prev) => !prev);
   };
   return (
-    <header class=" border-b px-4 sm:px-10 bg-white font-sans min-h-[70px] tracking-wide relative z-50">
-      <div class="flex flex-wrap items-center gap-4 w-full mx-auto h-[60px]">
-        <Link to={"/"} class="max-sm:hidden">
+    <header class="fixed top-0 right-0 left-0 border-b px-4 sm:px-10 bg-white font-sans min-h-[70px] max-h-[120px] tracking-wide z-50">
+      <div class="max-w-[1200px] flex flex-wrap items-center gap-4 w-full mx-auto h-[60px]">
+        <Link to={"/"}>
           <img
-            src="https://readymadeui.com/readymadeui.svg"
-            alt="logo"
-            class="w-36"
+            alt="Phongtro123.com logo"
+            class="h-8"
+            height="50"
+            src="https://phongtro123.com/images/logo-phongtro.svg"
+            width="150"
           />
         </Link>
 
@@ -168,7 +170,12 @@ export default function Header() {
         <ul className=" flex justify-center items-center gap-5">
           {categories?.map((category, index) => {
             return (
-              <li key={index} className="hover:text-[#E51F40]  cursor-pointer">
+              <li
+                key={index}
+                className={`hover:text-[#E51F40]  cursor-pointer ${
+                  slug && (slug?.includes(category?.slug) ? "text-red" : "")
+                }`}
+              >
                 <Link
                   className="py-4 px-2 block"
                   to={`/category/${category?.slug}`}

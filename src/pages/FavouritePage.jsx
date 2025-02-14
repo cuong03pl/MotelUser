@@ -13,12 +13,8 @@ export default function FavouritePage() {
   useEffect(() => {
     const fetchAPI = async () => {
       try {
-        let params = {
-          page: 1,
-          pageSize: 10,
-        };
         const url = `https://localhost:7224/api/Users/GetUserFavorite/${user?.id}`;
-        const res = await axios.get(url, { params });
+        const res = await axios.get(url);
         setPosts(res?.data);
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -31,32 +27,9 @@ export default function FavouritePage() {
     <div className="flex max-w-[1000px] m-auto ">
       <div className="grid grid-cols-3 gap-4">
         <div className="col-span-2">
-          <div className="text-[20px] font-medium mb-2">
-            Kênh thông tin Phòng trọ số 1 Việt Nam
-          </div>
-          <div className="text-[12px] mb-3">Có 69.307 tin đăng cho thuê</div>
-          <div className="">
-            <ul className="flex items-center gap-5">
-              <li>
-                <Link className="px-4 py-2 font-medium bg-white rounded-lg text-red">
-                  Toàn quốc
-                </Link>
-              </li>
-              <li>
-                <Link>Toàn quốc</Link>
-              </li>
-            </ul>
-          </div>
-          <div className="mt-5">
-            <ul className="flex items-center gap-5">
-              <li>
-                <Link className="underline font-medium">Đề xuất</Link>
-              </li>
-              <li>
-                <Link className="font-normal">Mới đăng</Link>
-              </li>
-            </ul>
-          </div>
+          <div className="text-[20px] font-medium mb-2">Tin đã lưu</div>
+          <div className="text-[12px] mb-3">Có {posts.length} tin đã lưu</div>
+
           <Posts posts={posts} />
           <div className="mt-5">
             <Tags></Tags>

@@ -10,7 +10,9 @@ export default function Posts({ posts }) {
           return <PostItem data={data} key={index} />;
         })}
       {posts.length === 0 && (
-        <div className="text-center text-gray-500">Không có bài viết nào.</div>
+        <div className="text-center text-gray-500 h-[300px] flex justify-center items-center">
+          Không có bài viết nào.
+        </div>
       )}
     </div>
   );

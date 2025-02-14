@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import Support from "../../components/Support/Support";
 
 export default function DefaultLayout({ children }) {
   return (
@@ -9,8 +10,9 @@ export default function DefaultLayout({ children }) {
         <Header />
 
         <main>
-          <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10 bg-[#fcf5ed]">
+          <div className="mx-auto max-w-full p-4 md:p-[150px] 2xl:p-10 bg-[#fcf5ed]">
             {children}
+            <Support />
           </div>
         </main>
         <Footer />

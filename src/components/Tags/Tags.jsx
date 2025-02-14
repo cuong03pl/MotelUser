@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Tags() {
   const [tags, setTags] = useState([]);
@@ -21,12 +21,9 @@ export default function Tags() {
     fetchAPI();
   }, []);
   const handleTag = (slug) => {
-    const params = {
-      provinceSlug: slug,
-    };
-    const queryString = new URLSearchParams(params).toString();
-    navigate(`?${queryString}`, { replace: true });
+    navigate(`/?provinceSlug=${slug}`, { replace: true });
   };
+
   return (
     <>
       <div className="mb-2 font-medium">Tìm kiếm theo từ khóa</div>
