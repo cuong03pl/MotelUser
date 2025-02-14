@@ -76,16 +76,9 @@ export default function HomePage() {
           </div>
 
           <div className="">
-            <ul className="flex items-center gap-5">
-              <li>
-                <Link className="px-4 py-2 font-medium bg-white rounded-lg text-red">
-                  Toàn quốc
-                </Link>
-              </li>
-              <li>
-                <Link>Toàn quốc</Link>
-              </li>
-            </ul>
+            <div className="">
+              <Tags />
+            </div>
           </div>
           <div className="mt-5">
             <ul className="flex items-center gap-5">
@@ -142,9 +135,9 @@ export default function HomePage() {
               />
             </span>
           </div>
-          <div className="mt-5">
+          {/* <div className="mt-5">
             <Tags></Tags>
-          </div>
+          </div> */}
         </div>
         <div className="">
           <Filter />
