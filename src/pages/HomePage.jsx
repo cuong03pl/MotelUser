@@ -40,7 +40,7 @@ export default function HomePage() {
     };
 
     fetchAPI();
-  }, [searchParams]);
+  }, [searchParams, page]);
   useEffect(() => {
     const pageParam = Number(searchParams.get("page")) || 1;
 
