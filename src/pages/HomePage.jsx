@@ -18,7 +18,7 @@ export default function HomePage() {
   useEffect(() => {
     const fetchAPI = async () => {
       try {
-        let url = "https://localhost:7224/api/Posts";
+        let url = "https://motel.azurewebsites.net/api/Posts";
         let params = {
           page,
           pageSize: 5,
@@ -52,7 +52,7 @@ export default function HomePage() {
     const fetchAPI = async () => {
       try {
         const res = await axios.get(
-          "https://localhost:7224/api/Posts/GetCount"
+          "https://motel.azurewebsites.net/api/Posts/GetCount"
         );
         setTotalPost(res?.data);
       } catch (error) {

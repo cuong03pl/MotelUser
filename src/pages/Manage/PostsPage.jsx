@@ -15,7 +15,9 @@ export default function PostsPage() {
   useEffect(() => {
     const fetchAPI = async () => {
       await axios
-        .get(`https://localhost:7224/api/Users/GetUserPosts/${user?.id}`)
+        .get(
+          `https://motel.azurewebsites.net/api/Users/GetUserPosts/${user?.id}`
+        )
         .then((res) => {
           setPosts(res?.data);
         });
@@ -30,11 +32,13 @@ export default function PostsPage() {
       pauseOnHover: false,
     });
   const handleDelete = async (id, handleOpenModalDelete) => {
-    await axios.delete(`https://localhost:7224/api/Posts/${id}`).then((res) => {
-      successNotify("Xóa thành công");
-      setIsReload(isReload ? false : true);
-      handleOpenModalDelete();
-    });
+    await axios
+      .delete(`https://motel.azurewebsites.net/api/Posts/${id}`)
+      .then((res) => {
+        successNotify("Xóa thành công");
+        setIsReload(isReload ? false : true);
+        handleOpenModalDelete();
+      });
   };
   return (
     <div className="max-w-[1000px] m-auto py-[100px]  h-full">

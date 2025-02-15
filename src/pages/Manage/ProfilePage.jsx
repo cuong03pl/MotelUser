@@ -19,7 +19,7 @@ export default function ProfilePage() {
 
   const handleUpdate = async () => {
     try {
-      let url = `https://localhost:7224/api/Users/${user?.id}`;
+      let url = `https://motel.azurewebsites.net/api/Users/${user?.id}`;
       const res = await axios.put(url, {
         phoneNumber: phone,
         fullName: fullname,

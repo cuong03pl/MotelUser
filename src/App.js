@@ -37,7 +37,7 @@ function App() {
     const fetchAPI = async () => {
       const user_data = jwtDecode(token);
       await axios
-        .get(`https://localhost:7224/api/Users/${user_data?.sub}`)
+        .get(`https://motel.azurewebsites.net/api/Users/${user_data?.sub}`)
         .then((res) => {
           dispatch(setUser(res?.data));
         });

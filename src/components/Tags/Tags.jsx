@@ -9,7 +9,7 @@ export default function Tags() {
     const fetchAPI = async () => {
       try {
         const res = await axios.get(
-          "https://localhost:7224/api/Posts/GetLocations"
+          "https://motel.azurewebsites.net/api/Posts/GetLocations"
         );
 
         setTags(res?.data);

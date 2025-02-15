@@ -13,7 +13,7 @@ export default function FavouritePage() {
   useEffect(() => {
     const fetchAPI = async () => {
       try {
-        const url = `https://localhost:7224/api/Users/GetUserFavorite/${user?.id}`;
+        const url = `https://motel.azurewebsites.net/api/Users/GetUserFavorite/${user?.id}`;
         const res = await axios.get(url);
         setPosts(res?.data);
       } catch (error) {

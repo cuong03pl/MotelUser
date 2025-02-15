@@ -112,13 +112,15 @@ export default function PostDetailPage() {
   }, [selectedDistrictId, selectedDistrict]);
   useEffect(() => {
     const fetchProvinces = async () => {
-      await axios.get("https://localhost:7224/api/Categories").then((res) => {
-        setCategories(
-          res.data.map((data) => {
-            return { value: data?.id, label: data?.name };
-          })
-        );
-      });
+      await axios
+        .get("https://motel.azurewebsites.net/api/Categories")
+        .then((res) => {
+          setCategories(
+            res.data.map((data) => {
+              return { value: data?.id, label: data?.name };
+            })
+          );
+        });
     };
 
     fetchProvinces();
@@ -195,7 +197,7 @@ export default function PostDetailPage() {
         pauseOnHover: false,
       });
     axios
-      .put(`https://localhost:7224/api/Posts/${post?.id}`, formData, {
+      .put(`https://motel.azurewebsites.net/api/Posts/${post?.id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((res) => {
@@ -207,20 +209,22 @@ export default function PostDetailPage() {
   };
   useEffect(() => {
     const fetchAPI = async () => {
-      await axios.get(`https://localhost:7224/api/Posts/${id}`).then((res) => {
-        setSelectedCategory(res?.data?.categoryId);
-        setDescription(res?.data?.description);
-        setTitle(res?.data?.title);
-        setPrice(res?.data?.price);
-        setArea(res?.data?.area);
-        setSelectedProvinceId(res?.data?.location?.provinceId);
-        setSelectedDistrictId(res?.data?.location?.districtId);
-        setSelectedWardId(res?.data?.location?.wardId);
-        setSelectedInfoMore(res?.data?.location?.addressLine);
-        setSelectedFeatures(res?.data?.amenities);
-        setImages(res?.data?.imageUrls);
-        setPost(res?.data);
-      });
+      await axios
+        .get(`https://motel.azurewebsites.net/api/Posts/${id}`)
+        .then((res) => {
+          setSelectedCategory(res?.data?.categoryId);
+          setDescription(res?.data?.description);
+          setTitle(res?.data?.title);
+          setPrice(res?.data?.price);
+          setArea(res?.data?.area);
+          setSelectedProvinceId(res?.data?.location?.provinceId);
+          setSelectedDistrictId(res?.data?.location?.districtId);
+          setSelectedWardId(res?.data?.location?.wardId);
+          setSelectedInfoMore(res?.data?.location?.addressLine);
+          setSelectedFeatures(res?.data?.amenities);
+          setImages(res?.data?.imageUrls);
+          setPost(res?.data);
+        });
     };
 
     fetchAPI();
@@ -440,7 +444,7 @@ export default function PostDetailPage() {
             <img
               key={index}
               alt={`Uploaded ${index}`}
-              src={`https://localhost:7224${img}`}
+              src={`https://motel.azurewebsites.net${img}`}
               className="w-full h-24 object-cover rounded"
             />
           ))}

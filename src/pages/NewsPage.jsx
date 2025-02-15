@@ -9,9 +9,11 @@ export default function NewsPage() {
   const [news, setNews] = useState({});
   useEffect(() => {
     const fetchAPI = async () => {
-      await axios.get(`https://localhost:7224/api/News/${id}`).then((res) => {
-        setNews(res?.data);
-      });
+      await axios
+        .get(`https://motel.azurewebsites.net/api/News/${id}`)
+        .then((res) => {
+          setNews(res?.data);
+        });
     };
 
     fetchAPI();

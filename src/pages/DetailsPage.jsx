@@ -29,9 +29,11 @@ export default function DetailsPage() {
   const [modalContent, setModalContent] = useState(null);
   useEffect(() => {
     const fetchAPI = async () => {
-      await axios.get(`https://localhost:7224/api/Posts/${id}`).then((res) => {
-        setPost(res?.data);
-      });
+      await axios
+        .get(`https://motel.azurewebsites.net/api/Posts/${id}`)
+        .then((res) => {
+          setPost(res?.data);
+        });
     };
 
     fetchAPI();
@@ -43,7 +45,7 @@ export default function DetailsPage() {
     const fetchAPI = async () => {
       try {
         const res = await axios.get(
-          `https://localhost:7224/api/Posts/GetPostsByProvinceSlug/${post?.id}`,
+          `https://motel.azurewebsites.net/api/Posts/GetPostsByProvinceSlug/${post?.id}`,
           {
             params: {
               page: 1,
@@ -65,7 +67,9 @@ export default function DetailsPage() {
     if (!post?.ownerId) return;
     const fetchAPI = async () => {
       await axios
-        .get(`https://localhost:7224/api/Users/countPost/${post?.ownerId}`)
+        .get(
+          `https://motel.azurewebsites.net/api/Users/countPost/${post?.ownerId}`
+        )
         .then((res) => {
           setCountPost(res?.data);
         });
@@ -80,7 +84,7 @@ export default function DetailsPage() {
     const fetchAPI = async () => {
       try {
         const res = await axios.get(
-          `https://localhost:7224/api/Users/CheckFavorite`,
+          `https://motel.azurewebsites.net/api/Users/CheckFavorite`,
           {
             params: {
               userId: user?.id,
@@ -101,7 +105,7 @@ export default function DetailsPage() {
   const handleFavotite = async () => {
     try {
       const res = await axios.post(
-        `https://localhost:7224/api/Users/AddFavoritePost`,
+        `https://motel.azurewebsites.net/api/Users/AddFavoritePost`,
         null,
         {
           params: {
@@ -150,7 +154,7 @@ export default function DetailsPage() {
                       <SwiperSlide className="w-full h-full">
                         <img
                           className="w-full h-full object-contain"
-                          src={`https://localhost:7224/${img}`}
+                          src={`https://motel.azurewebsites.net/${img}`}
                           alt=""
                         />
                       </SwiperSlide>
@@ -443,7 +447,7 @@ export default function DetailsPage() {
                   <div className="">
                     <img
                       className="rounded-lg object-contain h-[174px] w-[232px] "
-                      src={`https://localhost:7224/${res?.imageUrls[0]}`}
+                      src={`https://motel.azurewebsites.net/${res?.imageUrls[0]}`}
                       alt=""
                     />
                     <div className="pt-[10px]">

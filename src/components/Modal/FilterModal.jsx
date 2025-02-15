@@ -45,9 +45,11 @@ export default function FilterModal({ onClose }) {
   const navigate = useNavigate();
   useEffect(() => {
     const fetchAPI = async () => {
-      await axios.get(`https://localhost:7224/api/Categories`).then((res) => {
-        setCategories(res.data);
-      });
+      await axios
+        .get(`https://motel.azurewebsites.net/api/Categories`)
+        .then((res) => {
+          setCategories(res.data);
+        });
     };
     fetchAPI();
   }, []);
