@@ -16,6 +16,7 @@ import Modal from "react-modal";
 import CustomModal from "../components/Modal/Modal";
 import ShareModal from "../components/Modal/ShareModal";
 import ReportModal from "../components/Modal/ReportModal";
+import Comment from "../components/Comment/Comment";
 
 Modal.setAppElement("#root");
 export default function DetailsPage() {
@@ -399,6 +400,9 @@ export default function DetailsPage() {
           </div>
           <News />
         </div>
+      </div>
+      <div className="bg-white mt-5 p-3 rounded-md">
+        <Comment slug={id} postId={post?.id} />
       </div>
       <div className="bg-white mt-5 p-3 rounded-md">
         <div className="justify-between flex items-center">
