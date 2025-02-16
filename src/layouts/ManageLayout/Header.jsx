@@ -22,14 +22,6 @@ export default function Header() {
         </div>
         <div class="flex items-center space-x-6 text-sm"></div>
         <div class="flex items-center space-x-4 text-sm">
-          <Link class="flex items-center space-x-1 hover:underline" href="#">
-            <i class="far fa-heart"></i>
-            <span>Tin đã lưu</span>
-          </Link>
-          <Link class="flex items-center space-x-1 hover:underline" href="#">
-            <i class="far fa-folder"></i>
-            <span>Quản lý</span>
-          </Link>
           <div class="flex items-center space-x-1">
             <img
               alt="User avatar"

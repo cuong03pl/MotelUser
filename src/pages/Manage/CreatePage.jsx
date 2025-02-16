@@ -447,29 +447,6 @@ export default function CreatePage() {
         </div>
       </div>
 
-      <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-[800px] mt-5">
-        <h2 class="text-xl font-semibold mb-4">Thông tin liên hệ</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label class="block mb-2">Họ Tên</label>
-            <input
-              type="text"
-              value={fullname}
-              onChange={(e) => setFullname(e.target.value)}
-              class="w-full p-2 border border-gray-300 rounded outline-none"
-            />
-          </div>
-          <div>
-            <label class="block mb-2">Số điện thoại</label>
-            <input
-              type="text"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              class="w-full p-2 border border-gray-300 rounded outline-none"
-            />
-          </div>
-        </div>
-      </div>
       <div
         onClick={handleSubmit}
         className="bg-red p-2 rounded-lg shadow-md flex items-center justify-center w-full max-w-[800px] mt-5 text-white cursor-pointer"

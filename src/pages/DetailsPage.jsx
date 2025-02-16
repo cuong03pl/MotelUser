@@ -23,6 +23,7 @@ export default function DetailsPage() {
   const { id } = useParams();
   const [post, setPost] = useState(null);
   const [relatePosts, setRelatePosts] = useState([]);
+  const [userPosts, setUserPosts] = useState([]);
   const [countPost, setCountPost] = useState(0);
   const [favourited, setFavourited] = useState(false);
   const user = useSelector((state) => state?.user?.user_data);
@@ -54,6 +55,7 @@ export default function DetailsPage() {
             },
           }
         );
+
         setRelatePosts(res?.data?.data);
       } catch (error) {
         console.error("Error fetching related posts:", error);
@@ -62,6 +64,23 @@ export default function DetailsPage() {
 
     fetchAPI();
   }, [post?.id]);
+
+  useEffect(() => {
+    if (!post?.id) return;
+
+    const fetchAPI = async () => {
+      try {
+        const res = await axios.get(
+          `https://localhost:7224/api/Users/GetUserPosts/${post?.ownerId}`
+        );
+        setUserPosts(res?.data);
+      } catch (error) {
+        console.error("Error fetching related posts:", error);
+      }
+    };
+
+    fetchAPI();
+  }, [post?.ownerId]);
 
   // get count post
   useEffect(() => {
@@ -408,7 +427,7 @@ export default function DetailsPage() {
         <div className="justify-between flex items-center">
           <h3 className="font-semibold">Tin đăng cùng khu vực </h3>
           <div className="flex gap-2">
-            <button className="swiper-button-prev !static !mt-0 !h-[40px] !w-[40px] bg-white border border-[#ccc] border-solid rounded-lg !text-red">
+            <button className="swiper-button-prev swiper-prev-1 !static !mt-0 !h-[40px] !w-[40px] bg-white border border-[#ccc] border-solid rounded-lg !text-red">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
@@ -418,7 +437,7 @@ export default function DetailsPage() {
                 <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" />
               </svg>
             </button>
-            <button className="swiper-button-next !static !mt-0 !h-[40px] !w-[40px] bg-white border border-[#ccc] border-solid rounded-lg !text-red">
+            <button className="swiper-button-next swiper-next-1 !static !mt-0 !h-[40px] !w-[40px] bg-white border border-[#ccc] border-solid rounded-lg !text-red">
               <svg
                 className="!w-[20px] !h-[20px]"
                 fill="currentColor"
@@ -440,12 +459,88 @@ export default function DetailsPage() {
               disableOnInteraction: false,
             }}
             navigation={{
-              prevEl: ".swiper-button-prev",
-              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-prev-1",
+              nextEl: ".swiper-next-1",
             }}
             modules={[Navigation]}
           >
             {relatePosts?.map((res, index) => {
+              return (
+                <SwiperSlide className="w-full h-full">
+                  <div className="">
+                    <img
+                      className="rounded-lg object-contain h-[174px] w-[232px] "
+                      src={`https://motel.azurewebsites.net/${res?.imageUrls[0]}`}
+                      alt=""
+                    />
+                    <div className="pt-[10px]">
+                      <Link
+                        to={`/details/${res?.slug}`}
+                        className="uppercase text-[14px] font-semibold text-[#055699] line-clamp-2"
+                      >
+                        {res?.title}
+                      </Link>
+                      <div class="mb-2 flex items-center">
+                        <span class="text-green font-medium  text-[13px]">
+                          {res?.price} triệu/tháng
+                        </span>
+                        <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
+                        <span className="text-[13px]">
+                          {res?.area} m<sup>2</sup>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        </div>
+      </div>
+      <div className="bg-white mt-5 p-3 rounded-md">
+        <div className="justify-between flex items-center">
+          <h3 className="font-semibold">
+            Tin đăng khác của {post?.user?.fullName}{" "}
+          </h3>
+          <div className="flex gap-2">
+            <button className="swiper-button-prev swiper-prev-2 !static !mt-0 !h-[40px] !w-[40px] bg-white border border-[#ccc] border-solid rounded-lg !text-red">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 320 512"
+                className="!w-[20px] !h-[20px]"
+              >
+                <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" />
+              </svg>
+            </button>
+            <button className="swiper-button-next swiper-next-2 !static !mt-0 !h-[40px] !w-[40px] bg-white border border-[#ccc] border-solid rounded-lg !text-red">
+              <svg
+                className="!w-[20px] !h-[20px]"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 320 512"
+              >
+                <path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div className="mt-2">
+          <Swiper
+            className=" h-full py-3"
+            spaceBetween={30}
+            slidesPerView={4}
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
+            navigation={{
+              prevEl: ".swiper-prev-2",
+              nextEl: ".swiper-next-2",
+            }}
+            modules={[Navigation]}
+          >
+            {userPosts?.map((res, index) => {
               return (
                 <SwiperSlide className="w-full h-full">
                   <div className="">

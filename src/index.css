@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.swiper-button-prev::after,
-.swiper-button-next::after {
+.swiper-button-prev::after, .swiper-button-prev2::after,
+.swiper-button-next::after, .swiper-button-next2::after {
   content: none !important;
 }
