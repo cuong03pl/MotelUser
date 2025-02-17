@@ -71,7 +71,7 @@ export default function DetailsPage() {
     const fetchAPI = async () => {
       try {
         const res = await axios.get(
-          `https://localhost:7224/api/Users/GetUserPosts/${post?.ownerId}`
+          `https://motel.azurewebsites.net/api/Users/GetUserPosts/${post?.ownerId}`
         );
         setUserPosts(res?.data);
       } catch (error) {

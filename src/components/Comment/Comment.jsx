@@ -22,7 +22,9 @@ export default function Comment({ slug, postId }) {
   useEffect(() => {
     const fetchAPI = async () => {
       await axios
-        .get(`https://localhost:7224/api/Reviews/GetReviewsByPost/${slug}`)
+        .get(
+          `https://motel.azurewebsites.net/api/Reviews/GetReviewsByPost/${slug}`
+        )
         .then((res) => {
           setComments(res?.data);
         });
@@ -33,7 +35,7 @@ export default function Comment({ slug, postId }) {
 
   const handleComment = async (content) => {
     await axios
-      .post(`https://localhost:7224/api/Reviews`, {
+      .post(`https://motel.azurewebsites.net/api/Reviews`, {
         comment: content,
         postId: postId,
         userId: user?.id,
