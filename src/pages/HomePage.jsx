@@ -19,7 +19,7 @@ export default function HomePage() {
   useEffect(() => {
     const fetchAPI = async () => {
       try {
-        let url = "https://motel.azurewebsites.net/api/GetApprovedPosts";
+        let url = "https://motel.azurewebsites.net/api/Posts/GetApprovedPosts";
         let params = {
           page,
           pageSize: 5,

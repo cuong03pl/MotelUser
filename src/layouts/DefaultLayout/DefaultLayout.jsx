@@ -10,7 +10,7 @@ export default function DefaultLayout({ children }) {
         <Header />
 
         <main>
-          <div className="mx-auto max-w-full p-4 md:p-[150px] 2xl:p-10 bg-[#fcf5ed]">
+          <div className="mx-auto max-w-full  p-[150px] bg-[#fcf5ed]">
             {children}
             <Support />
           </div>
