@@ -27,7 +27,7 @@ export default function CategoryPage() {
           minArea: searchParams.get("minArea") || null,
           maxArea: searchParams.get("maxArea") || null,
         };
-        const url = `https://motel.azurewebsites.net/api/Posts/GetPostsByCategory/${slug}`;
+        const url = `https://localhost:7224/api/Posts/GetPostsByCategory/${slug}`;
         const res = await axios.get(url, { params });
         setPosts(res?.data?.data);
         setTotalPage(res?.data?.totalPages);

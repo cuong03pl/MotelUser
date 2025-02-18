@@ -46,7 +46,7 @@ export default function LoginPage() {
     });
   const handleLogin = async () => {
     await axios
-      .post("https://motel.azurewebsites.net/api/Auth/login", {
+      .post("https://localhost:7224/api/Auth/login", {
         email,
         password,
       })

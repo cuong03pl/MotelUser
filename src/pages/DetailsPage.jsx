@@ -29,14 +29,23 @@ export default function DetailsPage() {
   const user = useSelector((state) => state?.user?.user_data);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  const [selectedFeatures, setSelectedFeatures] = useState({
+    "Đầy đủ nội thất": false,
+    "Có máy lạnh": false,
+    "Có thang máy": false,
+    "Có bảo vệ 24/24": false,
+    "Có gác": false,
+    "Có máy giặt": false,
+    "Không chung chủ": false,
+    "Có hầm để xe": false,
+  });
   // Lấy ra thông tin chi tiết bài viết
   useEffect(() => {
     const fetchAPI = async () => {
-      await axios
-        .get(`https://motel.azurewebsites.net/api/Posts/${id}`)
-        .then((res) => {
-          setPost(res?.data);
-        });
+      await axios.get(`https://localhost:7224/api/Posts/${id}`).then((res) => {
+        setPost(res?.data);
+        setSelectedFeatures(res?.data?.amenities);
+      });
     };
 
     fetchAPI();
@@ -49,7 +58,7 @@ export default function DetailsPage() {
     const fetchAPI = async () => {
       try {
         const res = await axios.get(
-          `https://motel.azurewebsites.net/api/Posts/GetPostsByProvinceSlug/${post?.id}`,
+          `https://localhost:7224/api/Posts/GetPostsByProvinceSlug/${post?.id}`,
           {
             params: {
               page: 1,
@@ -73,7 +82,7 @@ export default function DetailsPage() {
     const fetchAPI = async () => {
       try {
         const res = await axios.get(
-          `https://motel.azurewebsites.net/api/Users/GetUserPosts/${post?.ownerId}`
+          `https://localhost:7224/api/Users/GetUserPosts/${post?.ownerId}`
         );
         setUserPosts(res?.data);
       } catch (error) {
@@ -89,9 +98,7 @@ export default function DetailsPage() {
     if (!post?.ownerId) return;
     const fetchAPI = async () => {
       await axios
-        .get(
-          `https://motel.azurewebsites.net/api/Users/countPost/${post?.ownerId}`
-        )
+        .get(`https://localhost:7224/api/Users/countPost/${post?.ownerId}`)
         .then((res) => {
           setCountPost(res?.data);
         });
@@ -106,7 +113,7 @@ export default function DetailsPage() {
     const fetchAPI = async () => {
       try {
         const res = await axios.get(
-          `https://motel.azurewebsites.net/api/Users/CheckFavorite`,
+          `https://localhost:7224/api/Users/CheckFavorite`,
           {
             params: {
               userId: user?.id,
@@ -127,7 +134,7 @@ export default function DetailsPage() {
   const handleFavotite = async () => {
     try {
       const res = await axios.post(
-        `https://motel.azurewebsites.net/api/Users/AddFavoritePost`,
+        `https://localhost:7224/api/Users/AddFavoritePost`,
         null,
         {
           params: {
@@ -176,7 +183,7 @@ export default function DetailsPage() {
                       <SwiperSlide className="w-full h-full">
                         <img
                           className="w-full h-full object-contain"
-                          src={`https://motel.azurewebsites.net/${img}`}
+                          src={`https://localhost:7224/${img}`}
                           alt=""
                         />
                       </SwiperSlide>
@@ -223,6 +230,47 @@ export default function DetailsPage() {
               <div className="py-5">
                 <h4 className="font-medium text-[18px]">Thông tin mô tả</h4>
                 <div dangerouslySetInnerHTML={{ __html: post?.description }} />
+              </div>
+              <div className="py-5">
+                <h2 className="text-xl font-semibold mb-4">Đặc điểm nổi bật</h2>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    {Object?.keys(selectedFeatures)
+                      ?.slice(0, 4)
+                      .map((feature) => (
+                        <label
+                          key={feature}
+                          className="flex items-center space-x-2 mt-2"
+                        >
+                          <input
+                            type="checkbox"
+                            className="form-checkbox outline-none"
+                            checked={selectedFeatures[feature]}
+                            readOnly
+                          />
+                          <span>{feature}</span>
+                        </label>
+                      ))}
+                  </div>
+                  <div>
+                    {Object.keys(selectedFeatures)
+                      .slice(4)
+                      .map((feature) => (
+                        <label
+                          key={feature}
+                          className="flex items-center space-x-2 mt-2"
+                        >
+                          <input
+                            type="checkbox"
+                            className="form-checkbox outline-none"
+                            checked={selectedFeatures[feature]}
+                            readOnly
+                          />
+                          <span>{feature}</span>
+                        </label>
+                      ))}
+                  </div>
+                </div>
               </div>
               <div className="border-b border-solid border-[#cdcccc]"></div>
               <div className="py-5">
@@ -472,7 +520,7 @@ export default function DetailsPage() {
                   <div className="">
                     <img
                       className="rounded-lg object-contain h-[174px] w-[232px] "
-                      src={`https://motel.azurewebsites.net/${res?.imageUrls[0]}`}
+                      src={`https://localhost:7224/${res?.imageUrls[0]}`}
                       alt=""
                     />
                     <div className="pt-[10px]">
@@ -548,7 +596,7 @@ export default function DetailsPage() {
                   <div className="">
                     <img
                       className="rounded-lg object-contain h-[174px] w-[232px] "
-                      src={`https://motel.azurewebsites.net/${res?.imageUrls[0]}`}
+                      src={`https://localhost:7224/${res?.imageUrls[0]}`}
                       alt=""
                     />
                     <div className="pt-[10px]">

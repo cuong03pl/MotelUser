@@ -15,7 +15,7 @@ export default function PostItem({ data }) {
     const fetchAPI = async () => {
       try {
         const res = await axios.get(
-          `https://motel.azurewebsites.net/api/Users/CheckFavorite`,
+          `https://localhost:7224/api/Users/CheckFavorite`,
           {
             params: {
               userId: user?.id,
@@ -36,7 +36,7 @@ export default function PostItem({ data }) {
   const handleFavotite = async () => {
     try {
       const res = await axios.post(
-        `https://motel.azurewebsites.net/api/Users/AddFavoritePost`,
+        `https://localhost:7224/api/Users/AddFavoritePost`,
         null,
         {
           params: {
@@ -55,7 +55,7 @@ export default function PostItem({ data }) {
       <div className="max-h-[260px] h-[260px] w-full">
         <img
           className="w-full h-full object-contain"
-          src={`https://motel.azurewebsites.net/${data?.imageUrls[0]}`}
+          src={`https://localhost:7224/${data?.imageUrls[0]}`}
           alt=""
         />
       </div>

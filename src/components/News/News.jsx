@@ -8,7 +8,7 @@ export default function News() {
   useEffect(() => {
     const fetchAPI = async () => {
       await axios
-        .get(`https://motel.azurewebsites.net/api/News`, {
+        .get(`https://localhost:7224/api/News`, {
           params: {
             page: 1,
             pageSize: 5,

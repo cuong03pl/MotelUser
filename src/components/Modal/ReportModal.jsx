@@ -13,7 +13,7 @@ export default function ReportModal({ onClose, postId }) {
   const handleReport = () => {
     axios
       .post(
-        "https://motel.azurewebsites.net/api/Reports",
+        "https://localhost:7224/api/Reports",
         {
           reason,
           note,

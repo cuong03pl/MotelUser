@@ -20,7 +20,7 @@ export default function ProfilePage() {
   // Xử lý thay đổi thông tin user
   const handleUpdate = async () => {
     try {
-      let url = `https://motel.azurewebsites.net/api/Users/${user?.id}`;
+      let url = `https://localhost:7224/api/Users/${user?.id}`;
       const res = await axios.put(url, {
         phoneNumber: phone,
         fullName: fullname,
@@ -39,7 +39,7 @@ export default function ProfilePage() {
             alt="Profile picture placeholder"
             class="w-16 h-16 rounded-full mr-4"
             height="64"
-            src="https://storage.googleapis.com/a1aa/image/jnSAZiKxxyJUGpRx9cC2OJA2U6sqnsr51yhgmHEiXjIzSQCF.jpg"
+            src={user?.avatar}
             width="64"
           />
           <div>

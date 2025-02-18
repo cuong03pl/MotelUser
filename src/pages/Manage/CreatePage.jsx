@@ -111,15 +111,13 @@ export default function CreatePage() {
   }, [selectedDistrict]);
   useEffect(() => {
     const fetchProvinces = async () => {
-      await axios
-        .get("https://motel.azurewebsites.net/api/Categories")
-        .then((res) =>
-          setCategories(
-            res.data.map((data) => {
-              return { value: data?.id, label: data?.name };
-            })
-          )
-        );
+      await axios.get("https://localhost:7224/api/Categories").then((res) =>
+        setCategories(
+          res.data.map((data) => {
+            return { value: data?.id, label: data?.name };
+          })
+        )
+      );
     };
 
     fetchProvinces();
@@ -182,7 +180,7 @@ export default function CreatePage() {
         pauseOnHover: false,
       });
     axios
-      .post("https://motel.azurewebsites.net/api/Posts", formData, {
+      .post("https://localhost:7224/api/Posts", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((res) => {

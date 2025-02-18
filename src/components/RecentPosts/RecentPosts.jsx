@@ -9,7 +9,7 @@ export default function RecentPosts() {
     const fetchLatestPosts = async () => {
       try {
         const res = await axios.get(
-          "https://motel.azurewebsites.net/api/Posts/GetLatestPosts"
+          "https://localhost:7224/api/Posts/GetLatestPosts"
         );
         setLatestPosts(res.data);
       } catch (error) {
@@ -28,7 +28,7 @@ export default function RecentPosts() {
             <div className="flex gap-2 items-center">
               <img
                 className="min-w-[80px] h-[80px] rounded-lg block"
-                src={`https://motel.azurewebsites.net/${post?.imageUrls[0]}`}
+                src={`https://localhost:7224/${post?.imageUrls[0]}`}
                 alt=""
               />
               <div className="">

@@ -19,7 +19,7 @@ export default function HomePage() {
   useEffect(() => {
     const fetchAPI = async () => {
       try {
-        let url = "https://motel.azurewebsites.net/api/Posts/GetApprovedPosts";
+        let url = "https://localhost:7224/api/Posts/GetApprovedPosts";
         let params = {
           page,
           pageSize: 5,
@@ -54,7 +54,7 @@ export default function HomePage() {
     const fetchAPI = async () => {
       try {
         const res = await axios.get(
-          "https://motel.azurewebsites.net/api/Posts/GetCount"
+          "https://localhost:7224/api/Posts/GetCount"
         );
         setTotalPost(res?.data);
       } catch (error) {

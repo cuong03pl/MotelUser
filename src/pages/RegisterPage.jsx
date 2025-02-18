@@ -75,7 +75,7 @@ export default function RegisterPage() {
   const handleRegister = async () => {
     // if (password === confirmPassword) {
     //   await axios
-    //     .post("https://motel.azurewebsites.net/api/Auth/register", {
+    //     .post("https://localhost:7224/api/Auth/register", {
     //       fullname,
     //       password,
     //       phoneNumber: phone,
