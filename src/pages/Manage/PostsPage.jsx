@@ -12,6 +12,7 @@ export default function PostsPage() {
 
   const [isReload, setIsReload] = useState(false);
   const user = useSelector((state) => state?.user?.user_data);
+  // Lấy ra các bài viết của user đang đăng nhập
   useEffect(() => {
     const fetchAPI = async () => {
       await axios
@@ -31,6 +32,7 @@ export default function PostsPage() {
       position: "bottom-right",
       pauseOnHover: false,
     });
+  // Xử lý xóa baif viết
   const handleDelete = async (id, handleOpenModalDelete) => {
     await axios
       .delete(`https://motel.azurewebsites.net/api/Posts/${id}`)

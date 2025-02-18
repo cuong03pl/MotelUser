@@ -43,6 +43,7 @@ export default function FilterModal({ onClose }) {
   });
 
   const navigate = useNavigate();
+  // Lấy ra các danh mục
   useEffect(() => {
     const fetchAPI = async () => {
       await axios
@@ -54,6 +55,7 @@ export default function FilterModal({ onClose }) {
     fetchAPI();
   }, []);
 
+  // Lấy ra tất cả các tỉnh thành phố
   useEffect(() => {
     const fetchProvinces = async () => {
       const response = await fetch("https://provinces.open-api.vn/api/p");
@@ -68,6 +70,7 @@ export default function FilterModal({ onClose }) {
 
     fetchProvinces();
   }, []);
+  // Lấy ra các quận huyện của tỉnh/TP được chọn
   useEffect(() => {
     const fetchDistricts = async () => {
       const response = await fetch(
@@ -88,6 +91,7 @@ export default function FilterModal({ onClose }) {
     }
   }, [selectedProvince]);
 
+  // Xử lý lọc theo giá, diện tích, danh mục, địa chỉ
   const handleFilter = () => {
     const params = {
       minPrice: selectedPrice?.min,

@@ -17,6 +17,7 @@ export default function ProfilePage() {
       pauseOnHover: false,
     });
 
+  // Xử lý thay đổi thông tin user
   const handleUpdate = async () => {
     try {
       let url = `https://motel.azurewebsites.net/api/Users/${user?.id}`;

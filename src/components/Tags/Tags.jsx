@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 export default function Tags() {
   const [tags, setTags] = useState([]);
   const navigate = useNavigate();
+  // Lấy ra các tag tương đương với tỉnh thành phố
   useEffect(() => {
     const fetchAPI = async () => {
       try {

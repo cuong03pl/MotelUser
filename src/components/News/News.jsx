@@ -4,6 +4,7 @@ import NewsItem from "./NewsItem";
 
 export default function News() {
   const [news, setNews] = useState([]);
+  // Lấy ra các tin tức
   useEffect(() => {
     const fetchAPI = async () => {
       await axios

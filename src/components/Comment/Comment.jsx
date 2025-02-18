@@ -9,16 +9,22 @@ export default function Comment({ slug, postId }) {
   const [content, setContent] = useState(null);
   const [isReload, setIsReload] = useState(false);
   const user = useSelector((state) => state?.user?.user_data);
+
+  // toasty hiển thị thông báo lỗi
   const errorNotify = (message) =>
     toast.error(message, {
       position: "bottom-right",
       pauseOnHover: false,
     });
+
+  // toasty hiển thị thông báo thành công
+
   const successNotify = (message) =>
     toast.success(message, {
       position: "bottom-right",
       pauseOnHover: false,
     });
+  // Lấy comment của bài viết
   useEffect(() => {
     const fetchAPI = async () => {
       await axios
@@ -33,6 +39,7 @@ export default function Comment({ slug, postId }) {
     fetchAPI();
   }, [slug, isReload]);
 
+  // Xử lý comment bài viết
   const handleComment = async (content) => {
     await axios
       .post(`https://motel.azurewebsites.net/api/Reviews`, {

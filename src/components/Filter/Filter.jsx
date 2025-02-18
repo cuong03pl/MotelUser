@@ -8,6 +8,7 @@ export default function Filter() {
   const [maxArea, setMaxArea] = useState(null);
   const navigate = useNavigate();
 
+  // Xử lý lọc theo giá, diện tích
   const handleFilter = () => {
     const params = {
       minPrice,

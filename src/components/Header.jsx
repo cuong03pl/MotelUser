@@ -13,6 +13,7 @@ export default function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const user = useSelector((state) => state?.user?.user_data);
   const { slug } = useParams();
+  // Lấy ra các danh mục
   useEffect(() => {
     const fetchAPI = async () => {
       await axios

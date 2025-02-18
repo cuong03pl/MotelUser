@@ -15,6 +15,7 @@ export default function CategoryPage() {
   const initialPage = Number(searchParams.get("page")) || 1;
   const [page, setPage] = useState(initialPage);
   const [totalPages, setTotalPage] = useState(1);
+  // Lấy ra các bài viết thuộc category
   useEffect(() => {
     const fetchAPI = async () => {
       try {

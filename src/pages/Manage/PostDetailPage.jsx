@@ -60,6 +60,8 @@ export default function PostDetailPage() {
     const newImages = files.map((file) => URL.createObjectURL(file));
     setImages((prev) => [...prev, ...newImages].slice(0, 20));
   };
+
+  // Lấy ra các tỉnh thành phố
   useEffect(() => {
     const fetchProvinces = async () => {
       const response = await fetch("https://provinces.open-api.vn/api/p");
@@ -74,6 +76,8 @@ export default function PostDetailPage() {
 
     fetchProvinces();
   }, []);
+
+  // Lấy ra các quận huyện ứng với tỉnh tp được chọn
   useEffect(() => {
     const fetchDistricts = async () => {
       const response = await fetch(
@@ -92,6 +96,8 @@ export default function PostDetailPage() {
       fetchDistricts();
     }
   }, [selectedProvinceId]);
+
+  // Lấy ra các đường phố ứng với quận huyện
   useEffect(() => {
     const fetchDistricts = async () => {
       const response = await fetch(
@@ -131,7 +137,7 @@ export default function PostDetailPage() {
       [feature]: !prevFeatures[feature],
     }));
   };
-
+  // Xử lý update bài viết
   const handleSubmit = async () => {
     const formData = new FormData();
     formData.append("Title", title);

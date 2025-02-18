@@ -2,6 +2,7 @@ import Tippy from "@tippyjs/react/headless";
 import React from "react";
 import Menu from "./Menu";
 
+// Giao diện dropdown khi ấn vào user
 export default function DropdownUser({ user }) {
   return (
     <Tippy

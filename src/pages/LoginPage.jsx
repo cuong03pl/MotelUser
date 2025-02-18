@@ -12,6 +12,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [isShowPass, setIsShowPass] = useState(false);
   const dispatch = useDispatch();
+  // validate form đăng nhập
   const schema = yup
     .object({
       email: yup

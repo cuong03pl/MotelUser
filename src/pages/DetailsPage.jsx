@@ -29,6 +29,7 @@ export default function DetailsPage() {
   const user = useSelector((state) => state?.user?.user_data);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  // Lấy ra thông tin chi tiết bài viết
   useEffect(() => {
     const fetchAPI = async () => {
       await axios
@@ -41,6 +42,7 @@ export default function DetailsPage() {
     fetchAPI();
   }, [id]);
 
+  // Lấy bài viết thông qua tỉnh thành phố
   useEffect(() => {
     if (!post?.id) return;
 

@@ -12,6 +12,7 @@ export default function RegisterPage() {
   const [phone, setPhone] = useState("");
   const [isShowPass, setIsShowPass] = useState(false);
   const [isShowConfirmPass, setIsShowConfirmPass] = useState(false);
+  // validate form đăng kí
 
   const schema = yup
     .object({

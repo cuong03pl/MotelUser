@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function RecentPosts() {
   const [latestPosts, setLatestPosts] = useState([]);
+  // Lấy ra các bài viết mới nhất
   useEffect(() => {
     const fetchLatestPosts = async () => {
       try {

@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 export default function FavouritePage() {
   const [posts, setPosts] = useState([]);
   const user = useSelector((state) => state?.user?.user_data);
+  // Lấy danh sách bài viết được yêu thích của user
   useEffect(() => {
     const fetchAPI = async () => {
       try {

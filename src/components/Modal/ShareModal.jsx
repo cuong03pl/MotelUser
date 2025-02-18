@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 export default function ShareModal({ onClose }) {
   let location = useLocation();
   const fullURL = `${window.location.origin}${location.pathname}${location.search}`;
+  // Xử lý copy link url bài viết hiện tại
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(fullURL);

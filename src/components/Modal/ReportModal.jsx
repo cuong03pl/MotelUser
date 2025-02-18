@@ -9,6 +9,7 @@ export default function ReportModal({ onClose, postId }) {
   const [note, setNote] = useState("");
   const user = useSelector((state) => state?.user?.user_data);
 
+  // Xử lý báo cáo bài viết
   const handleReport = () => {
     axios
       .post(

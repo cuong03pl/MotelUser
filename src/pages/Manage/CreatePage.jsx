@@ -48,11 +48,13 @@ export default function CreatePage() {
   const [images, setImages] = useState([]);
   const user = useSelector((state) => state?.user?.user_data);
 
+  // Xử lý khi upload file
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
     const newImages = files.map((file) => URL.createObjectURL(file));
     setImages((prev) => [...prev, ...newImages].slice(0, 20));
   };
+  // Lấy ra các tỉnh thành phố
   useEffect(() => {
     const fetchProvinces = async () => {
       const response = await fetch("https://provinces.open-api.vn/api/p");
@@ -67,6 +69,7 @@ export default function CreatePage() {
 
     fetchProvinces();
   }, []);
+  // Lấy ra các quận huyện ứng với tỉnh tp được chọn
   useEffect(() => {
     const fetchDistricts = async () => {
       const response = await fetch(
@@ -86,6 +89,8 @@ export default function CreatePage() {
       fetchDistricts();
     }
   }, [selectedProvince]);
+
+  // Lấy ra các đường phố ứng với quận huyện
   useEffect(() => {
     const fetchDistricts = async () => {
       const response = await fetch(
@@ -119,6 +124,8 @@ export default function CreatePage() {
 
     fetchProvinces();
   }, []);
+
+  // Xử lý chọn checkbox
   const handleCheckboxChange = (feature) => {
     setSelectedFeatures((prevFeatures) => ({
       ...prevFeatures,
@@ -126,6 +133,7 @@ export default function CreatePage() {
     }));
   };
 
+  //  Xử lý tạo mới bài viết
   const handleSubmit = async () => {
     const formData = new FormData();
     formData.append("Title", title);

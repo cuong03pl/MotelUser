@@ -1,6 +1,7 @@
 import React from "react";
 
 export default function Support() {
+  // Hiển thị giao diện hỗ trợ khách hàng
   return (
     <div class="bg-white max-w-[1000px] mx-auto p-8 rounded-lg shadow-md flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-6 mt-5">
       <img

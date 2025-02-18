@@ -15,10 +15,11 @@ export default function HomePage() {
   const [page, setPage] = useState(initialPage);
   const [totalPages, setTotalPage] = useState(1);
   const [totalPost, setTotalPost] = useState(0);
+  // Lấy ra các bài viết
   useEffect(() => {
     const fetchAPI = async () => {
       try {
-        let url = "https://motel.azurewebsites.net/api/Posts";
+        let url = "https://motel.azurewebsites.net/api/GetApprovedPosts";
         let params = {
           page,
           pageSize: 5,
@@ -48,6 +49,7 @@ export default function HomePage() {
       setPage(pageParam);
     }
   }, [searchParams]);
+  // Lấy số lượng bài viết
   useEffect(() => {
     const fetchAPI = async () => {
       try {

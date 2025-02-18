@@ -5,6 +5,7 @@ export default function Favourite({
   onFavorite,
   onlyIcon = false,
 }) {
+  // Xử lý yêu thích bài viết
   const handleFavotite = () => {
     onFavorite();
   };

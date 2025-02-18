@@ -4,9 +4,11 @@ import { Link } from "react-router-dom";
 export default function PostItem({ data, onDelete }) {
   const [isOpenDelete, setIsOpenDelete] = useState(false);
 
+  // Xử lý hiển thị model xóa bài viết
   const handleOpenModalDelete = () => {
     setIsOpenDelete(isOpenDelete ? false : true);
   };
+  // Xử lý xóa bài viết
   const handleDelete = async (id) => {
     onDelete(id, handleOpenModalDelete);
   };
@@ -78,6 +80,8 @@ export default function PostItem({ data, onDelete }) {
           </button>
         </div>
       </div>
+
+      {/* modal xóa bài viết */}
       {isOpenDelete && (
         <div className="fixed inset-0 z-[99999] flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
           <div class="px-4 py-6 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 w-[600px]">

@@ -17,6 +17,7 @@ function App() {
   const token = useSelector((state) => state.user?.user_token);
   const dispatch = useDispatch();
   const location = useLocation();
+  // Kiểm tra xem đã đăng nhập chưa hoặc nếu token mà hết hạn thì sẽ tự động đăng xuất
   useEffect(() => {
     const publicPages = [
       routes.manage_create,
@@ -33,6 +34,7 @@ function App() {
     }
   }, [navigate, token]);
 
+  // call API lấy dữ liệu user
   useEffect(() => {
     const fetchAPI = async () => {
       const user_data = jwtDecode(token);
@@ -48,6 +50,7 @@ function App() {
   }, []);
   return (
     <div className="bg-[#f1f5f9] min-h-screen">
+      {/*  Cấu hình layout website  */}
       <Routes>
         {publicRoutes.map((route, index) => {
           let Comp = route.component;
