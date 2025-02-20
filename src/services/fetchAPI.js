@@ -99,7 +99,7 @@ export const CreateComment = async (params) => {
   return res;
 };
 export const UpdatePost = async (id, params) => {
-  const res = await put(`Posts/${post?.id}`, params, {
+  const res = await put(`Posts/${id}`, params, {
     headers: { "Content-Type": "multipart/form-data" },
   });
   return res;
