@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { convertTime } from "../../utils/convertTime";
 import Favourite from "../Favourite/Favourite";
 import { useSelector } from "react-redux";
-import axios from "axios";
+import { AddFavoritePost, CheckFavorite } from "../../services/fetchAPI";
 
 export default function PostItem({ data }) {
   const [favourited, setFavourited] = useState(false);
@@ -14,15 +14,12 @@ export default function PostItem({ data }) {
 
     const fetchAPI = async () => {
       try {
-        const res = await axios.get(
-          `https://localhost:7224/api/Users/CheckFavorite`,
-          {
-            params: {
-              userId: user?.id,
-              postId: data?.id,
-            },
-          }
-        );
+        const res = await CheckFavorite({
+          params: {
+            userId: user?.id,
+            postId: data?.id,
+          },
+        });
 
         setFavourited(res?.data); // Chỉ cần cập nhật giá trị từ API
       } catch (error) {
@@ -35,16 +32,12 @@ export default function PostItem({ data }) {
 
   const handleFavotite = async () => {
     try {
-      const res = await axios.post(
-        `https://localhost:7224/api/Users/AddFavoritePost`,
-        null,
-        {
-          params: {
-            userId: user?.id,
-            postId: data?.id,
-          },
-        }
-      );
+      const res = await AddFavoritePost({
+        params: {
+          userId: user?.id,
+          postId: data?.id,
+        },
+      });
       setFavourited((prev) => !prev);
     } catch (error) {
       console.error("Error fetching related posts:", error);
@@ -55,7 +48,7 @@ export default function PostItem({ data }) {
       <div className="max-h-[260px] h-[260px] w-full">
         <img
           className="w-full h-full object-contain"
-          src={`https://localhost:7224/${data?.imageUrls[0]}`}
+          src={`${process.env.REACT_APP_API_URL}/${data?.imageUrls[0]}`}
           alt=""
         />
       </div>

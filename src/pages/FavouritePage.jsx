@@ -6,6 +6,7 @@ import Posts from "../components/Posts/Posts";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { GetUserFavorite } from "../services/fetchAPI";
 
 export default function FavouritePage() {
   const [posts, setPosts] = useState([]);
@@ -14,8 +15,7 @@ export default function FavouritePage() {
   useEffect(() => {
     const fetchAPI = async () => {
       try {
-        const url = `https://localhost:7224/api/Users/GetUserFavorite/${user?.id}`;
-        const res = await axios.get(url);
+        const res = await GetUserFavorite(user?.id);
         setPosts(res?.data);
       } catch (error) {
         console.error("Error fetching posts:", error);

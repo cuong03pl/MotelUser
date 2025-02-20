@@ -3,6 +3,11 @@ import CommentItem from "./CommentItem";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import {
+  CreateComment,
+  GetReviews,
+  GetReviewsByPost,
+} from "../../services/fetchAPI";
 
 export default function Comment({ slug, postId }) {
   const [comments, setComments] = useState([]);
@@ -27,11 +32,9 @@ export default function Comment({ slug, postId }) {
   // Lấy comment của bài viết
   useEffect(() => {
     const fetchAPI = async () => {
-      await axios
-        .get(`https://localhost:7224/api/Reviews/GetReviewsByPost/${slug}`)
-        .then((res) => {
-          setComments(res?.data);
-        });
+      await GetReviewsByPost(slug).then((res) => {
+        setComments(res?.data);
+      });
     };
 
     fetchAPI();
@@ -39,12 +42,11 @@ export default function Comment({ slug, postId }) {
 
   // Xử lý comment bài viết
   const handleComment = async (content) => {
-    await axios
-      .post(`https://localhost:7224/api/Reviews`, {
-        comment: content,
-        postId: postId,
-        userId: user?.id,
-      })
+    await CreateComment({
+      comment: content,
+      postId: postId,
+      userId: user?.id,
+    })
       .then((res) => {
         successNotify("Bình luận thành công !");
         setContent("");

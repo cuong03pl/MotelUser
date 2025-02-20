@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import { useSelector } from "react-redux";
+import { CreatePost, GetCategories } from "../../services/fetchAPI";
 const modules = {
   toolbar: [
     [{ font: [] }],
@@ -111,7 +112,7 @@ export default function CreatePage() {
   }, [selectedDistrict]);
   useEffect(() => {
     const fetchProvinces = async () => {
-      await axios.get("https://localhost:7224/api/Categories").then((res) =>
+      await GetCategories().then((res) =>
         setCategories(
           res.data.map((data) => {
             return { value: data?.id, label: data?.name };
@@ -143,7 +144,6 @@ export default function CreatePage() {
     formData.append("Available", true);
     formData.append("Is_Browse", 0);
     formData.append("CategoryId", selectedCategory?.value);
-
     formData.append("Location.Province", selectedProvince?.label || "");
     formData.append("Location.District", selectedDistrict?.label || "");
     formData.append("Location.Ward", selectedWard?.label || "");
@@ -179,10 +179,7 @@ export default function CreatePage() {
         position: "bottom-right",
         pauseOnHover: false,
       });
-    axios
-      .post("https://localhost:7224/api/Posts", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
+    await CreatePost(formData)
       .then((res) => {
         successNotify("Thêm bài viết thành công. Vui lòng đợi xét duyệt");
       })

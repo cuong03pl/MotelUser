@@ -7,6 +7,7 @@ import News from "../components/News/News";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 import Filter from "../components/Filter/Filter";
+import { GetApprovedPosts, GetCountPost } from "../services/fetchAPI";
 
 export default function HomePage() {
   const [posts, setPosts] = useState([]);
@@ -19,7 +20,6 @@ export default function HomePage() {
   useEffect(() => {
     const fetchAPI = async () => {
       try {
-        let url = "https://localhost:7224/api/Posts/GetApprovedPosts";
         let params = {
           page,
           pageSize: 5,
@@ -31,7 +31,7 @@ export default function HomePage() {
           provinceSlug: searchParams.get("provinceSlug") || null,
           districtSlug: searchParams.get("districtSlug") || null,
         };
-        const res = await axios.get(url, { params });
+        const res = await GetApprovedPosts(params);
 
         setTotalPage(res?.data?.totalPages);
         setPosts(res?.data?.data);
@@ -53,9 +53,7 @@ export default function HomePage() {
   useEffect(() => {
     const fetchAPI = async () => {
       try {
-        const res = await axios.get(
-          "https://localhost:7224/api/Posts/GetCount"
-        );
+        const res = await GetCountPost();
         setTotalPost(res?.data);
       } catch (error) {
         console.error("Error fetching posts:", error);

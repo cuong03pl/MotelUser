@@ -3,8 +3,9 @@ import { CloseIcon } from "../Icon/Icon";
 import axios from "axios";
 import Select from "react-select";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { GetCategories } from "../../services/fetchAPI";
 const priceRanges = [
-  { label: "Tất cả", min: 0, max: null },
+  { label: "Tất cả", min: 0, max: 100000000 },
   { label: "Dưới 1 triệu", min: 0, max: 1 },
   { label: "1 - 2 triệu", min: 1, max: 2 },
   { label: "2 - 3 triệu", min: 2, max: 3 },
@@ -12,16 +13,16 @@ const priceRanges = [
   { label: "5 - 7 triệu", min: 5, max: 7 },
   { label: "7 - 10 triệu", min: 7, max: 10 },
   { label: "10 - 15 triệu", min: 10, max: 15 },
-  { label: "Trên 15 triệu", min: 15, max: null },
+  { label: "Trên 15 triệu", min: 15, max: 100000000 },
 ];
 const areaFilters = [
-  { label: "Tất cả", min: 0, max: null },
-  { label: "Dưới 20m²", min: null, max: 20 },
+  { label: "Tất cả", min: 0, max: 100000000 },
+  { label: "Dưới 20m²", min: 0, max: 20 },
   { label: "Từ 20m² - 30m²", min: 20, max: 30 },
   { label: "Từ 30m² - 50m²", min: 30, max: 50 },
   { label: "Từ 50m² - 70m²", min: 50, max: 70 },
   { label: "Từ 70m² - 90m²", min: 70, max: 90 },
-  { label: "Trên 90m²", min: 90, max: null },
+  { label: "Trên 90m²", min: 90, max: 100000000 },
 ];
 export default function FilterModal({ onClose }) {
   const [searchParams] = useSearchParams();
@@ -46,7 +47,7 @@ export default function FilterModal({ onClose }) {
   // Lấy ra các danh mục
   useEffect(() => {
     const fetchAPI = async () => {
-      await axios.get(`https://localhost:7224/api/Categories`).then((res) => {
+      await GetCategories().then((res) => {
         setCategories(res.data);
       });
     };
@@ -99,6 +100,7 @@ export default function FilterModal({ onClose }) {
       categoryId: categoryId,
       provinceSlug: selectedProvince?.value,
       districtSlug: selectedDistrict?.value,
+      page: 1,
     };
 
     const cleanedParams = Object.fromEntries(

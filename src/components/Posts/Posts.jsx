@@ -1,5 +1,4 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PostItem from "./PostItem";
 
 export default function Posts({ posts }) {

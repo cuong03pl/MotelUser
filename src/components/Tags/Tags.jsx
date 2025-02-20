@@ -1,6 +1,6 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { GetLocations } from "../../services/fetchAPI";
 
 export default function Tags() {
   const [tags, setTags] = useState([]);
@@ -9,10 +9,7 @@ export default function Tags() {
   useEffect(() => {
     const fetchAPI = async () => {
       try {
-        const res = await axios.get(
-          "https://localhost:7224/api/Posts/GetLocations"
-        );
-
+        const res = await GetLocations();
         setTags(res?.data);
       } catch (error) {
         console.error("Error fetching posts:", error);

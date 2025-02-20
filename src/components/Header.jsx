@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import routes from "../config/routes";
-import { useDispatch, useSelector } from "react-redux";
-import { jwtDecode } from "jwt-decode";
-import axios from "axios";
+import { useSelector } from "react-redux";
 import DropdownUser from "./DropdownUser/DropdownUser";
 import { FilterIcon } from "./Icon/Icon";
 import CustomModal from "./Modal/Modal";
 import FilterModal from "./Modal/FilterModal";
+import { GetCategories } from "../services/fetchAPI";
 export default function Header() {
   const [categories, setCategories] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,7 +15,7 @@ export default function Header() {
   // Lấy ra các danh mục
   useEffect(() => {
     const fetchAPI = async () => {
-      await axios.get(`https://localhost:7224/api/Categories`).then((res) => {
+      await GetCategories().then((res) => {
         setCategories(res.data);
       });
     };

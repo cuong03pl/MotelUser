@@ -3,13 +3,14 @@ import RecentPosts from "../components/RecentPosts/RecentPosts";
 import News from "../components/News/News";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { GetNewsById } from "../services/fetchAPI";
 
 export default function NewsPage() {
   const { id } = useParams();
   const [news, setNews] = useState({});
   useEffect(() => {
     const fetchAPI = async () => {
-      await axios.get(`https://localhost:7224/api/News/${id}`).then((res) => {
+      await GetNewsById(id).then((res) => {
         setNews(res?.data);
       });
     };

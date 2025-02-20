@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setUserToken } from "../features/user/userSlice";
+import { Login } from "../services/fetchAPI";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,19 +46,17 @@ export default function LoginPage() {
       pauseOnHover: false,
     });
   const handleLogin = async () => {
-    await axios
-      .post("https://localhost:7224/api/Auth/login", {
-        email,
-        password,
-      })
-      .then((res) => {
-        if (res.data) {
-          dispatch(setUserToken(res.data));
-          window.location.href = "/";
-        } else {
-          notifyInvalid();
-        }
-      });
+    await Login({
+      email,
+      password,
+    }).then((res) => {
+      if (res.data) {
+        dispatch(setUserToken(res.data));
+        window.location.href = "/";
+      } else {
+        notifyInvalid();
+      }
+    });
   };
 
   return (

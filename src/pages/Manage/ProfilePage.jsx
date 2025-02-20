@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { updateUser } from "../../features/user/userSlice";
+import { UpdateUser } from "../../services/fetchAPI";
 
 export default function ProfilePage() {
   const dispatch = useDispatch();
@@ -20,8 +21,7 @@ export default function ProfilePage() {
   // Xử lý thay đổi thông tin user
   const handleUpdate = async () => {
     try {
-      let url = `https://localhost:7224/api/Users/${user?.id}`;
-      const res = await axios.put(url, {
+      const res = await UpdateUser(user?.id, {
         phoneNumber: phone,
         fullName: fullname,
       });

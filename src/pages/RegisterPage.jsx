@@ -1,9 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
+import { Register } from "../services/fetchAPI";
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -73,26 +75,25 @@ export default function RegisterPage() {
       pauseOnHover: false,
     });
   const handleRegister = async () => {
-    // if (password === confirmPassword) {
-    //   await axios
-    //     .post("https://localhost:7224/api/Auth/register", {
-    //       fullname,
-    //       password,
-    //       phoneNumber: phone,
-    //       email,
-    //     })
-    //     .then((res) => {
-    //       successNotify(res.data?.message);
-    //       setTimeout(() => {
-    //         window.location.href = "/login";
-    //       }, 3000);
-    //     })
-    //     .catch((err) => {
-    //       if (err.response.data) {
-    //         errorNotify(err.response.data[0].description);
-    //       }
-    //     });
-    // }
+    if (password === confirmPassword) {
+      await Register({
+        fullname,
+        password,
+        phoneNumber: phone,
+        email,
+      })
+        .then((res) => {
+          successNotify(res.data?.message);
+          setTimeout(() => {
+            window.location.href = "/login";
+          }, 3000);
+        })
+        .catch((err) => {
+          if (err.response.data) {
+            errorNotify(err.response.data[0].description);
+          }
+        });
+    }
   };
 
   return (

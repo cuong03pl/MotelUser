@@ -1,6 +1,6 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { GetLatestPosts } from "../../services/fetchAPI";
 
 export default function RecentPosts() {
   const [latestPosts, setLatestPosts] = useState([]);
@@ -8,9 +8,7 @@ export default function RecentPosts() {
   useEffect(() => {
     const fetchLatestPosts = async () => {
       try {
-        const res = await axios.get(
-          "https://localhost:7224/api/Posts/GetLatestPosts"
-        );
+        const res = await GetLatestPosts();
         setLatestPosts(res.data);
       } catch (error) {
         console.error("Lỗi khi lấy bài đăng mới nhất:", error);
@@ -28,7 +26,7 @@ export default function RecentPosts() {
             <div className="flex gap-2 items-center">
               <img
                 className="min-w-[80px] h-[80px] rounded-lg block"
-                src={`https://localhost:7224/${post?.imageUrls[0]}`}
+                src={`${process.env.REACT_APP_API_URL}/${post?.imageUrls[0]}`}
                 alt=""
               />
               <div className="">

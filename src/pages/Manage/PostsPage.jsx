@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import routes from "../../config/routes";
-import axios from "axios";
 import { useSelector } from "react-redux";
-import { convertTime } from "../../utils/convertTime";
 import { toast } from "react-toastify";
 import Post from "../../components/Manage/Post/Post";
+import { DeletePost, GetUserPosts } from "../../services/fetchAPI";
 
 export default function PostsPage() {
   const [posts, setPosts] = useState([]);
@@ -15,11 +14,9 @@ export default function PostsPage() {
   // Lấy ra các bài viết của user đang đăng nhập
   useEffect(() => {
     const fetchAPI = async () => {
-      await axios
-        .get(`https://localhost:7224/api/Users/GetUserPosts/${user?.id}`)
-        .then((res) => {
-          setPosts(res?.data);
-        });
+      await GetUserPosts(user?.id).then((res) => {
+        setPosts(res?.data);
+      });
     };
 
     fetchAPI();
@@ -32,7 +29,7 @@ export default function PostsPage() {
     });
   // Xử lý xóa baif viết
   const handleDelete = async (id, handleOpenModalDelete) => {
-    await axios.delete(`https://localhost:7224/api/Posts/${id}`).then((res) => {
+    await DeletePost(id).then((res) => {
       successNotify("Xóa thành công");
       setIsReload(isReload ? false : true);
       handleOpenModalDelete();

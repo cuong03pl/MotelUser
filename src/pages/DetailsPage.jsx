@@ -17,6 +17,14 @@ import CustomModal from "../components/Modal/Modal";
 import ShareModal from "../components/Modal/ShareModal";
 import ReportModal from "../components/Modal/ReportModal";
 import Comment from "../components/Comment/Comment";
+import {
+  AddFavoritePost,
+  CheckFavorite,
+  GetCountUserPost,
+  GetPostById,
+  GetPostsByProvinceSlug,
+  GetUserPosts,
+} from "../services/fetchAPI";
 
 Modal.setAppElement("#root");
 export default function DetailsPage() {
@@ -42,7 +50,7 @@ export default function DetailsPage() {
   // Lấy ra thông tin chi tiết bài viết
   useEffect(() => {
     const fetchAPI = async () => {
-      await axios.get(`https://localhost:7224/api/Posts/${id}`).then((res) => {
+      await GetPostById(id).then((res) => {
         setPost(res?.data);
         setSelectedFeatures(res?.data?.amenities);
       });
@@ -57,15 +65,12 @@ export default function DetailsPage() {
 
     const fetchAPI = async () => {
       try {
-        const res = await axios.get(
-          `https://localhost:7224/api/Posts/GetPostsByProvinceSlug/${post?.id}`,
-          {
-            params: {
-              page: 1,
-              pageSize: 10,
-            },
-          }
-        );
+        const res = await GetPostsByProvinceSlug(post?.id, {
+          params: {
+            page: 1,
+            pageSize: 10,
+          },
+        });
 
         setRelatePosts(res?.data?.data);
       } catch (error) {
@@ -81,9 +86,7 @@ export default function DetailsPage() {
 
     const fetchAPI = async () => {
       try {
-        const res = await axios.get(
-          `https://localhost:7224/api/Users/GetUserPosts/${post?.ownerId}`
-        );
+        const res = await GetUserPosts(post?.ownerId);
         setUserPosts(res?.data);
       } catch (error) {
         console.error("Error fetching related posts:", error);
@@ -97,11 +100,9 @@ export default function DetailsPage() {
   useEffect(() => {
     if (!post?.ownerId) return;
     const fetchAPI = async () => {
-      await axios
-        .get(`https://localhost:7224/api/Users/countPost/${post?.ownerId}`)
-        .then((res) => {
-          setCountPost(res?.data);
-        });
+      await GetCountUserPost(post?.ownerId).then((res) => {
+        setCountPost(res?.data);
+      });
     };
     fetchAPI();
   }, [post]);
@@ -112,15 +113,12 @@ export default function DetailsPage() {
 
     const fetchAPI = async () => {
       try {
-        const res = await axios.get(
-          `https://localhost:7224/api/Users/CheckFavorite`,
-          {
-            params: {
-              userId: user?.id,
-              postId: post?.id,
-            },
-          }
-        );
+        const res = await CheckFavorite({
+          params: {
+            userId: user?.id,
+            postId: post?.id,
+          },
+        });
 
         setFavourited(res?.data); // Chỉ cần cập nhật giá trị từ API
       } catch (error) {
@@ -133,16 +131,12 @@ export default function DetailsPage() {
 
   const handleFavotite = async () => {
     try {
-      const res = await axios.post(
-        `https://localhost:7224/api/Users/AddFavoritePost`,
-        null,
-        {
-          params: {
-            userId: user?.id,
-            postId: post?.id,
-          },
-        }
-      );
+      const res = await AddFavoritePost({
+        params: {
+          userId: user?.id,
+          postId: post?.id,
+        },
+      });
       setFavourited((prev) => !prev);
     } catch (error) {
       console.error("Error fetching related posts:", error);
@@ -183,7 +177,7 @@ export default function DetailsPage() {
                       <SwiperSlide className="w-full h-full">
                         <img
                           className="w-full h-full object-contain"
-                          src={`https://localhost:7224/${img}`}
+                          src={`${process.env.REACT_APP_API_URL}/${img}`}
                           alt=""
                         />
                       </SwiperSlide>
@@ -520,7 +514,7 @@ export default function DetailsPage() {
                   <div className="">
                     <img
                       className="rounded-lg object-contain h-[174px] w-[232px] "
-                      src={`https://localhost:7224/${res?.imageUrls[0]}`}
+                      src={`${process.env.REACT_APP_API_URL}/${res?.imageUrls[0]}`}
                       alt=""
                     />
                     <div className="pt-[10px]">
@@ -596,7 +590,7 @@ export default function DetailsPage() {
                   <div className="">
                     <img
                       className="rounded-lg object-contain h-[174px] w-[232px] "
-                      src={`https://localhost:7224/${res?.imageUrls[0]}`}
+                      src={`${process.env.REACT_APP_API_URL}/${res?.imageUrls[0]}`}
                       alt=""
                     />
                     <div className="pt-[10px]">

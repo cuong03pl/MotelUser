@@ -4,9 +4,9 @@ import News from "../components/News/News";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import Posts from "../components/Posts/Posts";
 import Tags from "../components/Tags/Tags";
-import axios from "axios";
 import Filter from "../components/Filter/Filter";
 import ReactPaginate from "react-paginate";
+import { GetPostsByCategory } from "../services/fetchAPI";
 
 export default function CategoryPage() {
   const { slug } = useParams();
@@ -27,8 +27,7 @@ export default function CategoryPage() {
           minArea: searchParams.get("minArea") || null,
           maxArea: searchParams.get("maxArea") || null,
         };
-        const url = `https://localhost:7224/api/Posts/GetPostsByCategory/${slug}`;
-        const res = await axios.get(url, { params });
+        const res = await GetPostsByCategory(slug, { params });
         setPosts(res?.data?.data);
         setTotalPage(res?.data?.totalPages);
       } catch (error) {

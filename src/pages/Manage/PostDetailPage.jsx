@@ -5,6 +5,11 @@ import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import {
+  GetCategories,
+  GetPostById,
+  UpdatePost,
+} from "../../services/fetchAPI";
 const modules = {
   toolbar: [
     [{ font: [] }],
@@ -118,7 +123,7 @@ export default function PostDetailPage() {
   }, [selectedDistrictId, selectedDistrict]);
   useEffect(() => {
     const fetchProvinces = async () => {
-      await axios.get("https://localhost:7224/api/Categories").then((res) => {
+      await GetCategories().then((res) => {
         setCategories(
           res.data.map((data) => {
             return { value: data?.id, label: data?.name };
@@ -200,10 +205,9 @@ export default function PostDetailPage() {
         position: "bottom-right",
         pauseOnHover: false,
       });
-    axios
-      .put(`https://localhost:7224/api/Posts/${post?.id}`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
+    await UpdatePost(post?.id, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    })
       .then((res) => {
         successNotify("Sửa bài viết thành công. Vui lòng đợi xét duyệt");
       })
@@ -213,7 +217,7 @@ export default function PostDetailPage() {
   };
   useEffect(() => {
     const fetchAPI = async () => {
-      await axios.get(`https://localhost:7224/api/Posts/${id}`).then((res) => {
+      await GetPostById({ id }).then((res) => {
         setSelectedCategory(res?.data?.categoryId);
         setDescription(res?.data?.description);
         setTitle(res?.data?.title);
@@ -446,7 +450,7 @@ export default function PostDetailPage() {
             <img
               key={index}
               alt={`Uploaded ${index}`}
-              src={`https://localhost:7224${img}`}
+              src={`${process.env.REACT_APP_API_URL}/${img}`}
               className="w-full h-24 object-cover rounded"
             />
           ))}

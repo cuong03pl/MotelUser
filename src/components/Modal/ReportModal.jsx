@@ -3,6 +3,7 @@ import { CloseIcon } from "../Icon/Icon";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { GetReports } from "../../services/fetchAPI";
 
 export default function ReportModal({ onClose, postId }) {
   const [reason, setReason] = useState("");
@@ -10,20 +11,18 @@ export default function ReportModal({ onClose, postId }) {
   const user = useSelector((state) => state?.user?.user_data);
 
   // Xử lý báo cáo bài viết
-  const handleReport = () => {
-    axios
-      .post(
-        "https://localhost:7224/api/Reports",
-        {
-          reason,
-          note,
-          postId,
-          userId: user?.id,
-        },
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      )
+  const handleReport = async () => {
+    await GetReports(
+      {
+        reason,
+        note,
+        postId,
+        userId: user?.id,
+      },
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    )
       .then((res) => {
         onClose();
         setNote("");

@@ -1,22 +1,21 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import NewsItem from "./NewsItem";
+import { GetNews } from "../../services/fetchAPI";
 
 export default function News() {
   const [news, setNews] = useState([]);
   // Lấy ra các tin tức
   useEffect(() => {
     const fetchAPI = async () => {
-      await axios
-        .get(`https://localhost:7224/api/News`, {
-          params: {
-            page: 1,
-            pageSize: 5,
-          },
-        })
-        .then((res) => {
-          setNews(res?.data);
-        });
+      await GetNews({
+        params: {
+          page: 1,
+          pageSize: 5,
+        },
+      }).then((res) => {
+        setNews(res?.data);
+      });
     };
 
     fetchAPI();
