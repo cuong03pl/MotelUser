@@ -92,7 +92,7 @@ export default function Header() {
                 to={routes.register}
                 class="hover:text-[#007bff] text-gray-600 block font-bold text-[15px]"
               >
-                Sign Up
+                Đăng kí
               </Link>
             </li>
 
@@ -101,7 +101,7 @@ export default function Header() {
                 to={"/login"}
                 class="hover:text-[#007bff] text-gray-600 block font-bold text-[15px]"
               >
-                Sign In
+                Đăng nhập
               </Link>
             </li>
           </ul>
