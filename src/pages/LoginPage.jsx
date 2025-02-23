@@ -22,7 +22,7 @@ export default function LoginPage() {
         .required("Vui lòng nhập email"),
       password: yup
         .string()
-        .min(8, "Mật khẩu phải có ít nhất 8 ký tự")
+        .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
         .matches(/[A-Z]/, "Mật khẩu phải chứa ít nhất một chữ in hoa")
         .matches(/\d/, "Mật khẩu phải chứa ít nhất một số")
         .matches(
