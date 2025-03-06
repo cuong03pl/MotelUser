@@ -10,6 +10,8 @@ const routes = {
   news: "/news/:id",
   category: "/category/:slug",
   favourite: "/favourite",
+  deposite: "/deposite",
+  payment: "/pay/:postId",
 };
 
 export default routes;

@@ -39,9 +39,16 @@ export const CheckFavorite = async (params) => {
   const res = await get(`Users/CheckFavorite`, params);
   return res;
 };
-
+export const CheckDeposite = async (params) => {
+  const res = await get(`Booking/CheckUserBooking`, params);
+  return res;
+};
 export const GetUserFavorite = async (id) => {
   const res = await get(`Users/GetUserFavorite/${id}`);
+  return res;
+};
+export const GetUserBookings = async (id) => {
+  const res = await get(`Booking/GetUserBookings/${id}`);
   return res;
 };
 export const GetApprovedPosts = async (params) => {
@@ -98,6 +105,11 @@ export const CreateComment = async (params) => {
   const res = await post(`Reviews`, params);
   return res;
 };
+export const CreateBooking = async (params) => {
+  const res = await post(`Booking`, params);
+  return res;
+};
+
 export const UpdatePost = async (id, params) => {
   const res = await put(`Posts/${id}`, params, {
     headers: { "Content-Type": "multipart/form-data" },

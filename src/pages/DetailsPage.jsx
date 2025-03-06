@@ -19,7 +19,9 @@ import ReportModal from "../components/Modal/ReportModal";
 import Comment from "../components/Comment/Comment";
 import {
   AddFavoritePost,
+  CheckDeposite,
   CheckFavorite,
+  CreateBooking,
   GetCountUserPost,
   GetPostById,
   GetPostsByProvinceSlug,
@@ -34,6 +36,7 @@ export default function DetailsPage() {
   const [userPosts, setUserPosts] = useState([]);
   const [countPost, setCountPost] = useState(0);
   const [favourited, setFavourited] = useState(false);
+  const [deposite, setDeposite] = useState(false);
   const user = useSelector((state) => state?.user?.user_data);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
@@ -129,6 +132,28 @@ export default function DetailsPage() {
     fetchAPI();
   }, [post?.id]);
 
+  // check deposite
+  useEffect(() => {
+    if (!user || !post?.id) return;
+
+    const fetchAPI = async () => {
+      try {
+        const res = await CheckDeposite({
+          params: {
+            userId: user?.id,
+            postId: post?.id,
+          },
+        });
+
+        setDeposite(res?.data); // Chỉ cần cập nhật giá trị từ API
+      } catch (error) {
+        console.error("Error checking favorite:", error);
+      }
+    };
+
+    fetchAPI();
+  }, [post?.id]);
+
   const handleFavotite = async () => {
     try {
       const res = await AddFavoritePost({
@@ -151,6 +176,7 @@ export default function DetailsPage() {
     }
     setIsModalOpen((prev) => !prev);
   };
+
   return (
     <div className=" max-w-[1000px] m-auto ">
       <div className="grid grid-cols-3 gap-4">
@@ -205,18 +231,30 @@ export default function DetailsPage() {
                     {post?.location?.district}, {post?.location?.province}
                   </span>
                 </div>
-                <div class="mb-2 flex items-center">
-                  <span class="text-green font-medium  text-[16px]">
-                    {post?.price} triệu/tháng
-                  </span>
-                  <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
-                  <span className="text-[13px]">
-                    {post?.area} m<sup>2</sup>
-                  </span>
-                  <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
-                  <Link class="text-body text-[13px]">
-                    {post?.location?.district}, {post?.location?.province}
-                  </Link>
+                <div className="flex items-center justify-between">
+                  <div class="mb-2 flex items-center">
+                    <span class="text-green font-medium  text-[16px]">
+                      {post?.price} triệu/tháng
+                    </span>
+                    <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
+                    <span className="text-[13px]">
+                      {post?.area} m<sup>2</sup>
+                    </span>
+                    <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
+                    <Link class="text-body text-[13px]">
+                      {post?.location?.district}, {post?.location?.province}
+                    </Link>
+                  </div>
+                  {!deposite && (
+                    <div className="">
+                      <Link
+                        to={`/pay/${post?.slug}`}
+                        class=" text-white bg-red  font-medium rounded-lg text-sm px-5 py-2.5 "
+                      >
+                        Đặt cọc
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="border-b border-solid border-[#cdcccc]"></div>

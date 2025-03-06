@@ -1,5 +1,6 @@
 import routes from "../config/routes";
 import CategoryPage from "../pages/CategoryPage";
+import DepositedManagePage from "../pages/DepositedManagePage";
 import DetailsPage from "../pages/DetailsPage";
 import FavouritePage from "../pages/FavouritePage";
 import HomePage from "../pages/HomePage";
@@ -9,6 +10,7 @@ import PostDetailPage from "../pages/Manage/PostDetailPage";
 import PostsPage from "../pages/Manage/PostsPage";
 import ProfilePage from "../pages/Manage/ProfilePage";
 import NewsPage from "../pages/NewsPage";
+import PaymentPage from "../pages/PaymentPage";
 import RegisterPage from "../pages/RegisterPage";
 
 export const publicRoutes = [
@@ -39,6 +41,14 @@ export const publicRoutes = [
   {
     path: routes.favourite,
     component: <FavouritePage />,
+  },
+  {
+    path: routes.deposite,
+    component: <DepositedManagePage />,
+  },
+  {
+    path: routes.payment,
+    component: <PaymentPage />,
   },
   {
     path: routes.manage_create,
