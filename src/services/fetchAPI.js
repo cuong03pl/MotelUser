@@ -101,6 +101,10 @@ export const CreatePost = async (params) => {
   });
   return res;
 };
+export const CreateReport = async (params) => {
+  const res = await post(`Reports`, params);
+  return res;
+};
 export const CreateComment = async (params) => {
   const res = await post(`Reviews`, params);
   return res;

@@ -3,7 +3,7 @@ import { CloseIcon } from "../Icon/Icon";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { GetReports } from "../../services/fetchAPI";
+import { CreateReport, GetReports } from "../../services/fetchAPI";
 
 export default function ReportModal({ onClose, postId }) {
   const [reason, setReason] = useState("");
@@ -12,7 +12,7 @@ export default function ReportModal({ onClose, postId }) {
 
   // Xử lý báo cáo bài viết
   const handleReport = async () => {
-    await GetReports(
+    await CreateReport(
       {
         reason,
         note,
