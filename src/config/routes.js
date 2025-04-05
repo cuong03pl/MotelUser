@@ -12,6 +12,7 @@ const routes = {
   favourite: "/favourite",
   deposite: "/deposite",
   payment: "/pay/:postId",
+  compare: "/compare",
 };
 
 export default routes;

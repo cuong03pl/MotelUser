@@ -20,16 +20,10 @@ function App() {
   const location = useLocation();
   // Kiểm tra xem đã đăng nhập chưa hoặc nếu token mà hết hạn thì sẽ tự động đăng xuất
   useEffect(() => {
-    const publicPages = [
-      routes.manage_create,
-      routes.profile,
-      routes.posts,
-      routes.favourite,
-    ];
+    const publicPages = [routes.register];
 
-    if (publicPages.includes(location.pathname)) {
+    if (!publicPages.includes(location.pathname)) {
       if (isTokenExpired(token) || token === "") {
-        navigate("/login");
         dispatch(logOut());
       }
     }

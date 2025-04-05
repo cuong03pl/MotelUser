@@ -12,6 +12,7 @@ import ProfilePage from "../pages/Manage/ProfilePage";
 import NewsPage from "../pages/NewsPage";
 import PaymentPage from "../pages/PaymentPage";
 import RegisterPage from "../pages/RegisterPage";
+import ComparePage from "../pages/ComparePage";
 
 export const publicRoutes = [
   {
@@ -69,5 +70,9 @@ export const publicRoutes = [
     path: routes.post_detail,
     component: <PostDetailPage />,
     manage: true,
+  },
+  {
+    path: routes.compare,
+    component: <ComparePage />,
   },
 ];

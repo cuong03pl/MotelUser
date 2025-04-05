@@ -32,14 +32,14 @@ export default function Header() {
             alt="Phongtro123.com logo"
             class="h-8"
             height="50"
-            src="https://phongtro123.com/images/logo-phongtro.svg"
+            src="https://static.chotot.com/storage/APP_WRAPPER/logo/pty-logo-appwrapper.png"
             width="150"
           />
         </Link>
 
         <div
           id="collapseMenu"
-          class="lg:!flex lg:flex-auto lg:ml-12 max-lg:hidden max-lg:before:fixed max-lg:before:bg-black max-lg:before:opacity-50 max-lg:before:inset-0 max-lg:before:z-50"
+          class="lg:!flex lg:flex-auto max-lg:hidden max-lg:before:fixed max-lg:before:bg-black max-lg:before:opacity-50 max-lg:before:inset-0 max-lg:before:z-50"
         >
           <button
             id="toggleClose"
@@ -81,6 +81,14 @@ export default function Header() {
                   <span> Bộ lọc</span>
                 </button>
               </li>
+              <li>
+                <Link
+                  to={routes.compare}
+                  class="hover:text-[#007bff] text-black block font-normal text-[15px]"
+                >
+                  So sánh
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
@@ -90,7 +98,7 @@ export default function Header() {
             <li class="max-lg:border-b max-lg:py-3 max-lg:mt-2">
               <Link
                 to={routes.register}
-                class="hover:text-[#007bff] text-gray-600 block font-bold text-[15px]"
+                class="hover:text-[#007bff] text-black block font-normal text-[15px]"
               >
                 Đăng kí
               </Link>
@@ -99,7 +107,7 @@ export default function Header() {
             <li>
               <Link
                 to={"/login"}
-                class="hover:text-[#007bff] text-gray-600 block font-bold text-[15px]"
+                class="hover:text-[#007bff] text-black block font-normal text-[15px]"
               >
                 Đăng nhập
               </Link>
