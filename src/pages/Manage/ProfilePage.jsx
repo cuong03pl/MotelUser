@@ -82,7 +82,7 @@ export default function ProfilePage() {
         </div>
         <button
           onClick={handleUpdate}
-          class="w-full py-3 mt-6 text-white bg-red rounded-lg"
+          class="w-full py-3 mt-6 text-white bg-[#fa6819] hover:opacity-75 rounded-lg"
         >
           Cập nhật
         </button>

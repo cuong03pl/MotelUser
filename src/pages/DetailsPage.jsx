@@ -27,6 +27,7 @@ import {
   GetPostsByProvinceSlug,
   GetUserPosts,
 } from "../services/fetchAPI";
+import { convertPrice } from "../utils/convertPrice";
 
 Modal.setAppElement("#root");
 export default function DetailsPage() {
@@ -182,8 +183,8 @@ export default function DetailsPage() {
       <div className="grid grid-cols-3 gap-4">
         <div className="col-span-2">
           <div className=" flex flex-col gap-4">
-            <div className="p-3 bg-white rounded-lg shadow-xl">
-              <div className="max-h-[260px] h-[260px] w-full">
+            <div className="flex flex-col gap-4">
+              <div className="max-h-[260px] h-[260px] w-full bg-white">
                 <Swiper
                   className="mySwiper h-full"
                   spaceBetween={30}
@@ -211,168 +212,118 @@ export default function DetailsPage() {
                   })}
                 </Swiper>
               </div>
-              <div className="py-5 ">
-                <h3 className="text-red font-semibold">{post?.title}</h3>
-                <div className="flex items-center gap-2 py-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="w-[13px] h-[13px]"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                  <span className="text-[13px]">
-                    {post?.location?.addressLine}, {post?.location?.ward},{" "}
-                    {post?.location?.district}, {post?.location?.province}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div class="mb-2 flex items-center">
-                    <span class="text-green font-medium  text-[16px]">
-                      {post?.price} triệu/tháng
-                    </span>
-                    <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
+              <div className="bg-white p-3 rounded-lg">
+                <div className="py-5 ">
+                  <h3 className="text-black text-[16px] font-semibold">{post?.title}</h3>
+                  <div className="flex items-center gap-2 py-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="w-[13px] h-[13px]"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
                     <span className="text-[13px]">
-                      {post?.area} m<sup>2</sup>
-                    </span>
-                    <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
-                    <Link class="text-body text-[13px]">
+                      {post?.location?.addressLine}, {post?.location?.ward},{" "}
                       {post?.location?.district}, {post?.location?.province}
-                    </Link>
-                  </div>
-                  {!deposite && (
-                    <div className="">
-                      <Link
-                        to={`/pay/${post?.slug}`}
-                        class=" text-white bg-red  font-medium rounded-lg text-sm px-5 py-2.5 "
-                      >
-                        Đặt cọc
-                      </Link>
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className="border-b border-solid border-[#cdcccc]"></div>
-              {/* Description */}
-              <div className="py-5">
-                <h4 className="font-medium text-[18px]">Thông tin mô tả</h4>
-                <div dangerouslySetInnerHTML={{ __html: post?.description }} />
-              </div>
-              <div className="py-5">
-                <h2 className="text-xl font-semibold mb-4">Đặc điểm nổi bật</h2>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    {Object?.keys(selectedFeatures)
-                      ?.slice(0, 4)
-                      .map((feature) => (
-                        <label
-                          key={feature}
-                          className="flex items-center space-x-2 mt-2"
-                        >
-                          <input
-                            type="checkbox"
-                            className="form-checkbox outline-none"
-                            checked={selectedFeatures[feature]}
-                            readOnly
-                          />
-                          <span>{feature}</span>
-                        </label>
-                      ))}
-                  </div>
-                  <div>
-                    {Object.keys(selectedFeatures)
-                      .slice(4)
-                      .map((feature) => (
-                        <label
-                          key={feature}
-                          className="flex items-center space-x-2 mt-2"
-                        >
-                          <input
-                            type="checkbox"
-                            className="form-checkbox outline-none"
-                            checked={selectedFeatures[feature]}
-                            readOnly
-                          />
-                          <span>{feature}</span>
-                        </label>
-                      ))}
-                  </div>
-                </div>
-              </div>
-              <div className="border-b border-solid border-[#cdcccc]"></div>
-              <div className="py-5">
-                <div className="flex gap-3 items-center">
-                  <div className="border border-solid border-[#ccc] p-1 rounded-full">
-                    <img
-                      className="w-[100px] h-[100px]"
-                      src={post?.user?.avatar}
-                      alt=""
-                    />
-                  </div>
-                  <div className="">
-                    <span className="text-[16px] font-semibold">
-                      {post?.user?.fullName}
                     </span>
-                    <div class="my-2 flex items-center">
-                      <span className="text-[13px]">{countPost} tin đăng</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div class="mb-2 flex items-center">
+                      <span class="text-[#e5193b] font-bold  text-[16px]">
+                        {post?.price} triệu/tháng
+                      </span>
                       <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
                       <span className="text-[13px]">
-                        Tham gia từ: {convertTime(post?.user?.createdOn)}
+                        {post?.area} m<sup>2</sup>
                       </span>
+                      <span class="block w-1 h-1 rounded-full bg-[#aaa] mx-2"></span>
+                      <Link class="text-body text-[13px]">
+                        {post?.location?.district}, {post?.location?.province}
+                      </Link>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center justify-center gap-2 bg-green px-3 py-2 rounded-2xl text-white">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          className="w-[16px] h-[16px]"
+                    {/* {!deposite && (
+                      <div className="">
+                        <Link
+                          to={`/pay/${post?.slug}`}
+                          class=" text-white bg-red  font-medium rounded-lg text-sm px-5 py-2.5 "
                         >
-                          <path
-                            fill-rule="evenodd"
-                            d="M1.5 4.5a3 3 0 0 1 3-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 0 1-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 0 0 6.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 0 1 1.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 0 1-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5Z"
-                            clip-rule="evenodd"
-                          />
-                        </svg>
-                        <a
-                          href={`tel:${post?.user?.phoneNumber}`}
-                          className="text-[14px]"
-                        >
-                          {post?.user?.phoneNumber}
-                        </a>
+                          Đặt cọc
+                        </Link>
                       </div>
-                      <div className="flex items-center justify-center gap-2 bg-blue px-3 py-2 rounded-2xl text-white">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke-width="1.5"
-                          stroke="currentColor"
-                          className="w-[16px] h-[16px]"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z"
-                          />
-                        </svg>
+                    )} */}
+                  </div>
+                </div>
+                <div class="">
+                  <div class="flex items-center justify-between py-2 border-b">
+                    <div class="flex items-center">
+                      <i class="fas fa-ruler-combined text-xl"></i>
+                      <span class="ml-2">Diện tích</span>
+                    </div>
+                    <span class="font-bold">{post?.area} m²</span>
+                  </div>
 
-                        <a
-                          href={`https://zalo.me/${post?.user?.phoneNumber}`}
-                          className="text-[14px]"
-                        >
-                          Nhắn Zalo
-                        </a>
-                      </div>
+                  <div class="flex items-center justify-between py-2">
+                    <div class="flex items-center">
+                      <i class="fas fa-key text-xl"></i>
+                      <span class="ml-2">Số tiền cọc</span>
+                    </div>
+                    <span class="font-bold">{convertPrice(post?.price)}</span>
+                  </div>
+                </div>
+                {/* Description */}
+                <div className="py-5">
+                  <h4 className="font-medium text-[18px]">Mô tả chi tiết</h4>
+                  <div dangerouslySetInnerHTML={{ __html: post?.description }} />
+                </div>
+                <div className="py-5">
+                  <h2 className="text-xl font-semibold mb-4">Đặc điểm nổi bật</h2>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      {Object?.keys(selectedFeatures)
+                        ?.slice(0, 4)
+                        .map((feature) => (
+                          <label
+                            key={feature}
+                            className="flex items-center space-x-2 mt-2"
+                          >
+                            <input
+                              type="checkbox"
+                              className="form-checkbox outline-none"
+                              checked={selectedFeatures[feature]}
+                              readOnly
+                            />
+                            <span>{feature}</span>
+                          </label>
+                        ))}
+                    </div>
+                    <div>
+                      {Object.keys(selectedFeatures)
+                        .slice(4)
+                        .map((feature) => (
+                          <label
+                            key={feature}
+                            className="flex items-center space-x-2 mt-2"
+                          >
+                            <input
+                              type="checkbox"
+                              className="form-checkbox outline-none"
+                              checked={selectedFeatures[feature]}
+                              readOnly
+                            />
+                            <span>{feature}</span>
+                          </label>
+                        ))}
                     </div>
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
           <div className="mt-5">
@@ -402,7 +353,7 @@ export default function DetailsPage() {
                   </span>
                 </div>
                 <div className="flex flex-col items-center gap-3 w-full">
-                  <div className="flex w-full items-center justify-center gap-2 bg-green px-3 py-2 rounded-2xl text-white">
+                  <div className="flex w-full items-center justify-center gap-2 bg-green px-3 py-2 rounded-lg text-white">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -422,7 +373,7 @@ export default function DetailsPage() {
                       {post?.user?.phoneNumber}{" "}
                     </a>
                   </div>
-                  <div className="flex items-center justify-center gap-2 bg-blue px-3 py-2 rounded-2xl text-white w-full">
+                  <div className="flex items-center justify-center gap-2 bg-blue px-3 py-2 rounded-lg text-white w-full">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -438,12 +389,11 @@ export default function DetailsPage() {
                       />
                     </svg>
 
-                    <a
-                      href={`https://zalo.me/${post?.user?.phoneNumber}`}
+                    <span
                       className="text-[18px]"
                     >
-                      Nhắn Zalo
-                    </a>
+                      Chat
+                    </span>
                   </div>
                 </div>
                 <div class="flex gap-5 items-center py-3 w-full justify-between">

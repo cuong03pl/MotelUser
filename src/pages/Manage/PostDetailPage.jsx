@@ -484,7 +484,7 @@ export default function PostDetailPage() {
 
       <div
         onClick={handleSubmit}
-        className="bg-red p-2 rounded-lg shadow-md flex items-center justify-center w-full max-w-[800px] mt-5 text-white cursor-pointer"
+        className="bg-[#fa6819] hover:opacity-75 p-2 rounded-lg shadow-md flex items-center justify-center w-full max-w-[800px] mt-5 text-white cursor-pointer"
       >
         Tiếp tục
       </div>

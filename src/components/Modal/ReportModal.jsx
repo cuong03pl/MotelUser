@@ -28,7 +28,7 @@ export default function ReportModal({ onClose, postId }) {
         setNote("");
         setReason("");
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
   return (
     <div className="w-[300px]">
@@ -121,7 +121,7 @@ export default function ReportModal({ onClose, postId }) {
         <div class="mb-4">
           <button
             onClick={handleReport}
-            className="bg-red w-full px-[13px] py-2 rounded-xl text-white"
+            className="bg-[#fa6819] hover:opacity-75 w-full px-[13px] py-2 rounded-xl text-white"
           >
             Gửi
           </button>

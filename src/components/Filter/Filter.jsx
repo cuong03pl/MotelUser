@@ -75,7 +75,7 @@ export default function Filter() {
       </div>
       <button
         onClick={handleFilter}
-        className="w-full bg-blue text py-2 font-medium text-white rounded-lg flex items-center justify-center"
+        className="w-full bg-[#fa6819] text py-2 font-medium text-white rounded-lg flex items-center justify-center"
       >
         Áp dụng
       </button>

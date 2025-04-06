@@ -247,11 +247,9 @@ export default function CreatePage() {
             id="address"
             className="w-full p-2 border border-gray-300 rounded bg-gray-100 outline-none"
             placeholder="Địa chỉ"
-            value={`${`${selectedInfoMore},` || ""}${
-              selectedWard?.value ? ` ${selectedWard.value}, ` : ""
-            }${selectedDistrict?.value ? `${selectedDistrict.value}, ` : ""}${
-              selectedProvince?.value ? `${selectedProvince.value} ` : ""
-            }`}
+            value={`${`${selectedInfoMore},` || ""}${selectedWard?.value ? ` ${selectedWard.value}, ` : ""
+              }${selectedDistrict?.value ? `${selectedDistrict.value}, ` : ""}${selectedProvince?.value ? `${selectedProvince.value} ` : ""
+              }`}
             readOnly
           />
         </div>
@@ -452,7 +450,7 @@ export default function CreatePage() {
 
       <div
         onClick={handleSubmit}
-        className="bg-red p-2 rounded-lg shadow-md flex items-center justify-center w-full max-w-[800px] mt-5 text-white cursor-pointer"
+        className="bg-[#fa6819] hover:opacity-75 p-2 rounded-lg shadow-md flex items-center justify-center w-full max-w-[800px] mt-5 text-white cursor-pointer"
       >
         Tiếp tục
       </div>

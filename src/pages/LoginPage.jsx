@@ -314,7 +314,7 @@ export default function LoginPage() {
                   <button
                     type="button"
                     onClick={handleSubmit(handleLogin)}
-                    className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                    className="w-full cursor-pointer rounded-lg  bg-[#fa6819] p-4 text-white transition hover:bg-opacity-90"
                   >
                     Đăng nhập
                   </button>

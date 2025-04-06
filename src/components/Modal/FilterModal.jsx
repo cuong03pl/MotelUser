@@ -207,7 +207,7 @@ export default function FilterModal({ onClose }) {
       <div className="mt-6">
         <button
           onClick={handleFilter}
-          className="bg-red w-full px-[13px] py-2 rounded-xl text-white"
+          className="bg-[#fa6819] w-full px-[13px] py-2 rounded-xl text-white"
         >
           Áp dụng
         </button>

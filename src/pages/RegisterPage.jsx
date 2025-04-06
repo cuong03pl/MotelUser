@@ -499,7 +499,7 @@ export default function RegisterPage() {
                   <div className="mb-4">
                     <button
                       onClick={handleSubmit(handleRegister)}
-                      className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                      className="w-full cursor-pointer rounded-lg border bg-[#fa6819] p-4 text-white transition hover:bg-opacity-90"
                     >
                       Đăng kí
                     </button>

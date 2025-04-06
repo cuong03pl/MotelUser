@@ -19,7 +19,7 @@ export default function Favourite({
           class="size-6"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"
-          fill="blue"
+          fill="#fa6819"
           stroke-width="1.5"
           stroke="currentColor"
         >
