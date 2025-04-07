@@ -327,6 +327,11 @@ export default function LoginPage() {
                       Đăng kí
                     </Link>
                   </p>
+                  <p className="mt-2">
+                    <Link to="/forgot-password" className="text-primary">
+                      Quên mật khẩu?
+                    </Link>
+                  </p>
                 </div>
               </div>
             </div>

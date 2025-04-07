@@ -144,3 +144,13 @@ export const Register = async (params) => {
   const res = await post(`Auth/register`, params);
   return res;
 };
+
+export const ForgotPassword = async (params) => {
+  const res = await post(`Auth/forgot-password`, params);
+  return res;
+};
+
+export const ResetPassword = async (params) => {
+  const res = await post(`Auth/reset-password`, params);
+  return res;
+};

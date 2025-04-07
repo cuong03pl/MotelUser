@@ -2,6 +2,8 @@ const routes = {
   home: "/",
   login: "/login",
   register: "/register",
+  forgotPassword: "/forgot-password",
+  resetPassword: "/reset-password",
   details: "/details/:id",
   manage_create: "/manage/create",
   profile: "/manage/profile",

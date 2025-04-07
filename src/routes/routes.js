@@ -3,6 +3,7 @@ import CategoryPage from "../pages/CategoryPage";
 import DepositedManagePage from "../pages/DepositedManagePage";
 import DetailsPage from "../pages/DetailsPage";
 import FavouritePage from "../pages/FavouritePage";
+import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
 import CreatePage from "../pages/Manage/CreatePage";
@@ -13,6 +14,7 @@ import NewsPage from "../pages/NewsPage";
 import PaymentPage from "../pages/PaymentPage";
 import RegisterPage from "../pages/RegisterPage";
 import ComparePage from "../pages/ComparePage";
+import ResetPasswordPage from "../pages/ResetPasswordPage";
 
 export const publicRoutes = [
   {
@@ -26,6 +28,14 @@ export const publicRoutes = [
   {
     path: routes.register,
     component: <RegisterPage />,
+  },
+  {
+    path: routes.forgotPassword,
+    component: <ForgotPasswordPage />,
+  },
+  {
+    path: routes.resetPassword,
+    component: <ResetPasswordPage />,
   },
   {
     path: routes.details,
