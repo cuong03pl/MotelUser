@@ -25,7 +25,7 @@ export default function Header() {
     setIsModalOpen((prev) => !prev);
   };
   return (
-    <header class="fixed top-0 right-0 left-0 border-b px-4 sm:px-10 bg-white font-sans min-h-[70px] max-h-[120px] tracking-wide z-50">
+    <header class="fixed top-0 right-0 left-0 border-b px-4 sm:px-10 bg-white font-sans min-h-[70px] max-h-[120px] tracking-wide z-[9999]">
       <div class="max-w-[1200px] flex flex-wrap items-center gap-4 w-full mx-auto h-[60px]">
         <Link to={"/"}>
           <img
