@@ -15,6 +15,7 @@ const routes = {
   deposite: "/deposite",
   payment: "/pay/:postId",
   compare: "/compare",
+  chat: "/chat/:id",
 };
 
 export default routes;

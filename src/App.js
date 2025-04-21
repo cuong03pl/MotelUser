@@ -12,13 +12,15 @@ import { logOut, setUser, setUserId } from "./features/user/userSlice";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import { GetUserByToken } from "./services/fetchAPI";
+import signalRService from "./services/signalRService";
 
 function App() {
   const navigate = useNavigate();
   const token = useSelector((state) => state.user?.user_token);
+  const user = useSelector((state) => state.user?.user_data);
   const dispatch = useDispatch();
   const location = useLocation();
-  // Kiểm tra xem đã đăng nhập chưa hoặc nếu token mà hết hạn thì sẽ tự động đăng xuất
+
   useEffect(() => {
     const publicPages = [routes.register];
 
@@ -29,7 +31,29 @@ function App() {
     }
   }, [navigate, token]);
 
-  // call API lấy dữ liệu user
+  useEffect(() => {
+    const initializeSignalR = async () => {
+      if (user?.id) {
+        try {
+          console.log("Initializing SignalR connection for user:", user.id);
+          await signalRService.startConnection();
+          console.log("SignalR initialized successfully!");
+        } catch (error) {
+          console.error("Failed to initialize SignalR connection:", error);
+        }
+      }
+    };
+
+    initializeSignalR();
+
+    return () => {
+      if (signalRService.isConnected()) {
+        console.log("Cleaning up SignalR connection on app unmount");
+        signalRService.stopConnection();
+      }
+    };
+  }, [user?.id]);
+
   useEffect(() => {
     const fetchAPI = async () => {
       const user_data = jwtDecode(token);
@@ -41,9 +65,9 @@ function App() {
       fetchAPI();
     }
   }, []);
+
   return (
     <div className="bg-[#f1f5f9] min-h-screen">
-      {/*  Cấu hình layout website  */}
       <Routes>
         {publicRoutes.map((route, index) => {
           let Comp = route.component;

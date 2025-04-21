@@ -1,5 +1,4 @@
 export const convertPrice = (price) => {
-  console.log(price);
   if (price < 1) {
     return `${(price * 100000).toLocaleString("vi-VN")}k`;
   }

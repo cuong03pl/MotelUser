@@ -154,3 +154,36 @@ export const ResetPassword = async (params) => {
   const res = await post(`Auth/reset-password`, params);
   return res;
 };
+
+// Chat APIs
+export const GetConversations = async (userId) => {
+  const res = await get(`Messages/conversations/${userId}`);
+  return res;
+};
+
+export const GetConversationById = async (id) => {
+  const res = await get(`Messages/conversation/${id}`);
+  return res;
+};
+export const GetMessages = async (conversationId) => {
+  const res = await get(`Messages/messages/${conversationId}`);
+  return res;
+};
+
+export const SendMessage = async (params) => {
+  const res = await post(`Messages/send`, params);
+  return res;
+};
+
+export const CreateConversation = async (params) => {
+  const res = await post("Messages/create", {
+    senderId: params.senderId,
+    receiverId: params.receiverId,
+  });
+  return res;
+};
+
+export const GetAllUsers = async () => {
+  const res = await get(`Users/GetAllUsers`);
+  return res;
+};

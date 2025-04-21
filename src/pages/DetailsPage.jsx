@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import RecentPosts from "../components/RecentPosts/RecentPosts";
 import Tags from "../components/Tags/Tags";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
@@ -7,7 +7,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import axios from "axios";
 import { convertTime } from "../utils/convertTime";
 import News from "../components/News/News";
 import Favourite from "../components/Favourite/Favourite";
@@ -22,7 +21,7 @@ import {
   AddFavoritePost,
   CheckDeposite,
   CheckFavorite,
-  CreateBooking,
+  CreateConversation,
   GetCountUserPost,
   GetPostById,
   GetPostsByProvinceSlug,
@@ -38,7 +37,6 @@ export default function DetailsPage() {
   const [userPosts, setUserPosts] = useState([]);
   const [countPost, setCountPost] = useState(0);
   const [favourited, setFavourited] = useState(false);
-  const [deposite, setDeposite] = useState(false);
   const user = useSelector((state) => state?.user?.user_data);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
@@ -52,6 +50,7 @@ export default function DetailsPage() {
     "Không chung chủ": false,
     "Có hầm để xe": false,
   });
+  const navigate = useNavigate();
   // Lấy ra thông tin chi tiết bài viết
   useEffect(() => {
     const fetchAPI = async () => {
@@ -147,7 +146,6 @@ export default function DetailsPage() {
           },
         });
 
-        setDeposite(res?.data); // Chỉ cần cập nhật giá trị từ API
       } catch (error) {
         console.error("Error checking favorite:", error);
       }
@@ -179,6 +177,14 @@ export default function DetailsPage() {
     setIsModalOpen((prev) => !prev);
   };
 
+  const handleChat = async () => {
+    const response = await CreateConversation({
+      senderId: user.id,
+      receiverId: post?.ownerId
+    });
+
+    navigate(`/chat/${response?.data?.id}`);
+  }
   return (
     <div className=" max-w-[1000px] m-auto ">
       <div className="grid grid-cols-3 gap-4">
@@ -400,7 +406,7 @@ export default function DetailsPage() {
                       {post?.user?.phoneNumber}{" "}
                     </a>
                   </div>
-                  <div className="flex items-center justify-center gap-2 bg-blue px-3 py-2 rounded-lg text-white w-full">
+                  <div onClick={() => handleChat()} className="flex items-center justify-center gap-2 bg-blue px-3 py-2 rounded-lg text-white w-full cursor-pointer">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
