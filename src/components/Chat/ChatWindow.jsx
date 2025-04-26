@@ -113,7 +113,6 @@ const ChatWindow = ({
               const isCurrentUser = message.senderId === user?.id;
               const messageTime = message.timestamp || message.createdAt;
 
-              // Show date separator when date changes
               const showDateSeparator =
                 index === 0 ||
                 new Date(messageTime).toDateString() !==

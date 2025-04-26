@@ -9,8 +9,8 @@ export const GetCategories = async () => {
   const res = await get(`Categories`);
   return res;
 };
-export const GetPostById = async (id) => {
-  const res = await get(`Posts/${id}`);
+export const GetPostById = async (slug) => {
+  const res = await get(`Posts/${slug}`);
   return res;
 };
 export const GetUserByToken = async (token) => {
@@ -125,6 +125,11 @@ export const UpdateUser = async (id, params) => {
   const res = await put(`Users/${id}`, params, {
     headers: { "Content-Type": "multipart/form-data" },
   });
+  return res;
+};
+
+export const UpdateBookingStatus = async (params) => {
+  const res = await put(`Booking/UpdateStatus`, params);
   return res;
 };
 // delete

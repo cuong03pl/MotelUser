@@ -11,7 +11,7 @@ import PostDetailPage from "../pages/Manage/PostDetailPage";
 import PostsPage from "../pages/Manage/PostsPage";
 import ProfilePage from "../pages/Manage/ProfilePage";
 import NewsPage from "../pages/NewsPage";
-import PaymentPage from "../pages/PaymentPage";
+import PaymentPage from "../pages/Manage/PaymentPage";
 import RegisterPage from "../pages/RegisterPage";
 import ComparePage from "../pages/ComparePage";
 import ResetPasswordPage from "../pages/ResetPasswordPage";
@@ -65,6 +65,7 @@ export const publicRoutes = [
   {
     path: routes.payment,
     component: <PaymentPage />,
+    manage: true,
   },
   {
     path: routes.manage_create,

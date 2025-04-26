@@ -217,7 +217,9 @@ export default function PostDetailPage() {
   };
   useEffect(() => {
     const fetchAPI = async () => {
-      await GetPostById({ id }).then((res) => {
+
+      await GetPostById(id).then((res) => {
+
         setSelectedCategory(res?.data?.categoryId);
         setDescription(res?.data?.description);
         setTitle(res?.data?.title);
@@ -400,40 +402,42 @@ export default function PostDetailPage() {
         <h2 className="text-xl font-semibold mb-4">Đặc điểm nổi bật</h2>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            {Object?.keys(selectedFeatures)
-              ?.slice(0, 4)
-              .map((feature) => (
-                <label
-                  key={feature}
-                  className="flex items-center space-x-2 mt-2"
-                >
-                  <input
-                    type="checkbox"
-                    className="form-checkbox outline-none"
-                    checked={selectedFeatures[feature]}
-                    onChange={() => handleCheckboxChange(feature)}
-                  />
-                  <span>{feature}</span>
-                </label>
-              ))}
+            {selectedFeatures &&
+              Object?.keys(selectedFeatures)
+                .slice(0, 4)
+                ?.map((feature) => (
+                  <label
+                    key={feature}
+                    className="flex items-center space-x-2 mt-2"
+                  >
+                    <input
+                      type="checkbox"
+                      className="form-checkbox outline-none"
+                      checked={selectedFeatures[feature]}
+                      onChange={() => handleCheckboxChange(feature)}
+                    />
+                    <span>{feature}</span>
+                  </label>
+                ))}
           </div>
           <div>
-            {Object.keys(selectedFeatures)
-              .slice(4)
-              .map((feature) => (
-                <label
-                  key={feature}
-                  className="flex items-center space-x-2 mt-2"
-                >
-                  <input
-                    type="checkbox"
-                    className="form-checkbox outline-none"
-                    checked={selectedFeatures[feature]}
-                    onChange={() => handleCheckboxChange(feature)}
-                  />
-                  <span>{feature}</span>
-                </label>
-              ))}
+            {selectedFeatures &&
+              Object?.keys(selectedFeatures)
+                .slice(4)
+                ?.map((feature) => (
+                  <label
+                    key={feature}
+                    className="flex items-center space-x-2 mt-2"
+                  >
+                    <input
+                      type="checkbox"
+                      className="form-checkbox outline-none"
+                      checked={selectedFeatures[feature]}
+                      onChange={() => handleCheckboxChange(feature)}
+                    />
+                    <span>{feature}</span>
+                  </label>
+                ))}
           </div>
         </div>
       </div>
@@ -446,7 +450,7 @@ export default function PostDetailPage() {
           sửa hình ảnh
         </p>
         <div className="mt-4 grid grid-cols-4 gap-2">
-          {images.map((img, index) => (
+          {images?.map((img, index) => (
             <img
               key={index}
               alt={`Uploaded ${index}`}

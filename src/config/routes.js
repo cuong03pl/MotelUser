@@ -13,7 +13,7 @@ const routes = {
   category: "/category/:slug",
   favourite: "/favourite",
   deposite: "/deposite",
-  payment: "/pay/:postId",
+  payment: "/manage/pay/:postId",
   compare: "/compare",
   chat: "/chat/:id",
 };

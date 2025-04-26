@@ -4,7 +4,14 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import { useSelector } from "react-redux";
-import { CreatePost, GetCategories } from "../../services/fetchAPI";
+import {
+  CreateBooking,
+  CreatePost,
+  GetCategories,
+} from "../../services/fetchAPI";
+import { useNavigate } from "react-router-dom";
+import sendTelegramMessage from "../../services/sendTele";
+import { convertPrice } from "../../utils/convertPrice";
 const modules = {
   toolbar: [
     [{ font: [] }],
@@ -48,7 +55,7 @@ export default function CreatePage() {
   });
   const [images, setImages] = useState([]);
   const user = useSelector((state) => state?.user?.user_data);
-
+  const navigate = useNavigate();
   // Xử lý khi upload file
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
@@ -180,8 +187,19 @@ export default function CreatePage() {
         pauseOnHover: false,
       });
     await CreatePost(formData)
-      .then((res) => {
-        successNotify("Thêm bài viết thành công. Vui lòng đợi xét duyệt");
+      .then(async (res) => {
+        const postId = res?.data?.id;
+        const slugs = res?.data?.slug;
+        await CreateBooking(
+          { postId: postId, userId: user?.id },
+          { headers: { "Content-Type": "application/json" } }
+        ).then((res) => {
+          // Send Telegram message after successful booking
+          const telegramMessage = `<b>🆕 New Order Created!</b>\n\n<b>📌 Title:</b> ${title}\n<b>💰 Price:</b> ${convertPrice(price)} đồng/tháng\n<b>📏 Area:</b> ${area}m²\n<b>📍 Location:</b> ${selectedInfoMore}, ${selectedWard?.label || ''}, ${selectedDistrict?.label || ''}, ${selectedProvince?.label || ''}\n\n<b>👤 Posted by:</b> ${user?.fullName || 'Unknown User'}`;
+          sendTelegramMessage(telegramMessage);
+          
+          navigate(`/manage/pay/${slugs}`);
+        });
       })
       .catch((err) => {
         errorNotify("Thêm thất bại");
@@ -247,9 +265,11 @@ export default function CreatePage() {
             id="address"
             className="w-full p-2 border border-gray-300 rounded bg-gray-100 outline-none"
             placeholder="Địa chỉ"
-            value={`${`${selectedInfoMore},` || ""}${selectedWard?.value ? ` ${selectedWard.value}, ` : ""
-              }${selectedDistrict?.value ? `${selectedDistrict.value}, ` : ""}${selectedProvince?.value ? `${selectedProvince.value} ` : ""
-              }`}
+            value={`${`${selectedInfoMore},` || ""}${
+              selectedWard?.value ? ` ${selectedWard.value}, ` : ""
+            }${selectedDistrict?.value ? `${selectedDistrict.value}, ` : ""}${
+              selectedProvince?.value ? `${selectedProvince.value} ` : ""
+            }`}
             readOnly
           />
         </div>
