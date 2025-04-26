@@ -9,6 +9,7 @@ import {
   CreateBooking,
   GetPostById,
   UpdateBookingStatus,
+  GetBookingByPost,
 } from "../../services/fetchAPI";
 import { checkPayment, paymentConfig } from "../../utils/payment";
 import { useSelector } from "react-redux";
@@ -21,6 +22,7 @@ export default function PaymentPage() {
   const user = useSelector((state) => state?.user?.user_data);
   const [isDeposited, setIsDeposited] = useState(false);
   const [post, setPost] = useState(null);
+  const [booking, setBooking] = useState(null);
   const intervalRef = useRef(null);
   const [selectedFeatures, setSelectedFeatures] = useState({
     "Đầy đủ nội thất": false,
@@ -41,6 +43,16 @@ export default function PaymentPage() {
         if (res?.data) {
           setPost(res?.data);
           setSelectedFeatures(res?.data?.amenities);
+          
+          // Fetch booking information after getting post details
+          const bookingRes = await GetBookingByPost(res?.data?.id);
+          if (bookingRes?.data) {
+            console.log(bookingRes);
+            
+            setBooking(bookingRes?.data?.data[0]);
+            console.log(bookingRes?.data?.data[0]);
+            
+          }
         }
       } catch (error) {}
     };
@@ -267,7 +279,7 @@ export default function PaymentPage() {
               Quét mã QR để đặt cọc ( 30% giá gốc)
             </div>
             <div class="flex justify-center items-center mt-3">
-              <img src={paymentConfig(post?.price * 1000000 * 0.3)} alt="" />
+              <img src={booking ? paymentConfig(booking?.price * 1000000) : 10000000} alt="" />
             </div>
           </div>
         </div>

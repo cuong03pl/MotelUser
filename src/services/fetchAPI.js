@@ -26,6 +26,12 @@ export const GetUserPosts = async (id) => {
   const res = await get(`Users/GetUserPosts/${id}`);
   return res;
 };
+
+export const GetBookingByPost = async (id) => {
+  const res = await get(`Booking/GetBookingByPost/${id}`);
+  return res;
+};
+
 export const GetCountPost = async (id) => {
   const res = await get(`Posts/GetCount`);
   return res;
@@ -41,6 +47,11 @@ export const CheckFavorite = async (params) => {
 };
 export const CheckDeposite = async (params) => {
   const res = await get(`Booking/CheckUserBooking`, params);
+  return res;
+};
+
+export const CheckHasPaid = async (params) => {
+  const res = await get(`Booking/CheckPayed`, params);
   return res;
 };
 export const GetUserFavorite = async (id) => {

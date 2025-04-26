@@ -1,8 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { CheckHasPaid } from "../../../services/fetchAPI";
 
 export default function PostItem({ data, onDelete }) {
   const [isOpenDelete, setIsOpenDelete] = useState(false);
+  const [isPaid, setIsPaid] = useState(false);
+
+  // Check if post has been paid when component mounts
+  useEffect(() => {
+    const checkPaymentStatus = async () => {
+      try {
+        const res = await CheckHasPaid({ params: { postId: data?.id } });
+        console.log(res);
+        setIsPaid(res?.data || false);
+        
+      } catch (error) {
+        console.error("Error checking payment status:", error);
+        setIsPaid(false);
+      }
+    };
+
+    if (data?.id) {
+      checkPaymentStatus();
+    }
+  }, [data?.id]);
 
   // Xử lý hiển thị model xóa bài viết
   const handleOpenModalDelete = () => {
@@ -78,19 +99,21 @@ export default function PostItem({ data, onDelete }) {
               />
             </svg>
           </button>
-          <Link
-            to={`/manage/pay/${data?.slug}`}
-            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white bg-green rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-          >
-            <svg
-              class="w-5 h-5"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 576 512"
+          {!isPaid && (
+            <Link
+              to={`/manage/pay/${data?.slug}`}
+              class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white bg-green rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
             >
-              <path d="M64 64C28.7 64 0 92.7 0 128L0 384c0 35.3 28.7 64 64 64l448 0c35.3 0 64-28.7 64-64l0-256c0-35.3-28.7-64-64-64L64 64zm64 320l-64 0 0-64c35.3 0 64 28.7 64 64zM64 192l0-64 64 0c0 35.3-28.7 64-64 64zM448 384c0-35.3 28.7-64 64-64l0 64-64 0zm64-192c-35.3 0-64-28.7-64-64l64 0 0 64zM288 160a96 96 0 1 1 0 192 96 96 0 1 1 0-192z" />
-            </svg>
-          </Link>
+              <svg
+                class="w-5 h-5"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 576 512"
+              >
+                <path d="M64 64C28.7 64 0 92.7 0 128L0 384c0 35.3 28.7 64 64 64l448 0c35.3 0 64-28.7 64-64l0-256c0-35.3-28.7-64-64-64L64 64zm64 320l-64 0 0-64c35.3 0 64 28.7 64 64zM64 192l0-64 64 0c0 35.3-28.7 64-64 64zM448 384c0-35.3 28.7-64 64-64l0 64-64 0zm64-192c-35.3 0-64-28.7-64-64l64 0 0 64zM288 160a96 96 0 1 1 0 192 96 96 0 1 1 0-192z" />
+              </svg>
+            </Link>
+          )}
         </div>
       </div>
 
