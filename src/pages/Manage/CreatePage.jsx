@@ -195,7 +195,7 @@ export default function CreatePage() {
           { headers: { "Content-Type": "application/json" } }
         ).then((res) => {
           // Send Telegram message after successful booking
-          const telegramMessage = `<b>🆕 New Order Created!</b>\n\n<b>📌 Title:</b> ${title}\n<b>💰 Price:</b> ${convertPrice(price)} đồng/tháng\n<b>📏 Area:</b> ${area}m²\n<b>📍 Location:</b> ${selectedInfoMore}, ${selectedWard?.label || ''}, ${selectedDistrict?.label || ''}, ${selectedProvince?.label || ''}\n\n<b>👤 Posted by:</b> ${user?.fullName || 'Unknown User'}`;
+          const telegramMessage = `<b>🆕 Đơn hàng mới!</b>\n\n<b>📌 Tiêu đề:</b> ${title}\n<b>💰 Giá:</b> ${convertPrice(price)} đồng/tháng\n<b>📏 Diện tích:</b> ${area}m²\n<b>📍 Địa chỉ:</b> ${selectedInfoMore}, ${selectedWard?.label || ''}, ${selectedDistrict?.label || ''}, ${selectedProvince?.label || ''}\n\n<b>👤 Người đăng:</b> ${user?.fullName || 'Unknown User'}`;
           sendTelegramMessage(telegramMessage);
           
           navigate(`/manage/pay/${slugs}`);

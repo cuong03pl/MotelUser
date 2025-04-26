@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Map from "../../components/Map/Map";
 import { convertPrice } from "../../utils/convertPrice";
+import sendTelegramMessage from "../../services/sendTele";
 export default function PaymentPage() {
   const { postId } = useParams();
   const user = useSelector((state) => state?.user?.user_data);
@@ -32,7 +33,6 @@ export default function PaymentPage() {
     "Có hầm để xe": false,
   });
   const navigate = useNavigate();
-  console.log(postId);
   useEffect(() => {
     const fetchAPI = async () => {
       try {
@@ -71,6 +71,9 @@ export default function PaymentPage() {
         clearInterval(intervalRef.current);
         setIsDeposited(true);
         successNotify("Thanh toán thành công");
+        
+        const telegramMessage = `<b>✅ Thanh toán thành công!</b>\n\n<b>📌 Tiêu đề:</b> ${post?.title}\n<b>💰 Giá:</b> ${convertPrice(post?.price)} đồng/tháng\n<b>📏 Diện tích:</b> ${post?.area}m²\n<b>📍 Địa chỉ:</b> ${post?.location?.addressLine}, ${post?.location?.ward}, ${post?.location?.district}, ${post?.location?.province}\n\n<b>👤 Người đăng:</b> ${user?.fullName || 'Unknown User'}`;
+        sendTelegramMessage(telegramMessage);
       }
     }, 5000);
 
