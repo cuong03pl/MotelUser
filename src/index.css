@@ -6,3 +6,60 @@
 .swiper-button-next::after, .swiper-button-next2::after {
   content: none !important;
 }
+
+/* Animation khi thích bài viết */
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.1);
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-heartbeat {
+  animation: heartbeat 1.5s ease-in-out;
+}
+
+/* Hiệu ứng transition cho card */
+.post-card {
+  transition: all 0.3s ease;
+}
+
+.post-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Hiệu ứng cho hình ảnh khi hover */
+.post-image {
+  transition: transform 0.5s ease;
+  overflow: hidden;
+}
+
+.post-image:hover img {
+  transform: scale(1.05);
+}
+
+/* Badge giảm giá */
+.price-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #e51f40;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  z-index: 10;
+}
