@@ -1,6 +1,5 @@
 import routes from "../config/routes";
 import CategoryPage from "../pages/CategoryPage";
-import DepositedManagePage from "../pages/DepositedManagePage";
 import DetailsPage from "../pages/DetailsPage";
 import FavouritePage from "../pages/FavouritePage";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage";
@@ -58,10 +57,7 @@ export const publicRoutes = [
     path: routes.favourite,
     component: <FavouritePage />,
   },
-  {
-    path: routes.deposite,
-    component: <DepositedManagePage />,
-  },
+  
   {
     path: routes.payment,
     component: <PaymentPage />,

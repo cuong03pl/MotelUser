@@ -14,7 +14,10 @@ function ComparePage() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await GetApprovedPosts({});
+        const res = await GetApprovedPosts({ 
+          pageSize: 1000 });
+        console.log(res?.data?.data);
+        
         const posts = res?.data?.data;
         if (posts) {
           setMotelOptions(

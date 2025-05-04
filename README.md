@@ -2,15 +2,7 @@
 
 Rate rooms and services
 View other guest reviews
-Advanced room search
-Booking history
-Interactive maps
-Multi-language support
-Dark/Light theme toggle
-Chatting
 Coupon
 
-
-ở trang danh sachs để hiển thị trạng thái đã thanh toán,nếu chưa thanh toán sẽ có button thanh toán // chua
 
 

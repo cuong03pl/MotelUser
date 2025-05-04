@@ -6,7 +6,7 @@
     "@hookform/resolvers": "^3.10.0",
     "@microsoft/signalr": "^8.0.7",
     "@react-google-maps/api": "^2.20.6",
-    "@reduxjs/toolkit": "^2.5.1",
+    "@reduxjs/toolkit": "^2.7.0",
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tippyjs/react": "^4.2.6",
     "axios": "^1.7.9",
