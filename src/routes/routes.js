@@ -15,6 +15,7 @@ import RegisterPage from "../pages/RegisterPage";
 import ComparePage from "../pages/ComparePage";
 import ResetPasswordPage from "../pages/ResetPasswordPage";
 import ChatPage from "../pages/ChatPage";
+import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
 
 export const publicRoutes = [
   {
@@ -27,7 +28,7 @@ export const publicRoutes = [
   },
   {
     path: routes.chat,
-    component: <ChatPage />,
+    component: <ProtectedRoute><ChatPage /></ProtectedRoute>,
   },
   {
     path: routes.register,
@@ -86,9 +87,5 @@ export const publicRoutes = [
   {
     path: routes.compare,
     component: <ComparePage />,
-  },
-  {
-    path: routes.chat,
-    component: <ChatPage />,
-  },
+  }
 ];

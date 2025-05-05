@@ -276,10 +276,49 @@ export default function PaymentPage() {
         <div className="">
           <div class="w-full">
             <div class="text-black text-center">
-              Quét mã QR để đặt cọc ( 30% giá gốc)
+              Quét mã QR để thanh toán
             </div>
             <div class="flex justify-center items-center mt-3">
               <img src={booking ? paymentConfig(booking?.price * 1000000) : 10000000} alt="" />
+            </div>
+            
+            <div className="mt-6 bg-white rounded-lg shadow p-4">
+              <h3 className="text-lg font-semibold text-center mb-3">Bảng Phí</h3>
+              <div className="overflow-x-auto">
+                <table className="min-w-full border border-gray-200">
+                  <thead>
+                    <tr className="bg-gray-100">
+                      <th className="py-2 px-4 border-b border-r text-left">Giá thuê (triệu/tháng)</th>
+                      <th className="py-2 px-4 border-b text-left">Phí</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className={`${post?.price < 3 ? 'bg-blue-50' : ''}`}>
+                      <td className="py-2 px-4 border-b border-r">Dưới 3 triệu</td>
+                      <td className="py-2 px-4 border-b">100.000 VND</td>
+                    </tr>
+                    <tr className={`${post?.price >= 3 && post?.price <= 5 ? 'bg-blue-50' : ''}`}>
+                      <td className="py-2 px-4 border-b border-r">Từ 3 đến 5 triệu</td>
+                      <td className="py-2 px-4 border-b">150.000 VND</td>
+                    </tr>
+                    <tr className={`${post?.price > 5 ? 'bg-blue-50' : ''}`}>
+                      <td className="py-2 px-4 border-b border-r">Trên 5 triệu</td>
+                      <td className="py-2 px-4 border-b">200.000 VND</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+              <div className="mt-4 p-3 bg-gray-50 rounded border border-gray-200">
+                <p className="text-sm text-gray-700">
+                  <span className="font-medium">Phí thanh toán của bạn:</span> {' '}
+                  {post?.price < 3 
+                    ? '100.000 VND' 
+                    : post?.price <= 5 
+                      ? '150.000 VND' 
+                      : '200.000 VND'}
+                </p>
+              </div>
             </div>
           </div>
         </div>

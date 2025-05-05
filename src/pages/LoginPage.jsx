@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -13,6 +13,11 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [isShowPass, setIsShowPass] = useState(false);
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+  
+  const from = location.state?.from || "/";
+  
   // validate form đăng nhập
   const schema = yup
     .object({
@@ -52,7 +57,9 @@ export default function LoginPage() {
     }).then((res) => {
       if (res.data) {
         dispatch(setUserToken(res.data));
-        window.location.href = "/";
+        
+        // Redirect to the page they were trying to access or home
+        navigate(from);
       } else {
         notifyInvalid();
       }

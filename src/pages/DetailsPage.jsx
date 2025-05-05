@@ -17,6 +17,8 @@ import ShareModal from "../components/Modal/ShareModal";
 import ReportModal from "../components/Modal/ReportModal";
 import Comment from "../components/Comment/Comment";
 import Map from "../components/Map/Map";
+import AmenitiesIcons from "../components/AmenitiesIcons/AmenitiesIcons";
+import { toast } from "react-toastify";
 import {
   AddFavoritePost,
   CheckDeposite,
@@ -178,6 +180,15 @@ export default function DetailsPage() {
   };
 
   const handleChat = async () => {
+    if (!user) {
+      toast.error('Bạn cần đăng nhập để sử dụng tính năng chat', {
+        position: 'bottom-right',
+        pauseOnHover: false,
+      });
+      navigate('/login', { state: { from: `/details/${id}` } });
+      return;
+    }
+    
     const response = await CreateConversation({
       senderId: user.id,
       receiverId: post?.ownerId
@@ -316,44 +327,7 @@ export default function DetailsPage() {
                 </div>
                 <div className="py-5">
                   <h2 className="text-xl font-semibold mb-4">Đặc điểm nổi bật</h2>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      {Object?.keys(selectedFeatures)
-                        ?.slice(0, 4)
-                        .map((feature) => (
-                          <label
-                            key={feature}
-                            className="flex items-center space-x-2 mt-2"
-                          >
-                            <input
-                              type="checkbox"
-                              className="form-checkbox outline-none"
-                              checked={selectedFeatures[feature]}
-                              readOnly
-                            />
-                            <span>{feature}</span>
-                          </label>
-                        ))}
-                    </div>
-                    <div>
-                      {Object.keys(selectedFeatures)
-                        .slice(4)
-                        .map((feature) => (
-                          <label
-                            key={feature}
-                            className="flex items-center space-x-2 mt-2"
-                          >
-                            <input
-                              type="checkbox"
-                              className="form-checkbox outline-none"
-                              checked={selectedFeatures[feature]}
-                              readOnly
-                            />
-                            <span>{feature}</span>
-                          </label>
-                        ))}
-                    </div>
-                  </div>
+                  <AmenitiesIcons amenities={selectedFeatures} />
                 </div>
               </div>
 
