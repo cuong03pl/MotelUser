@@ -51,14 +51,12 @@ export default function PostItem({ data, gridMode }) {
     <div className="p-3 h-full">
       {gridMode ? (
         <div className="grid grid-cols-1 border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white h-full flex flex-col">
-          <div className="col-span-1 relative overflow-hidden h-48">
+          <div className="col-span-1 relative overflow-hidden aspect-[4/3]">
             <img
               alt=""
               className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
               src={`${process.env.REACT_APP_API_URL}/${data?.imageUrls[0]}`}
             />
-          
-            
           </div>
           <div className="col-span-1 flex flex-col p-3 flex-grow">
             <div className="flex flex-col flex-grow">
@@ -89,7 +87,7 @@ export default function PostItem({ data, gridMode }) {
                 <div className="flex items-center">
                   <img
                     alt="Profile picture of the listing owner"
-                    className="w-8 h-8 rounded-full border border-gray-200"
+                    className="w-8 h-8 rounded-full border border-gray-200 object-cover"
                     height="40"
                     src={`${data?.user?.avatar}`}
                     width="40"
@@ -115,14 +113,12 @@ export default function PostItem({ data, gridMode }) {
       ) : (
         <div className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white h-full">
           <div className="grid grid-cols-4 gap-3 p-3 h-full">
-            <div className="col-span-1 relative overflow-hidden">
+            <div className="col-span-1 relative overflow-hidden aspect-[4/3]">
               <img
                 alt=""
                 className="w-full h-full object-cover rounded-lg transition-transform duration-500 hover:scale-105"
                 src={`${process.env.REACT_APP_API_URL}/${data?.imageUrls[0]}`}
               />
-             
-              
             </div>
             <div className="col-span-3 flex flex-col justify-between">
               <div className="flex-grow">
@@ -154,7 +150,7 @@ export default function PostItem({ data, gridMode }) {
                   <div className="flex items-center">
                     <img
                       alt="Profile picture of the listing owner"
-                      className="w-8 h-8 rounded-full border border-gray-200"
+                      className="w-8 h-8 rounded-full border border-gray-200 object-cover"
                       height="40"
                       src={`${data?.user?.avatar}`}
                       width="40"

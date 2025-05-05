@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Support from "../../components/Support/Support";
+import GoTop from "../../components/GoTop/GoTop";
 
 export default function DefaultLayout({ children }) {
   return (
@@ -16,6 +17,7 @@ export default function DefaultLayout({ children }) {
           </div>
         </main>
         <Footer />
+        <GoTop />
       </div>
     </div>
   );

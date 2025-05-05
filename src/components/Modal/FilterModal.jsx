@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CloseIcon } from "../Icon/Icon";
 import axios from "axios";
 import Select from "react-select";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import { GetCategories } from "../../services/fetchAPI";
 const priceRanges = [
   { label: "Tất cả", min: 0, max: 100000000 },
@@ -44,6 +44,7 @@ export default function FilterModal({ onClose }) {
   });
 
   const navigate = useNavigate();
+  const location = useLocation();
   // Lấy ra các danh mục
   useEffect(() => {
     const fetchAPI = async () => {
@@ -107,7 +108,14 @@ export default function FilterModal({ onClose }) {
       Object.entries(params).filter(([_, v]) => v != null && v !== "")
     );
     const queryString = new URLSearchParams(cleanedParams).toString();
-    navigate(`?${queryString}`, { replace: true });
+    
+    // Kiểm tra nếu đang ở trang chi tiết, chuyển về trang chủ với các tham số lọc
+    if (location.pathname.includes('/details/')) {
+      navigate(`/?${queryString}`);
+    } else {
+      navigate(`?${queryString}`, { replace: true });
+    }
+    
     onClose();
   };
   return (
