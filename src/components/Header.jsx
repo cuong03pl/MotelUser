@@ -7,11 +7,15 @@ import { FilterIcon } from "./Icon/Icon";
 import CustomModal from "./Modal/Modal";
 import FilterModal from "./Modal/FilterModal";
 import { GetCategories } from "../services/fetchAPI";
+
 export default function Header() {
   const [categories, setCategories] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const user = useSelector((state) => state?.user?.user_data);
+  const token = useSelector((state) => state?.user?.user_token);
   const { slug } = useParams();
+  const isLoggedIn = !!user || !!token;
+
   // Lấy ra các danh mục
   useEffect(() => {
     const fetchAPI = async () => {
@@ -21,16 +25,18 @@ export default function Header() {
     };
     fetchAPI();
   }, []);
+
   const handleOpenModal = () => {
     setIsModalOpen((prev) => !prev);
   };
+
   return (
-    <header class="fixed top-0 right-0 left-0 border-b px-4 sm:px-10 bg-white font-sans min-h-[70px] max-h-[120px] tracking-wide z-[9999]">
-      <div class="max-w-[1200px] flex flex-wrap items-center gap-4 w-full mx-auto h-[60px]">
+    <header className="fixed top-0 right-0 left-0 border-b px-4 sm:px-10 bg-white font-sans min-h-[70px] max-h-[120px] tracking-wide z-[9999]">
+      <div className="max-w-[1200px] flex flex-wrap items-center gap-4 w-full mx-auto h-[60px]">
         <Link to={"/"}>
           <img
             alt="Phongtro123.com logo"
-            class="h-8"
+            className="h-8"
             height="50"
             src="https://static.chotot.com/storage/APP_WRAPPER/logo/pty-logo-appwrapper.png"
             width="150"
@@ -39,15 +45,15 @@ export default function Header() {
 
         <div
           id="collapseMenu"
-          class="lg:!flex lg:flex-auto max-lg:hidden max-lg:before:fixed max-lg:before:bg-black max-lg:before:opacity-50 max-lg:before:inset-0 max-lg:before:z-50"
+          className="lg:!flex lg:flex-auto max-lg:hidden max-lg:before:fixed max-lg:before:bg-black max-lg:before:opacity-50 max-lg:before:inset-0 max-lg:before:z-50"
         >
           <button
             id="toggleClose"
-            class="lg:hidden fixed top-2 right-4 z-[100] rounded-full bg-white w-9 h-9 flex items-center justify-center border"
+            className="lg:hidden fixed top-2 right-4 z-[100] rounded-full bg-white w-9 h-9 flex items-center justify-center border"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="w-3.5 h-3.5 fill-black"
+              className="w-3.5 h-3.5 fill-black"
               viewBox="0 0 320.591 320.591"
             >
               <path
@@ -61,18 +67,18 @@ export default function Header() {
             </svg>
           </button>
 
-          <div class="lg:!flex lg:flex-auto items-center max-lg:fixed max-lg:bg-white max-lg:w-1/2 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-6 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50">
-            <ul class="lg:flex items-center lg:gap-x-8 max-lg:space-y-2">
-              <li class=" hidden max-lg:block">
+          <div className="lg:!flex lg:flex-auto items-center max-lg:fixed max-lg:bg-white max-lg:w-1/2 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-6 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50">
+            <ul className="lg:flex items-center lg:gap-x-8 max-lg:space-y-2">
+              <li className=" hidden max-lg:block">
                 <a href="javascript:void(0)">
                   <img
                     src="https://readymadeui.com/readymadeui.svg"
                     alt="logo"
-                    class="w-36"
+                    className="w-36"
                   />
                 </a>
               </li>
-              <li class="  max-lg:block">
+              <li className="  max-lg:block">
                 <button
                   onClick={handleOpenModal}
                   className="flex items-center gap-2 border border-[#ddd] rounded-3xl px-[10px] py-[5px]"
@@ -84,7 +90,7 @@ export default function Header() {
               <li>
                 <Link
                   to={routes.compare}
-                  class="hover:text-[#007bff] text-black block font-normal text-[15px]"
+                  className="hover:text-[#007bff] text-black block font-medium text-[15px]"
                 >
                   So sánh
                 </Link>
@@ -93,41 +99,41 @@ export default function Header() {
           </div>
         </div>
 
-        {!user && (
-          <ul class="lg:flex lg:items-center ml-auto max-lg:block lg:space-x-2">
-            <li class="max-lg:border-b max-lg:py-3 max-lg:mt-2 w-[100px] h-[40px]">
+        {!isLoggedIn && (
+          <ul className="lg:flex lg:items-center ml-auto max-lg:block lg:space-x-2">
+            <li className="max-lg:border-b max-lg:py-3 max-lg:mt-2 w-[100px] h-[40px]">
               <Link
                 to={routes.register}
-                class="text-[15px] w-full h-full flex items-center justify-center bg-blue text-white rounded-lg font-medium"
+                className="text-[15px] w-full h-full flex items-center justify-center bg-blue text-white rounded-lg font-medium"
               >
                 Đăng kí
               </Link>
             </li>
 
-            <li class="max-lg:border-b max-lg:py-3 max-lg:mt-2 w-[100px] h-[40px]">
+            <li className="max-lg:border-b max-lg:py-3 max-lg:mt-2 w-[100px] h-[40px]">
               <Link
                 to={"/login"}
-                class="text-[15px] w-full h-full flex items-center justify-center bg-[#e5193b] text-white rounded-lg font-medium"
+                className="text-[15px] w-full h-full flex items-center justify-center bg-[#e5193b] text-white rounded-lg font-medium"
               >
                 Đăng nhập
               </Link>
             </li>
           </ul>
         )}
-        {user && (
+        {isLoggedIn && (
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
-                class="w-[16px] h-[16px]"
+                className="w-[16px] h-[16px]"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
                 />
               </svg>
@@ -137,7 +143,7 @@ export default function Header() {
             </div>
             <div className="flex items-center gap-1">
               <svg
-                class="w-[16px] h-[16px]"
+                className="w-[16px] h-[16px]"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 640 512"
               >
@@ -148,7 +154,7 @@ export default function Header() {
               </Link>
             </div>
             <div className="flex items-center gap-1">
-              <svg class="w-[16px] h-[16px]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.28571 2C5.14907 2 4.05898 2.45153 3.25526 3.25526C2.45153 4.05898 2 5.14907 2 6.28571V17.7143C2 18.8509 2.45153 19.941 3.25526 20.7447C4.05898 21.5485 5.14907 22 6.28571 22H17.7143C18.8509 22 19.941 21.5485 20.7447 20.7447C21.5485 19.941 22 18.8509 22 17.7143V6.28571C22 5.14907 21.5485 4.05898 20.7447 3.25526C19.941 2.45153 18.8509 2 17.7143 2H6.28571ZM3.42857 6.28571C3.42857 5.52795 3.72959 4.80123 4.26541 4.26541C4.80123 3.72959 5.52795 3.42857 6.28571 3.42857H17.7143C18.472 3.42857 19.1988 3.72959 19.7346 4.26541C20.2704 4.80123 20.5714 5.52795 20.5714 6.28571V17.7143C20.5714 18.472 20.2704 19.1988 19.7346 19.7346C19.1988 20.2704 18.472 20.5714 17.7143 20.5714H6.28571C5.52795 20.5714 4.80123 20.2704 4.26541 19.7346C3.72959 19.1988 3.42857 18.472 3.42857 17.7143V6.28571Z" fill="currentColor"></path><rect x="6" y="7" width="3" height="3" rx="1.5" fill="currentColor"></rect><path d="M12 8.5C12 8.08579 12.3358 7.75 12.75 7.75H17.25C17.6642 7.75 18 8.08579 18 8.5C18 8.91421 17.6642 9.25 17.25 9.25H12.75C12.3358 9.25 12 8.91421 12 8.5Z" fill="currentColor"></path><rect x="6" y="14" width="3" height="3" rx="1.5" fill="currentColor"></rect><path d="M12 15.5C12 15.0858 12.3358 14.75 12.75 14.75H17.25C17.6642 14.75 18 15.0858 18 15.5C18 15.9142 17.6642 16.25 17.25 16.25H12.75C12.3358 16.25 12 15.9142 12 15.5Z" fill="currentColor"></path></svg>
+              <svg className="w-[16px] h-[16px]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.28571 2C5.14907 2 4.05898 2.45153 3.25526 3.25526C2.45153 4.05898 2 5.14907 2 6.28571V17.7143C2 18.8509 2.45153 19.941 3.25526 20.7447C4.05898 21.5485 5.14907 22 6.28571 22H17.7143C18.8509 22 19.941 21.5485 20.7447 20.7447C21.5485 19.941 22 18.8509 22 17.7143V6.28571C22 5.14907 21.5485 4.05898 20.7447 3.25526C19.941 2.45153 18.8509 2 17.7143 2H6.28571ZM3.42857 6.28571C3.42857 5.52795 3.72959 4.80123 4.26541 4.26541C4.80123 3.72959 5.52795 3.42857 6.28571 3.42857H17.7143C18.472 3.42857 19.1988 3.72959 19.7346 4.26541C20.2704 4.80123 20.5714 5.52795 20.5714 6.28571V17.7143C20.5714 18.472 20.2704 19.1988 19.7346 19.7346C19.1988 20.2704 18.472 20.5714 17.7143 20.5714H6.28571C5.52795 20.5714 4.80123 20.2704 4.26541 19.7346C3.72959 19.1988 3.42857 18.472 3.42857 17.7143V6.28571Z" fill="currentColor"></path><rect x="6" y="7" width="3" height="3" rx="1.5" fill="currentColor"></rect><path d="M12 8.5C12 8.08579 12.3358 7.75 12.75 7.75H17.25C17.6642 7.75 18 8.08579 18 8.5C18 8.91421 17.6642 9.25 17.25 9.25H12.75C12.3358 9.25 12 8.91421 12 8.5Z" fill="currentColor"></path><rect x="6" y="14" width="3" height="3" rx="1.5" fill="currentColor"></rect><path d="M12 15.5C12 15.0858 12.3358 14.75 12.75 14.75H17.25C17.6642 14.75 18 15.0858 18 15.5C18 15.9142 17.6642 16.25 17.25 16.25H12.75C12.3358 16.25 12 15.9142 12 15.5Z" fill="currentColor"></path></svg>
               <Link to={routes.manage_create} className="text-[14px]">
                 Quản lý
               </Link>
@@ -171,21 +177,21 @@ export default function Header() {
             <li>
               <Link
                 to={"/manage/create"}
-                class="px-4 py-2 text-sm rounded font-semibold text-white bg-[#fa6819] transition-all ease-in-out duration-300 hover:bg-opacity-75"
+                className="px-4 py-2 text-sm rounded font-semibold text-white bg-[#fa6819] transition-all ease-in-out duration-300 hover:bg-opacity-75"
               >
                 Đăng bài
               </Link>
-              <button id="toggleOpen" class="lg:hidden">
+              <button id="toggleOpen" className="lg:hidden">
                 <svg
-                  class="w-7 h-7"
+                  className="w-7 h-7"
                   fill="#000"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                     d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                    clip-rule="evenodd"
+                    clipRule="evenodd"
                   ></path>
                 </svg>
               </button>

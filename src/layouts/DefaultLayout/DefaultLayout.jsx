@@ -11,9 +11,16 @@ export default function DefaultLayout({ children }) {
         <Header />
 
         <main>
-          <div className="mx-auto max-w-full  p-[150px] bg-[#f4f4f4]">
-            {children}
-            <Support />
+          <div className="mx-auto max-w-full p-[150px] bg-[#f4f4f4]">
+            <div className="flex gap-4">
+              <div className="w-[100px] h-[100px]">
+                <img src="https://phongtro123.com/images/bds123_120_300.gif" alt="Banner" />
+              </div>
+              <div className="flex-1">
+                {children}
+                <Support />
+              </div>
+            </div>
           </div>
         </main>
         <Footer />

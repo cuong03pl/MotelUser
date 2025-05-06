@@ -9,6 +9,7 @@ import ReactPaginate from "react-paginate";
 import Filter from "../components/Filter/Filter";
 import { GetApprovedPosts, GetCountPost } from "../services/fetchAPI";
 import AboutUs from "../components/AboutUs/AboutUs";
+import Reviews from "../components/Reviews/Reviews";
 
 
 export default function HomePage() {
@@ -142,7 +143,9 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-        <AboutUs />
+      
+      <Reviews />
+      <AboutUs />
 
     </div>
   );

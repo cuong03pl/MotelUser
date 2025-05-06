@@ -6,8 +6,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { setUserToken } from "../features/user/userSlice";
-import { Login } from "../services/fetchAPI";
+import { setUser, setUserToken } from "../features/user/userSlice";
+import { GetUserByToken, Login } from "../services/fetchAPI";
+import { jwtDecode } from "jwt-decode";
+
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -50,20 +52,36 @@ export default function LoginPage() {
       position: "bottom-right",
       pauseOnHover: false,
     });
+    
   const handleLogin = async () => {
-    await Login({
-      email,
-      password,
-    }).then((res) => {
+    try {
+      const res = await Login({
+        email,
+        password,
+      });
+      
       if (res.data) {
+        // Lưu token vào Redux
         dispatch(setUserToken(res.data));
         
-        // Redirect to the page they were trying to access or home
+        // Giải mã token để lấy thông tin user
+        const user_data = jwtDecode(res.data);
+        
+        // Lấy thông tin chi tiết của user từ API
+        const userResponse = await GetUserByToken(user_data?.sub);
+        
+        // Lưu thông tin user vào Redux
+        dispatch(setUser(userResponse?.data));
+        
+        // Chuyển hướng sau khi đã lưu thông tin user
         navigate(from);
       } else {
         notifyInvalid();
       }
-    });
+    } catch (error) {
+      console.error("Login error:", error);
+      notifyInvalid();
+    }
   };
 
   return (

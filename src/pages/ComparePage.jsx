@@ -72,7 +72,7 @@ function ComparePage() {
         </div>
 
         <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
-          <div className="grid grid-cols-3 gap-4 p-6 border-b">
+          <div className="grid grid-cols-3 gap-4 p-3 border-b">
             <div className="font-semibold text-gray-700"></div>
             <div className="space-y-2">
               <label htmlFor="motel1" className="block text-sm font-medium text-gray-700">
@@ -80,7 +80,7 @@ function ComparePage() {
               </label>
               <select
                 id="motel1"
-                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                className="block w-full rounded-md border-gray-300 shadow-sm outline-none focus:border-blue-500 focus:ring-blue-500 h-[40px]"
                 value={motel1Slug}
                 onChange={(e) => setMotel1Slug(e.target.value)}
               >
@@ -98,7 +98,7 @@ function ComparePage() {
               </label>
               <select
                 id="motel2"
-                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                className="block w-full rounded-md border-gray-300 shadow-sm outline-none focus:border-blue-500 focus:ring-blue-500 h-[40px]"
                 value={motel2Slug}
                 onChange={(e) => setMotel2Slug(e.target.value)}
               >
