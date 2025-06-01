@@ -10,7 +10,6 @@ export default function ForgotPasswordPage() {
     const [email, setEmail] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    // validate form
     const schema = yup
         .object({
             email: yup

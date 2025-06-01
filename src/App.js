@@ -35,9 +35,7 @@ function App() {
     const initializeSignalR = async () => {
       if (user?.id) {
         try {
-          console.log("Initializing SignalR connection for user:", user.id);
           await signalRService.startConnection();
-          console.log("SignalR initialized successfully!");
         } catch (error) {
           console.error("Failed to initialize SignalR connection:", error);
         }
@@ -48,7 +46,6 @@ function App() {
 
     return () => {
       if (signalRService.isConnected()) {
-        console.log("Cleaning up SignalR connection on app unmount");
         signalRService.stopConnection();
       }
     };

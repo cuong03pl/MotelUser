@@ -140,7 +140,7 @@ export const UpdateUser = async (id, params) => {
 };
 
 export const UpdateBookingStatus = async (params) => {
-  const res = await put(`Booking/UpdateStatus`, params);
+  const res = await put(`Booking/UpdateStatus`, null,params);
   return res;
 };
 // delete

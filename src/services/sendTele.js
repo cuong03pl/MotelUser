@@ -6,7 +6,6 @@ function sendTelegramMessage(message) {
   const encodedMessage = message.replace(/\n/g, '%0A');
   const url = `https://api.telegram.org/bot${apiToken}/sendMessage?chat_id=${chatId}&text=${encodedMessage}&parse_mode=HTML&disable_web_page_preview=true`;
 
-  console.log(url);
 
   fetch(url, {
     method: "POST",

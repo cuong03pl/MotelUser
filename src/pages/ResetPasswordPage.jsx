@@ -92,7 +92,6 @@ export default function ResetPasswordPage() {
                 navigate("/login");
             }, 3000);
         } catch (error) {
-            console.log("Reset password error:", error);
             if (error.response?.data) {
                 if (error.response.data.Message) {
                     errorNotify(error.response.data.Message);

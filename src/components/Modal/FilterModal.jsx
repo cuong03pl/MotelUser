@@ -27,6 +27,8 @@ const areaFilters = [
 export default function FilterModal({ onClose }) {
   const [searchParams] = useSearchParams();
   const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [categoryId, setCategoryId] = useState(
     searchParams.get("categoryId") || ""
   );
@@ -91,41 +93,56 @@ export default function FilterModal({ onClose }) {
     }
   }, [selectedProvince]);
 
-  // Xử lý lọc theo giá, diện tích, danh mục, địa chỉ
-  const handleFilter = () => {
-    const params = {
-      minPrice: selectedPrice?.min,
-      maxPrice: selectedPrice?.max,
-      minArea: selectedArea?.min,
-      maxArea: selectedArea?.max,
-      categoryId: categoryId,
-      provinceSlug: selectedProvince?.value,
-      districtSlug: selectedDistrict?.value,
-      page: 1,
-    };
+  const handleApplyFilter = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const params = {
+        categoryId,
+        provinceSlug: selectedProvince?.value,
+        districtSlug: selectedDistrict?.value,
+        minPrice: selectedPrice.min,
+        maxPrice: selectedPrice.max,
+        minArea: selectedArea.min,
+        maxArea: selectedArea.max,
+      };
 
-    const cleanedParams = Object.fromEntries(
-      Object.entries(params).filter(([_, v]) => v != null && v !== "")
-    );
-    const queryString = new URLSearchParams(cleanedParams).toString();
-    
-    // Kiểm tra nếu đang ở trang chi tiết, chuyển về trang chủ với các tham số lọc
-    if (location.pathname.includes('/details/')) {
-      navigate(`/?${queryString}`);
-    } else {
-      navigate(`?${queryString}`, { replace: true });
+      const cleanedParams = Object.fromEntries(
+        Object.entries(params).filter(([_, v]) => v != null && v !== "")
+      );
+      const queryString = new URLSearchParams(cleanedParams).toString();
+      
+      if (location.pathname.includes('/details/')) {
+        navigate(`/?${queryString}`);
+      } else {
+        navigate(`?${queryString}`, { replace: true });
+      }
+      
+      onClose();
+    } catch (err) {
+      setError('Có lỗi xảy ra khi áp dụng bộ lọc. Vui lòng thử lại.');
+      console.error('Filter error:', err);
+    } finally {
+      setLoading(false);
     }
-    
-    onClose();
   };
+
   return (
-    <div class="max-w-[500px] mx-auto  p-6 ">
-      <div className=" flex items-center justify-between border-b border-[#ccc] pb-3">
+    <div className="max-w-[500px] mx-auto p-6">
+      <div className="flex items-center justify-between border-b border-[#ccc] pb-3">
         <span className="text-[20px]">Bộ lọc</span>
         <span onClick={onClose}>
           <CloseIcon className="w-[20px] h-[20px]" />
         </span>
       </div>
+
+      {error && (
+        <div className="mt-4 p-3 bg-red-50 text-red-600 rounded-md">
+          {error}
+        </div>
+      )}
+
       <div class="mb-6 mt-5">
         <h2 class="text-xl font-semibold mb-4">Danh mục cho thuê</h2>
         <div class="flex flex-wrap gap-4">
@@ -212,13 +229,21 @@ export default function FilterModal({ onClose }) {
         </div>
       </div>
 
-      <div className="mt-6">
-        <button
-          onClick={handleFilter}
+      <div className="mt-6 flex flex-col gap-3">
+      <button
+          onClick={handleApplyFilter}
           className="bg-[#fa6819] w-full px-[13px] py-2 rounded-xl text-white"
         >
           Áp dụng
         </button>
+        <button
+          onClick={onClose}
+          className="px-4 py-2 w-full border border-gray-300 rounded-xl hover:bg-gray-50"
+          disabled={loading}
+        >
+          Hủy
+        </button>
+       
       </div>
     </div>
   );

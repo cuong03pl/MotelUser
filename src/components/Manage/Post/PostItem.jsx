@@ -11,7 +11,6 @@ export default function PostItem({ data, onDelete }) {
     const checkPaymentStatus = async () => {
       try {
         const res = await CheckHasPaid({ params: { postId: data?.id } });
-        console.log(res);
         setIsPaid(res?.data || false);
         
       } catch (error) {

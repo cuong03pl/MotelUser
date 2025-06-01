@@ -44,13 +44,10 @@ export default function PaymentPage() {
           setPost(res?.data);
           setSelectedFeatures(res?.data?.amenities);
           
-          // Fetch booking information after getting post details
           const bookingRes = await GetBookingByPost(res?.data?.id);
           if (bookingRes?.data) {
-            console.log(bookingRes);
             
             setBooking(bookingRes?.data?.data[0]);
-            console.log(bookingRes?.data?.data[0]);
             
           }
         }
@@ -62,11 +59,13 @@ export default function PaymentPage() {
 
   const handleDeposit = async () => {
     try {
-      const res = await UpdateBookingStatus(
-        { postId: post?.id, userId: user?.id },
-        { headers: { "Content-Type": "application/json" } }
-      );
-    } catch (error) {}
+      const res = await UpdateBookingStatus({
+        params: { postId: post?.id, userId: user?.id },
+        headers: { "Content-Type": "application/json" }
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
   const successNotify = (message) =>
     toast.success(message, {
@@ -77,7 +76,6 @@ export default function PaymentPage() {
     if (isDeposited) return;
     intervalRef.current = setInterval(async () => {
       const isCheck = await checkPayment();
-
       if (isCheck) {
         handleDeposit();
         clearInterval(intervalRef.current);
@@ -86,6 +84,8 @@ export default function PaymentPage() {
         
         const telegramMessage = `<b>✅ Thanh toán thành công!</b>\n\n<b>📌 Tiêu đề:</b> ${post?.title}\n<b>💰 Giá:</b> ${convertPrice(post?.price)} đồng/tháng\n<b>📏 Diện tích:</b> ${post?.area}m²\n<b>📍 Địa chỉ:</b> ${post?.location?.addressLine}, ${post?.location?.ward}, ${post?.location?.district}, ${post?.location?.province}\n\n<b>👤 Người đăng:</b> ${user?.fullName || 'Unknown User'}`;
         sendTelegramMessage(telegramMessage);
+        
+        navigate('/manage/posts');
       }
     }, 5000);
 

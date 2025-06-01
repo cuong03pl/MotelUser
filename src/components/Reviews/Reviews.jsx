@@ -3,7 +3,6 @@ import React, { useState } from "react";
 export default function Reviews() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Sample reviews data - this could be fetched from an API in a real implementation
   const reviews = [
     {
       id: 1,
@@ -59,7 +58,6 @@ export default function Reviews() {
     );
   };
 
-  // Generate star rating display
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {

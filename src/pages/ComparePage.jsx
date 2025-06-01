@@ -18,7 +18,6 @@ function ComparePage() {
       try {
         const res = await GetApprovedPosts({ 
           pageSize: 1000 });
-        console.log(res?.data?.data);
         
         const posts = res?.data?.data;
         if (posts) {

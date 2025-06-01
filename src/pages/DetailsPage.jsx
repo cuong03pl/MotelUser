@@ -87,6 +87,7 @@ export default function DetailsPage() {
     fetchAPI();
   }, [post?.id]);
 
+  // Lấy các bài viết của người đăng
   useEffect(() => {
     if (!post?.id) return;
 
@@ -102,7 +103,7 @@ export default function DetailsPage() {
     fetchAPI();
   }, [post?.ownerId]);
 
-  // get count post
+  // Lấy số lượng bài viết của 1 user
   useEffect(() => {
     if (!post?.ownerId) return;
     const fetchAPI = async () => {
@@ -126,7 +127,7 @@ export default function DetailsPage() {
           },
         });
 
-        setFavourited(res?.data); // Chỉ cần cập nhật giá trị từ API
+        setFavourited(res?.data);
       } catch (error) {
         console.error("Error checking favorite:", error);
       }
@@ -135,28 +136,7 @@ export default function DetailsPage() {
     fetchAPI();
   }, [post?.id]);
 
-  // check deposite
-  useEffect(() => {
-    if (!user || !post?.id) return;
-
-    const fetchAPI = async () => {
-      try {
-        const res = await CheckDeposite({
-          params: {
-            userId: user?.id,
-            postId: post?.id,
-          },
-        });
-
-      } catch (error) {
-        console.error("Error checking favorite:", error);
-      }
-    };
-
-    fetchAPI();
-  }, [post?.id]);
-
-  const handleFavotite = async () => {
+  const handleFavorite = async () => {
     try {
       const res = await AddFavoritePost({
         params: {
@@ -203,6 +183,7 @@ export default function DetailsPage() {
           <div className=" flex flex-col gap-4">
             <div className="flex flex-col gap-4">
               <div className="max-h-[260px] h-[260px] w-full bg-white">
+                {/* Ảnh */}
                 <Swiper
                   className="mySwiper h-full"
                   spaceBetween={30}
@@ -231,6 +212,7 @@ export default function DetailsPage() {
                 </Swiper>
               </div>
               <div className="bg-white p-3 rounded-lg">
+                {/* Thông tin bài viết */}
                 <div className="py-5 ">
                   <h3 className="text-black text-[16px] font-semibold">{post?.title}</h3>
                   <div className="flex items-center gap-2 py-2">
@@ -294,12 +276,12 @@ export default function DetailsPage() {
                     <span class="font-bold">{convertPrice(post?.price)}</span>
                   </div>
                 </div>
-                {/* Description */}
                 <div className="py-5">
                   <h4 className="font-medium text-[18px]">Mô tả chi tiết</h4>
                   <div dangerouslySetInnerHTML={{ __html: post?.description }} />
                 </div>
 
+                {/* Vị trí */}
                 <div className="py-5">
                   <h4 className="font-medium text-[18px] mb-3">Vị trí</h4>
                   <div className="bg-white p-3 rounded-lg shadow-sm">
@@ -325,6 +307,7 @@ export default function DetailsPage() {
                     <Map address={post?.location} />
                   </div>
                 </div>
+                {/* Đặc điểm nổi bật */}
                 <div className="py-5">
                   <h2 className="text-xl font-semibold mb-4">Đặc điểm nổi bật</h2>
                   <AmenitiesIcons amenities={selectedFeatures} />
@@ -338,6 +321,7 @@ export default function DetailsPage() {
           </div>
         </div>
         <div className="w-full">
+          {/* Thông tin người đăng */}
           <div className="bg-white p-3">
             <div className="flex flex-col gap-3 items-center">
               <div className="border border-solid border-[#ccc] p-1 rounded-full">
@@ -405,7 +389,7 @@ export default function DetailsPage() {
                 </div>
                 <div class="flex gap-5 items-center py-3 w-full justify-between">
                   <Favourite
-                    onFavorite={handleFavotite}
+                    onFavorite={handleFavorite}
                     favourited={favourited}
                   />
 
@@ -462,6 +446,7 @@ export default function DetailsPage() {
       <div className="bg-white mt-5 p-3 rounded-md">
         <Comment slug={id} postId={post?.id} />
       </div>
+      {/* Tin đăng cùng khu vực */}
       <div className="bg-white mt-5 p-3 rounded-md">
         <div className="justify-between flex items-center">
           <h3 className="font-semibold">Tin đăng cùng khu vực </h3>
@@ -536,6 +521,7 @@ export default function DetailsPage() {
           </Swiper>
         </div>
       </div>
+      {/* Tin đăng khác của người đăng */}
       <div className="bg-white mt-5 p-3 rounded-md">
         <div className="justify-between flex items-center">
           <h3 className="font-semibold">

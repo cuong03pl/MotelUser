@@ -12,6 +12,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import sendTelegramMessage from "../../services/sendTele";
 import { convertPrice } from "../../utils/convertPrice";
+
+// config giống summernote 
 const modules = {
   toolbar: [
     [{ font: [] }],
@@ -41,8 +43,6 @@ export default function CreatePage() {
   const [price, setPrice] = useState("");
   const [area, setArea] = useState("");
   const [video, setVideo] = useState("");
-  const [fullname, setFullname] = useState("");
-  const [phone, setPhone] = useState("");
   const [selectedFeatures, setSelectedFeatures] = useState({
     "Đầy đủ nội thất": false,
     "Có máy lạnh": false,
@@ -186,6 +186,7 @@ export default function CreatePage() {
         position: "bottom-right",
         pauseOnHover: false,
       });
+      
     await CreatePost(formData)
       .then(async (res) => {
         const postId = res?.data?.id;
@@ -195,7 +196,8 @@ export default function CreatePage() {
           { headers: { "Content-Type": "application/json" } }
         ).then((res) => {
           // Send Telegram message after successful booking
-          const telegramMessage = `<b>🆕 Đơn hàng mới!</b>\n\n<b>📌 Tiêu đề:</b> ${title}\n<b>💰 Giá:</b> ${convertPrice(price)} đồng/tháng\n<b>📏 Diện tích:</b> ${area}m²\n<b>📍 Địa chỉ:</b> ${selectedInfoMore}, ${selectedWard?.label || ''}, ${selectedDistrict?.label || ''}, ${selectedProvince?.label || ''}\n\n<b>👤 Người đăng:</b> ${user?.fullName || 'Unknown User'}`;
+          const telegramMessage = `<b>🆕 Đơn hàng mới!</b>\n\n<b>📌 Tiêu đề:</b> <a href="${process.env.REACT_APP_FRONT_URL}/${slugs}">${title}</a>\n<b>💰 Giá:</b> ${convertPrice(price)} đồng/tháng\n<b>📏 Diện tích:</b> ${area}m²\n<b>📍 Địa chỉ:</b> ${selectedInfoMore}, ${selectedWard?.label || ''}, ${selectedDistrict?.label || ''}, ${selectedProvince?.label || ''}\n\n<b>👤 Người đăng:</b> ${user?.fullName || 'Unknown User'}\n\n${/cọc|đặt cọc|tiền cọc|đặt tiền cọc|cộc/i.test(description) ? "⚠️ <b>CHÚ Ý:</b> Bài đăng có đề cập đến CỌC, cần xem xét lại nội dung!" : ""}
+          `;
           sendTelegramMessage(telegramMessage);
           
           navigate(`/manage/pay/${slugs}`);

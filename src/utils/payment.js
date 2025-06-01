@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const STK = "0867086321";
+const STK = "9100002102003";
 const TYPE = "compact2";
-const ADDINFO = `Thanh toan coc tro ${
+const ADDINFO = `Thanh toan dang bai tro ${
   Math.floor(Math.random() * (10000000 - 1 + 1)) + 1
 }`;
 
@@ -18,7 +18,7 @@ export const paymentConfig = (amount) => {
 export const checkPayment = async () => {
   try {
     const response = await axios.get(
-      "https://script.google.com/macros/s/AKfycbwD1OGE8C50pUY6BzmGVw-r46ncJvRqGGgTJjQBm3nfTOZW2JNfXEHZSlOP0r79ILRbtQ/exec"
+      "https://script.google.com/macros/s/AKfycbxkB1pJe8BqGa6DNon_fihBoiVY3cdSf9FnI8uNR0zawqa0cMvI_OCYQY1tsUpmzJjjrA/exec"
     );
     const data = response.data.data[response.data.data.length - 1];
 

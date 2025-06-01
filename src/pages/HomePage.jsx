@@ -17,6 +17,8 @@ export default function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [totalPages, setTotalPage] = useState(1);
   const [totalPost, setTotalPost] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   
   const currentPage = Number(searchParams.get("page")) || 1;
   
@@ -24,6 +26,9 @@ export default function HomePage() {
   useEffect(() => {
     const fetchAPI = async () => {
       try {
+        setLoading(true);
+        setError(null);
+        
         let params = {
           page: currentPage,
           pageSize: 20, 
@@ -41,6 +46,9 @@ export default function HomePage() {
         setPosts(res?.data?.data);
       } catch (error) {
         console.error("Error fetching posts:", error);
+        setError('Không thể tải danh sách bài viết. Vui lòng thử lại sau.');
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -84,51 +92,37 @@ export default function HomePage() {
               </div>
             </div>
   
-            <Posts posts={posts} />
-            {totalPages > 0 && (
-              <div className="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t">
-                <span className="flex mt-2 sm:mt-auto sm:justify-center">
-                  <ReactPaginate
-                    nextLabel={
-                      <svg
-                        className="w-4 h-4 fill-current"
-                        aria-hidden="true"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                          clipRule="evenodd"
-                          fillRule="evenodd"
-                        ></path>
-                      </svg>
-                    }
-                    previousLabel={
-                      <svg
-                        className="w-4 h-4 fill-current"
-                        aria-hidden="true"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                          clipRule="evenodd"
-                          fillRule="evenodd"
-                        ></path>
-                      </svg>
-                    }
-                    breakLabel="..."
-                    pageCount={totalPages}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={handlePageClick}
-                    forcePage={currentPage - 1}
-                    containerClassName="inline-flex items-center space-x-2"
-                    pageClassName="px-3 py-1 rounded-md h-[40px] flex items-center text-[16px] cursor-pointer"
-                    activeClassName="bg-purple-600 text-white"
-                    previousClassName="px-3 py-1 rounded-l-md h-[40px] flex items-center text-[16px] cursor-pointer"
-                    nextClassName="px-3 py-1 rounded-r-md h-[40px] flex items-center text-[16px] cursor-pointer"
-                    pageLinkClassName="px-3 py-1 h-[40px] flex items-center"
-                  />
-                </span>
+            {error && (
+              <div className="mt-4 p-4 bg-red-50 text-red-600 rounded-lg">
+                {error}
+              </div>
+            )}
+
+            {loading ? (
+              <div className="flex justify-center items-center py-10">
+                <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+              </div>
+            ) : (
+              <Posts posts={posts} />
+            )}
+
+            {!loading && !error && posts?.length > 0 && (
+              <div className="flex justify-center mt-6">
+                <ReactPaginate
+                  breakLabel="..."
+                  nextLabel=">"
+                  onPageChange={handlePageClick}
+                  pageRangeDisplayed={5}
+                  pageCount={totalPages}
+                  previousLabel="<"
+                  renderOnZeroPageCount={null}
+                  className="flex items-center gap-2"
+                  pageClassName="px-3 py-1 h-[40px] flex items-center text-[16px] cursor-pointer"
+                  activeClassName="bg-blue-600 text-white rounded-md"
+                  previousClassName="px-3 py-1 rounded-l-md h-[40px] flex items-center text-[16px] cursor-pointer"
+                  nextClassName="px-3 py-1 rounded-r-md h-[40px] flex items-center text-[16px] cursor-pointer"
+                  pageLinkClassName="px-3 py-1 h-[40px] flex items-center"
+                />
               </div>
             )}
   

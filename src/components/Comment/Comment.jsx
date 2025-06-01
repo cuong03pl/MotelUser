@@ -23,7 +23,6 @@ export default function Comment({ slug, postId }) {
     });
 
   // toasty hiển thị thông báo thành công
-
   const successNotify = (message) =>
     toast.success(message, {
       position: "bottom-right",
