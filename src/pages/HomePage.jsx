@@ -100,14 +100,14 @@ export default function HomePage() {
 
             {loading ? (
               <div className="flex justify-center items-center py-10">
-                <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                <div className="w-8 h-8 border-4 border-blue border-t-transparent rounded-full animate-spin"></div>
               </div>
             ) : (
               <Posts posts={posts} />
             )}
 
-            {!loading && !error && posts?.length > 0 && (
-              <div className="flex justify-center mt-6">
+            
+              <div className="flex justify-center mt-6 mb-6">
                 <ReactPaginate
                   breakLabel="..."
                   nextLabel=">"
@@ -118,13 +118,12 @@ export default function HomePage() {
                   renderOnZeroPageCount={null}
                   className="flex items-center gap-2"
                   pageClassName="px-3 py-1 h-[40px] flex items-center text-[16px] cursor-pointer"
-                  activeClassName="bg-blue-600 text-white rounded-md"
-                  previousClassName="px-3 py-1 rounded-l-md h-[40px] flex items-center text-[16px] cursor-pointer"
-                  nextClassName="px-3 py-1 rounded-r-md h-[40px] flex items-center text-[16px] cursor-pointer"
+                  activeClassName="bg-blue text-white rounded-md"
+                  previousClassName="px-3 py-1 rounded-l-md h-[40px] flex items-center text-[16px] cursor-pointer bg-[#ccc]"
+                  nextClassName="px-3 py-1 rounded-r-md h-[40px] flex items-center text-[16px] cursor-pointer bg-[#ccc]"
                   pageLinkClassName="px-3 py-1 h-[40px] flex items-center"
                 />
               </div>
-            )}
   
           
           </div>

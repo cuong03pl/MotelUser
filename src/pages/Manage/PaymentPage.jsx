@@ -43,12 +43,10 @@ export default function PaymentPage() {
         if (res?.data) {
           setPost(res?.data);
           setSelectedFeatures(res?.data?.amenities);
-          
+
           const bookingRes = await GetBookingByPost(res?.data?.id);
           if (bookingRes?.data) {
-            
             setBooking(bookingRes?.data?.data[0]);
-            
           }
         }
       } catch (error) {}
@@ -61,7 +59,7 @@ export default function PaymentPage() {
     try {
       const res = await UpdateBookingStatus({
         params: { postId: post?.id, userId: user?.id },
-        headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json" },
       });
     } catch (error) {
       console.error(error);
@@ -76,18 +74,29 @@ export default function PaymentPage() {
     if (isDeposited) return;
     intervalRef.current = setInterval(async () => {
       const isCheck = await checkPayment();
+      // const isCheck = true;
       if (isCheck) {
         handleDeposit();
         clearInterval(intervalRef.current);
         setIsDeposited(true);
         successNotify("Thanh toán thành công");
-        
-        const telegramMessage = `<b>✅ Thanh toán thành công!</b>\n\n<b>📌 Tiêu đề:</b> ${post?.title}\n<b>💰 Giá:</b> ${convertPrice(post?.price)} đồng/tháng\n<b>📏 Diện tích:</b> ${post?.area}m²\n<b>📍 Địa chỉ:</b> ${post?.location?.addressLine}, ${post?.location?.ward}, ${post?.location?.district}, ${post?.location?.province}\n\n<b>👤 Người đăng:</b> ${user?.fullName || 'Unknown User'}`;
+
+        const telegramMessage = `<b>✅ Thanh toán thành công!</b>\n\n<b>📌 Tiêu đề:</b> ${
+          post?.title
+        }\n<b>💰 Giá:</b> ${convertPrice(
+          post?.price
+        )} đồng/tháng\n<b>📏 Diện tích:</b> ${
+          post?.area
+        }m²\n<b>📍 Địa chỉ:</b> ${post?.location?.addressLine}, ${
+          post?.location?.ward
+        }, ${post?.location?.district}, ${
+          post?.location?.province
+        }\n\n<b>👤 Người đăng:</b> ${user?.fullName || "Unknown User"}`;
         sendTelegramMessage(telegramMessage);
-        
-        navigate('/manage/posts');
+
+        navigate("/manage/posts");
       }
-    }, 5000);
+    }, 3000);
 
     return () => clearInterval(intervalRef.current);
   }, [post?.id]);
@@ -277,46 +286,68 @@ export default function PaymentPage() {
           <div class="w-full">
             <div class="text-black text-center">
               Quét mã QR để thanh toán
+              <p className="text-sm text-red font-bold">
+                (Vui lòng đợi sau khi quét mã và thanh toán.)
+              </p>
             </div>
             <div class="flex justify-center items-center mt-3">
-              <img src={booking ? paymentConfig(booking?.price * 1000000) : 10000000} alt="" />
+              <img
+                src={
+                  booking ? paymentConfig(booking?.price * 1000000) : 10000000
+                }
+                alt=""
+              />
             </div>
-            
+
             <div className="mt-6 bg-white rounded-lg shadow p-4">
-              <h3 className="text-lg font-semibold text-center mb-3">Bảng Phí</h3>
+              <h3 className="text-lg font-semibold text-center mb-3">
+                Bảng Phí
+              </h3>
               <div className="overflow-x-auto">
                 <table className="min-w-full border border-gray-200">
                   <thead>
                     <tr className="bg-gray-100">
-                      <th className="py-2 px-4 border-b border-r text-left">Giá thuê (triệu/tháng)</th>
+                      <th className="py-2 px-4 border-b border-r text-left">
+                        Giá thuê (triệu/tháng)
+                      </th>
                       <th className="py-2 px-4 border-b text-left">Phí</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className={`${post?.price < 3 ? 'bg-blue-50' : ''}`}>
-                      <td className="py-2 px-4 border-b border-r">Dưới 3 triệu</td>
+                    <tr className={`${post?.price < 3 ? "bg-blue-50" : ""}`}>
+                      <td className="py-2 px-4 border-b border-r">
+                        Dưới 3 triệu
+                      </td>
                       <td className="py-2 px-4 border-b">100.000 VND</td>
                     </tr>
-                    <tr className={`${post?.price >= 3 && post?.price <= 5 ? 'bg-blue-50' : ''}`}>
-                      <td className="py-2 px-4 border-b border-r">Từ 3 đến 5 triệu</td>
+                    <tr
+                      className={`${
+                        post?.price >= 3 && post?.price <= 5 ? "bg-blue-50" : ""
+                      }`}
+                    >
+                      <td className="py-2 px-4 border-b border-r">
+                        Từ 3 đến 5 triệu
+                      </td>
                       <td className="py-2 px-4 border-b">150.000 VND</td>
                     </tr>
-                    <tr className={`${post?.price > 5 ? 'bg-blue-50' : ''}`}>
-                      <td className="py-2 px-4 border-b border-r">Trên 5 triệu</td>
+                    <tr className={`${post?.price > 5 ? "bg-blue-50" : ""}`}>
+                      <td className="py-2 px-4 border-b border-r">
+                        Trên 5 triệu
+                      </td>
                       <td className="py-2 px-4 border-b">200.000 VND</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              
+
               <div className="mt-4 p-3 bg-gray-50 rounded border border-gray-200">
                 <p className="text-sm text-gray-700">
-                  <span className="font-medium">Phí thanh toán của bạn:</span> {' '}
-                  {post?.price < 3 
-                    ? '100.000 VND' 
-                    : post?.price <= 5 
-                      ? '150.000 VND' 
-                      : '200.000 VND'}
+                  <span className="font-medium">Phí thanh toán của bạn:</span>{" "}
+                  {post?.price < 3
+                    ? "100.000 VND"
+                    : post?.price <= 5
+                    ? "150.000 VND"
+                    : "200.000 VND"}
                 </p>
               </div>
             </div>
