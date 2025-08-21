@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import { CheckIcon, ErrorIcon, SendIcon } from "../Icon/Icon";
 
 const ChatWindow = ({
   conversation,
@@ -161,37 +162,14 @@ const ChatWindow = ({
                                   {message.isRead ? "Đã xem" : "Đã gửi"}
                                 </span>
                               )}
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              fill="currentColor"
-                              viewBox="0 0 16 16"
-                            >
-                              <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
-                            </svg>
+                            <CheckIcon className="w-3 h-3" />
                           </span>
                         )}
                       </div>
 
                       {message.sendFailed && (
                         <div className="text-xs text-red-400 mt-1 flex items-center">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="mr-1"
-                          >
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="12" y1="8" x2="12" y2="12"></line>
-                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                          </svg>
+                          <ErrorIcon className="mr-1 w-3 h-3" />
                           <span>Không gửi được!</span>
                           <button
                             className="ml-2 underline hover:text-red-300"
@@ -235,14 +213,7 @@ const ChatWindow = ({
             {sendingMessage ? (
               <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full" />
             ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="w-5 h-5"
-              >
-                <path d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
-              </svg>
+              <SendIcon className="w-5 h-5" />
             )}
           </button>
         </form>

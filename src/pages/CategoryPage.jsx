@@ -7,6 +7,7 @@ import Tags from "../components/Tags/Tags";
 import Filter from "../components/Filter/Filter";
 import ReactPaginate from "react-paginate";
 import { GetPostsByCategory } from "../services/fetchAPI";
+import { ChevronRightSmallIcon, ChevronLeftSmallIcon } from "../components/Icon/Icon";
 
 export default function CategoryPage() {
   const { slug } = useParams();
@@ -71,34 +72,14 @@ export default function CategoryPage() {
           </div>
           <Posts posts={posts} />
           {totalPages > 0 && (
-            <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t   ">
-              <span class="flex  mt-2 sm:mt-auto sm:justify-center">
+            <div className="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t">
+              <span className="flex mt-2 sm:mt-auto sm:justify-center">
                 <ReactPaginate
                   nextLabel={
-                    <svg
-                      class="w-4 h-4 fill-current"
-                      aria-hidden="true"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                        clip-rule="evenodd"
-                        fill-rule="evenodd"
-                      ></path>
-                    </svg>
+                    <ChevronRightSmallIcon className="w-4 h-4 fill-current" />
                   }
                   previousLabel={
-                    <svg
-                      class="w-4 h-4 fill-current"
-                      aria-hidden="true"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                        clip-rule="evenodd"
-                        fill-rule="evenodd"
-                      ></path>
-                    </svg>
+                    <ChevronLeftSmallIcon className="w-4 h-4 fill-current" />
                   }
                   breakLabel="..."
                   pageCount={totalPages}

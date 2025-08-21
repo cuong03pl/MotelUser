@@ -1,63 +1,60 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
+import { HeartFilledIcon, HeartOutlineIcon } from "../Icon/Icon";
 
 export default function Favourite({
   favourited,
   onFavorite,
   onlyIcon = false,
 }) {
-  // Xử lý yêu thích bài viết
-  const handleFavotite = () => {
-    onFavorite();
-  };
+  const user = useSelector((state) => state?.user?.user_data);
+  const token = useSelector((state) => state?.user?.user_token);
+  const navigate = useNavigate();
+  const location = useLocation();
   
   const [isAnimating, setIsAnimating] = useState(false);
-  
-  const handleClick = () => {
-    handleFavotite();
-    if (!favourited) {
-      setIsAnimating(true);
-      setTimeout(() => setIsAnimating(false), 1000);
+
+  // Xử lý yêu thích bài viết
+  const handleFavotite = () => {
+    // Kiểm tra đăng nhập
+    if (!user || !token) {
+      toast.error('Bạn cần đăng nhập để sử dụng tính năng này', {
+        position: 'bottom-right',
+        pauseOnHover: false,
+      });
+      // Lưu trang hiện tại và redirect về login
+      navigate('/login', { 
+        state: { from: location } 
+      });
+      return;
     }
+
+    // Trigger animation nếu user đã đăng nhập
+    setIsAnimating(true);
+    setTimeout(() => setIsAnimating(false), 300);
+    
+    onFavorite();
   };
-  
+
   return (
-    <div
-      onClick={handleClick}
-      className={`flex items-center space-x-1 cursor-pointer transition-all duration-300 
-        ${onlyIcon ? 'hover:scale-110' : 'hover:bg-gray-100 px-2 py-1 rounded-full'}`}
+    <button
+      onClick={handleFavotite}
+      className={`flex flex-row items-center gap-2 rounded-lg px-2 py-2 text-sm hover:text-red-500 hover:bg-gray-100 transition-all ${
+        onlyIcon ? "p-1" : ""
+      }`}
     >
       {favourited ? (
-        <svg
+        <HeartFilledIcon 
           className={`w-6 h-6 transform transition-transform ${isAnimating ? 'scale-125' : ''}`}
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 512 512"
-          fill="#fa6819"
-          strokeWidth="1.5"
-          stroke="currentColor"
-        >
-          <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
-        </svg>
+        />
       ) : (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="1.5"
-          stroke="currentColor"
+        <HeartOutlineIcon 
           className="w-6 h-6 hover:text-red-500 transition-colors"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
-          />
-        </svg>
+        />
       )}
-      {!onlyIcon && (
-        <span className={`text-[14px] font-medium ${favourited ? 'text-orange-600' : ''}`}>
-          {favourited ? "Bỏ lưu tin" : "Lưu tin"}
-        </span>
-      )}
-    </div>
+      {!onlyIcon && <span>Yêu thích</span>}
+    </button>
   );
 }

@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className="bg-gray-800 text-white pt-10 pb-6">
       <div className="container mx-auto max-w-6xl px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <h2 className="font-bold mb-5 text-base border-b border-gray-700 pb-2">VỀ PHONGTRO123.COM</h2>
             <ul>
@@ -68,54 +68,7 @@ export default function Footer() {
             </ul>
           </div>
           
-          <div>
-            <h2 className="font-bold mb-5 text-base border-b border-gray-700 pb-2">PHƯƠNG THỨC THANH TOÁN</h2>
-            <div className="grid grid-cols-3 gap-2">
-              <Link to={"/"} className="bg-white p-2 rounded hover:opacity-80 transition">
-                <img
-                  alt="MoMo payment method"
-                  className="h-8 w-auto object-contain"
-                  src="https://storage.googleapis.com/a1aa/image/xGiheZjRKG27GKj2mxHYXBqWn3jHS1PjuygGVPXXs03EqeIUA.jpg"
-                />
-              </Link>
-              <Link to={"/"} className="bg-white p-2 rounded hover:opacity-80 transition">
-                <img
-                  alt="Visa payment method"
-                  className="h-8 w-auto object-contain"
-                  src="https://storage.googleapis.com/a1aa/image/qNEp6iLJOU7mIFrhiG6czAeRRu4sQS9bpsXRfsQakMIEU9IUA.jpg"
-                />
-              </Link>
-              <Link to={"/"} className="bg-white p-2 rounded hover:opacity-80 transition">
-                <img
-                  alt="MasterCard payment method"
-                  className="h-8 w-auto object-contain"
-                  src="https://storage.googleapis.com/a1aa/image/498rnQ9WU2bGCxR2fLGSIuuprrLlsuajHFPBrT5HagzDqeIUA.jpg"
-                />
-              </Link>
-              <Link to={"/"} className="bg-white p-2 rounded hover:opacity-80 transition">
-                <img
-                  alt="JCB payment method"
-                  className="h-8 w-auto object-contain"
-                  src="https://storage.googleapis.com/a1aa/image/20qeR0oHx5SRIyFkedGZfaXOtpXnfm6X1fueOdtRaY0eCqeIUA.jpg"
-                />
-              </Link>
-              <Link to={"/"} className="bg-white p-2 rounded hover:opacity-80 transition">
-                <img
-                  alt="Internet Banking payment method"
-                  className="h-8 w-auto object-contain"
-                  src="https://storage.googleapis.com/a1aa/image/i7Y1eNSNT0UFGy5lf4CvQd6McVOhex500LQP6xpn1VQMo6RoA.jpg"
-                />
-              </Link>
-              <Link to={"/"} className="bg-white p-2 rounded hover:opacity-80 transition">
-                <img
-                  alt="Cash payment method"
-                  className="h-8 w-auto object-contain"
-                  src="https://storage.googleapis.com/a1aa/image/Mz3tkj2TwC7LGVmmBF9Z2jXedypnciKZbpFgTMTy2QxBqeIUA.jpg"
-                />
-              </Link>
-            </div>
-          </div>
-          
+     
           <div>
             <h2 className="font-bold mb-5 text-base border-b border-gray-700 pb-2">THEO DÕI PHONGTRO123.COM</h2>
             <div className="flex gap-4">
@@ -155,8 +108,8 @@ export default function Footer() {
         </div>
         
         <div className="mt-8 pt-6 border-t border-gray-700 text-center text-sm">
-          <p className="mb-2">© 2024 PhongTro123.com - All Rights Reserved</p>
-          <p>Địa chỉ: Số 1 Đường XYZ, Phường ABC, Quận DEF, Thành phố GHI, Việt Nam</p>
+          <p className="mb-2">© 2025 PhongTro123.com - All Rights Reserved</p>
+          <p>Địa chỉ: Số 298 Đ. Cầu Diễn, Minh Khai, Bắc Từ Liêm, Hà Nội, Việt Nam</p>
         </div>
       </div>
     </footer>

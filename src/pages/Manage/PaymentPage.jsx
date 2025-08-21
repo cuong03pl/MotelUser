@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 import Map from "../../components/Map/Map";
 import { convertPrice } from "../../utils/convertPrice";
 import sendTelegramMessage from "../../services/sendTele";
+import { LocationIcon } from "../../components/Icon/Icon";
 export default function PaymentPage() {
   const { postId } = useParams();
   const user = useSelector((state) => state?.user?.user_data);
@@ -141,18 +142,7 @@ export default function PaymentPage() {
                     {post?.title}
                   </h3>
                   <div className="flex items-center gap-2 py-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      className="w-[13px] h-[13px]"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
+                    <LocationIcon className="w-[13px] h-[13px]" />
                     <span className="text-[13px]">
                       {post?.location?.addressLine}, {post?.location?.ward},{" "}
                       {post?.location?.district}, {post?.location?.province}
@@ -214,18 +204,7 @@ export default function PaymentPage() {
                   <div className="bg-white p-3 rounded-lg shadow-sm">
                     <div className="mb-3">
                       <div className="flex items-center gap-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          className="w-[16px] h-[16px] text-red-500"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
-                            clip-rule="evenodd"
-                          />
-                        </svg>
+                        <LocationIcon className="w-[16px] h-[16px] text-red-500" />
                         <span className="text-[14px] font-medium">
                           {post?.location?.addressLine}, {post?.location?.ward},{" "}
                           {post?.location?.district}, {post?.location?.province}
