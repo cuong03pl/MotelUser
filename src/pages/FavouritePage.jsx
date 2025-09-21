@@ -10,13 +10,13 @@ import { GetUserFavorite } from "../services/fetchAPI";
 
 export default function FavouritePage() {
   const [posts, setPosts] = useState([]);
-  const user = useSelector((state) => state?.user?.user_data);
+  const user = useSelector((state) => state?.user?.user_data?.data);
   // Lấy danh sách bài viết được yêu thích của user
   useEffect(() => {
     const fetchAPI = async () => {
       try {
         const res = await GetUserFavorite(user?.id);
-        setPosts(res?.data);
+        setPosts(res?.data?.data);
       } catch (error) {
         console.error("Error fetching posts:", error);
       }

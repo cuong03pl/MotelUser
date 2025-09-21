@@ -9,9 +9,8 @@ import getLastDate from "../../utils/getLastDate";
 import { convertPrice } from "../../utils/convertPrice";
 
 export default function PostItem({ data, gridMode }) {
-  
   const [favourited, setFavourited] = useState(false);
-  const user = useSelector((state) => state?.user?.user_data);
+  const user = useSelector((state) => state?.user?.user_data?.data);
 
   useEffect(() => {
     if (!user || !data?.id) return;
@@ -19,13 +18,11 @@ export default function PostItem({ data, gridMode }) {
     const fetchAPI = async () => {
       try {
         const res = await CheckFavorite({
-          params: {
-            userId: user?.id,
-            postId: data?.id,
-          },
+          userId: user?.id,
+          postId: data?.id,
         });
 
-        setFavourited(res?.data); // Chỉ cần cập nhật giá trị từ API
+        setFavourited(res?.data?.data?.isFavorite); // Chỉ cần cập nhật giá trị từ API
       } catch (error) {
         console.error("Error checking favorite:", error);
       }
@@ -37,10 +34,8 @@ export default function PostItem({ data, gridMode }) {
   const handleFavotite = async () => {
     try {
       const res = await AddFavoritePost({
-        params: {
-          userId: user?.id,
-          postId: data?.id,
-        },
+        userId: user?.id,
+        postId: data?.id,
       });
       setFavourited((prev) => !prev);
     } catch (error) {
@@ -68,11 +63,10 @@ export default function PostItem({ data, gridMode }) {
                   {data?.title}
                 </Link>
               </div>
-            
+
               <div className="space-y-1 mt-1">
                 <p className="text-red-600 text-[16px] font-semibold">
                   {data?.price} triệu/tháng
-                  
                 </p>
                 <p className="text-gray-700 text-[14px]">
                   <span className="font-semibold">{data?.area} m²</span>
@@ -97,7 +91,6 @@ export default function PostItem({ data, gridMode }) {
                   <span className="ml-2 text-[12px] font-semibold">
                     {data?.user?.fullName}
                   </span>
-                  
                 </div>
               </div>
               {user && (
@@ -130,19 +123,20 @@ export default function PostItem({ data, gridMode }) {
                     {data?.title}
                   </Link>
                 </div>
-             
+
                 <div className="flex gap-1 items-center mt-2">
                   <p className="text-red-600 text-[16px] font-semibold">
                     {convertPrice(data?.price)}/tháng
                   </p>
-                 
+
                   <div className="">•</div>
                   <p className="text-black font-bold text-[12px]">
                     {data?.area} m²
                   </p>
                 </div>
                 <p className="text-gray-500 text-[12px] mt-1">
-                  {getProvince(data?.location?.addressLine)} • {getLastDate(data?.createAt)} ngày trước • Tin ưu tiên
+                  {getProvince(data?.location?.addressLine)} •{" "}
+                  {getLastDate(data?.createAt)} ngày trước • Tin ưu tiên
                 </p>
               </div>
               <div className="flex justify-between mt-3 pt-3 border-t border-gray-100">
@@ -160,7 +154,6 @@ export default function PostItem({ data, gridMode }) {
                     <span className="ml-2 text-[12px] font-semibold">
                       {data?.user?.fullName}
                     </span>
-                   
                   </div>
                 </div>
                 {user && (

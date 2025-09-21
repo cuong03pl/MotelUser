@@ -34,7 +34,7 @@ export default function Navbar() {
     },
   ];
   const dispatch = useDispatch();
-  const user = useSelector((state) => state?.user?.user_data);
+  const user = useSelector((state) => state?.user?.user_data?.data);
   const location = useLocation();
 
   return (

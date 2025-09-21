@@ -4,8 +4,6 @@ import { convertPrice } from "../utils/convertPrice";
 import { Link } from "react-router-dom";
 import { convertTime } from "../utils/convertTime";
 
-
-
 function ComparePage() {
   const [motel1Slug, setMotel1Slug] = useState("");
   const [motel2Slug, setMotel2Slug] = useState("");
@@ -16,13 +14,13 @@ function ComparePage() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await GetApprovedPosts({ 
-          pageSize: 1000 });
-        
+        const res = await GetApprovedPosts({
+          pageSize: 1000,
+        });
         const posts = res?.data?.data;
         if (posts) {
           setMotelOptions(
-            posts.map((post) => ({
+            posts?.data.map((post) => ({
               value: post.slug,
               label: post.title,
             }))
@@ -74,7 +72,10 @@ function ComparePage() {
           <div className="grid grid-cols-3 gap-4 p-3 border-b">
             <div className="font-semibold text-gray-700"></div>
             <div className="space-y-2">
-              <label htmlFor="motel1" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="motel1"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Nhà trọ 1
               </label>
               <select
@@ -92,7 +93,10 @@ function ComparePage() {
               </select>
             </div>
             <div className="space-y-2">
-              <label htmlFor="motel2" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="motel2"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Nhà trọ 2
               </label>
               <select
@@ -111,15 +115,16 @@ function ComparePage() {
             </div>
           </div>
 
-         
-
           {/* Tiêu đề */}
           <div className="grid grid-cols-3 gap-4 p-6 border-b">
             <div className="font-semibold text-gray-700">Tiêu đề</div>
             <div className="font-medium">
               {motel1 ? (
-                <Link to={`/details/${motel1.slug}`} className="text-blue-600 hover:underline">
-                  {motel1.title}
+                <Link
+                  to={`/details/${motel1?.data.slug}`}
+                  className="text-blue-600 hover:underline"
+                >
+                  {motel1?.data?.title}
                 </Link>
               ) : (
                 "-"
@@ -127,8 +132,11 @@ function ComparePage() {
             </div>
             <div className="font-medium">
               {motel2 ? (
-                <Link to={`/details/${motel2.slug}`} className="text-blue-600 hover:underline">
-                  {motel2.title}
+                <Link
+                  to={`/details/${motel2?.data?.slug}`}
+                  className="text-blue-600 hover:underline"
+                >
+                  {motel2?.data?.title}
                 </Link>
               ) : (
                 "-"
@@ -139,31 +147,41 @@ function ComparePage() {
           <div className="divide-y divide-gray-200">
             <div className="grid grid-cols-3 gap-4 p-6">
               <div className="font-semibold text-gray-700">Giá thuê</div>
-              <div className="text-red-600 font-semibold">{motel1 ? convertPrice(motel1.price) + "/tháng" : "-"}</div>
-              <div className="text-red-600 font-semibold">{motel2 ? convertPrice(motel2.price) + "/tháng" : "-"}</div>
+              <div className="text-red-600 font-semibold">
+                {motel1 ? convertPrice(motel1?.data?.price) + "/tháng" : "-"}
+              </div>
+              <div className="text-red-600 font-semibold">
+                {motel2 ? convertPrice(motel2?.data?.price) + "/tháng" : "-"}
+              </div>
             </div>
 
             <div className="grid grid-cols-3 gap-4 p-6">
               <div className="font-semibold text-gray-700">Diện tích</div>
-              <div>{motel1 ? `${motel1.area}m²` : "-"}</div>
-              <div>{motel2 ? `${motel2.area}m²` : "-"}</div>
+              <div>{motel1 ? `${motel1?.data?.area}m²` : "-"}</div>
+              <div>{motel2 ? `${motel2?.data?.area}m²` : "-"}</div>
             </div>
 
             <div className="grid grid-cols-3 gap-4 p-6">
               <div className="font-semibold text-gray-700">Địa chỉ</div>
               <div className="text-gray-700 text-sm">
-                {motel1 && motel1.location ? (
+                {motel1 && motel1?.data?.location ? (
                   <div>
-                    {motel1.location.addressLine}, {motel1.location.ward}, {motel1.location.district}, {motel1.location.province}
+                    {motel1?.data?.location.addressLine},{" "}
+                    {motel1?.data?.location.ward},{" "}
+                    {motel1?.data?.location.district},{" "}
+                    {motel1?.data?.location.province}
                   </div>
                 ) : (
                   "-"
                 )}
               </div>
               <div className="text-gray-700 text-sm">
-                {motel2 && motel2.location ? (
+                {motel2 && motel2?.data?.location ? (
                   <div>
-                    {motel2.location.addressLine}, {motel2.location.ward}, {motel2.location.district}, {motel2.location.province}
+                    {motel2?.data?.location.addressLine},{" "}
+                    {motel2?.data?.location.ward},{" "}
+                    {motel2?.data?.location.district},{" "}
+                    {motel2?.data?.location.province}
                   </div>
                 ) : (
                   "-"
@@ -174,12 +192,20 @@ function ComparePage() {
             <div className="grid grid-cols-3 gap-4 p-6">
               <div className="font-semibold text-gray-700">Chủ nhà</div>
               <div>
-                {motel1 && motel1.user ? (
+                {motel1 && motel1?.data?.user ? (
                   <div className="flex items-center space-x-2">
-                    <img src={motel1.user.avatar} alt="avatar" className="w-8 h-8 rounded-full object-cover" />
+                    <img
+                      src={motel1?.data?.user.avatar}
+                      alt="avatar"
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
                     <div>
-                      <div className="font-medium">{motel1.user.fullName}</div>
-                      <div className="text-sm text-gray-500">{motel1.user.phoneNumber}</div>
+                      <div className="font-medium">
+                        {motel1?.data?.user.fullName}
+                      </div>
+                      <div className="text-sm text-gray-500">
+                        {motel1?.data?.user.phoneNumber}
+                      </div>
                     </div>
                   </div>
                 ) : (
@@ -187,12 +213,20 @@ function ComparePage() {
                 )}
               </div>
               <div>
-                {motel2 && motel2.user ? (
+                {motel2 && motel2?.data?.user ? (
                   <div className="flex items-center space-x-2">
-                    <img src={motel2.user.avatar} alt="avatar" className="w-8 h-8 rounded-full object-cover" />
+                    <img
+                      src={motel2?.data?.user.avatar}
+                      alt="avatar"
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
                     <div>
-                      <div className="font-medium">{motel2.user.fullName}</div>
-                      <div className="text-sm text-gray-500">{motel2.user.phoneNumber}</div>
+                      <div className="font-medium">
+                        {motel2?.data?.user.fullName}
+                      </div>
+                      <div className="text-sm text-gray-500">
+                        {motel2?.data?.user.phoneNumber}
+                      </div>
                     </div>
                   </div>
                 ) : (
@@ -201,28 +235,26 @@ function ComparePage() {
               </div>
             </div>
 
-            
-
             <div className="grid grid-cols-3 gap-4 p-6">
               <div className="font-semibold text-gray-700">Tiện nghi</div>
               <div className="space-y-1">
-                {motel1 && motel1.amenities ? (
+                {motel1 && motel1?.data?.amenities ? (
                   <div className="flex flex-wrap gap-2">
-                    {typeof motel1.amenities === "object"
-                      ? Object.keys(motel1.amenities).map((amenity) => (
-                        <span
-                          key={amenity}
-                          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                            motel1.amenities[amenity] 
-                              ? "bg-blue-100 text-blue-800" 
-                              : "bg-gray-100 text-gray-800 line-through"
-                          }`}
-                        >
-                          {amenity}
-                        </span>
-                      ))
-                      : Array.isArray(motel1.amenities)
-                        ? motel1.amenities.map((amenity) => (
+                    {typeof motel1?.data?.amenities === "object"
+                      ? Object.keys(motel1?.data?.amenities).map((amenity) => (
+                          <span
+                            key={amenity}
+                            className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                              motel1?.data?.amenities[amenity]
+                                ? "bg-blue-100 text-blue-800"
+                                : "bg-gray-100 text-gray-800 line-through"
+                            }`}
+                          >
+                            {amenity}
+                          </span>
+                        ))
+                      : Array.isArray(motel1?.data?.amenities)
+                      ? motel1?.data?.amenities.map((amenity) => (
                           <span
                             key={amenity}
                             className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
@@ -230,30 +262,30 @@ function ComparePage() {
                             {amenity}
                           </span>
                         ))
-                        : motel1.amenities}
+                      : motel1?.data?.amenities}
                   </div>
                 ) : (
                   "-"
                 )}
               </div>
               <div className="space-y-1">
-                {motel2 && motel2.amenities ? (
+                {motel2 && motel2?.data?.amenities ? (
                   <div className="flex flex-wrap gap-2">
-                    {typeof motel2.amenities === "object"
-                      ? Object.keys(motel2.amenities).map((amenity) => (
-                        <span
-                          key={amenity}
-                          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                            motel2.amenities[amenity] 
-                              ? "bg-blue-100 text-blue-800" 
-                              : "bg-gray-100 text-gray-800 line-through"
-                          }`}
-                        >
-                          {amenity}
-                        </span>
-                      ))
-                      : Array.isArray(motel2.amenities)
-                        ? motel2.amenities.map((amenity) => (
+                    {typeof motel2?.data?.amenities === "object"
+                      ? Object.keys(motel2?.data?.amenities).map((amenity) => (
+                          <span
+                            key={amenity}
+                            className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                              motel2?.data?.amenities[amenity]
+                                ? "bg-blue-100 text-blue-800"
+                                : "bg-gray-100 text-gray-800 line-through"
+                            }`}
+                          >
+                            {amenity}
+                          </span>
+                        ))
+                      : Array.isArray(motel2?.data?.amenities)
+                      ? motel2?.data?.amenities.map((amenity) => (
                           <span
                             key={amenity}
                             className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
@@ -261,7 +293,7 @@ function ComparePage() {
                             {amenity}
                           </span>
                         ))
-                        : motel2.amenities}
+                      : motel2?.data?.amenities}
                   </div>
                 ) : (
                   "-"
@@ -271,19 +303,18 @@ function ComparePage() {
           </div>
         </div>
 
-        {/* Hành động */}
         <div className="flex justify-center space-x-4">
           {motel1 && (
-            <Link 
-              to={`/details/${motel1.slug}`} 
+            <Link
+              to={`/details/${motel1?.data?.slug}`}
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200"
             >
               Xem chi tiết nhà trọ 1
             </Link>
           )}
           {motel2 && (
-            <Link 
-              to={`/details/${motel2.slug}`} 
+            <Link
+              to={`/details/${motel2?.data?.slug}`}
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200"
             >
               Xem chi tiết nhà trọ 2

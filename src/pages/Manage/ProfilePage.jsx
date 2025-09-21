@@ -8,7 +8,7 @@ import { UpdateUser } from "../../services/fetchAPI";
 
 export default function ProfilePage() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state?.user?.user_data);
+  const user = useSelector((state) => state?.user?.user_data?.data);
   const [phone, setPhone] = useState(user?.phoneNumber);
   const [fullname, setFullname] = useState(user?.fullName);
 

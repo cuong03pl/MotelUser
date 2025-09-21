@@ -8,7 +8,7 @@ import { CreateReport, GetReports } from "../../services/fetchAPI";
 export default function ReportModal({ onClose, postId }) {
   const [reason, setReason] = useState("");
   const [note, setNote] = useState("");
-  const user = useSelector((state) => state?.user?.user_data);
+  const user = useSelector((state) => state?.user?.user_data?.data);
 
   // Xử lý báo cáo bài viết
   const handleReport = async () => {
@@ -28,7 +28,7 @@ export default function ReportModal({ onClose, postId }) {
         setNote("");
         setReason("");
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
   return (
     <div className="w-[300px]">

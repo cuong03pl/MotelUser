@@ -19,7 +19,7 @@ import { GetCategories } from "../services/fetchAPI";
 export default function Header() {
   const [categories, setCategories] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const user = useSelector((state) => state?.user?.user_data);
+  const user = useSelector((state) => state?.user?.user_data?.data);
   const token = useSelector((state) => state?.user?.user_token);
   const { slug } = useParams();
   const isLoggedIn = !!user || !!token;

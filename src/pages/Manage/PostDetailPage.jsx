@@ -58,7 +58,7 @@ export default function PostDetailPage() {
   const [selectedWardId, setSelectedWardId] = useState(null);
   const { id } = useParams();
 
-  const user = useSelector((state) => state?.user?.user_data);
+  const user = useSelector((state) => state?.user?.user_data?.data);
 
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);

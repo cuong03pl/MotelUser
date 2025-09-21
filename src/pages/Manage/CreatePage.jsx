@@ -54,7 +54,7 @@ export default function CreatePage() {
     "Có hầm để xe": false,
   });
   const [images, setImages] = useState([]);
-  const user = useSelector((state) => state?.user?.user_data);
+  const user = useSelector((state) => state?.user?.user_data?.data);
   const navigate = useNavigate();
   // Xử lý khi upload file
   const handleFileChange = (event) => {
@@ -121,7 +121,7 @@ export default function CreatePage() {
     const fetchProvinces = async () => {
       await GetCategories().then((res) =>
         setCategories(
-          res.data.map((data) => {
+          res.data?.data.map((data) => {
             return { value: data?.id, label: data?.name };
           })
         )

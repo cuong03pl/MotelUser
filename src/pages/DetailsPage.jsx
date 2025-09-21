@@ -49,7 +49,7 @@ export default function DetailsPage() {
   const [userPosts, setUserPosts] = useState([]);
   const [countPost, setCountPost] = useState(0);
   const [favourited, setFavourited] = useState(false);
-  const user = useSelector((state) => state?.user?.user_data);
+  const user = useSelector((state) => state?.user?.user_data?.data);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [selectedFeatures, setSelectedFeatures] = useState({
@@ -131,13 +131,11 @@ export default function DetailsPage() {
     const fetchAPI = async () => {
       try {
         const res = await CheckFavorite({
-          params: {
-            userId: user?.id,
-            postId: post?.id,
-          },
+          userId: user?.id,
+          postId: post?.id,
         });
 
-        setFavourited(res?.data);
+        setFavourited(res?.data?.data?.isFavorite);
       } catch (error) {
         console.error("Error checking favorite:", error);
       }
@@ -149,10 +147,8 @@ export default function DetailsPage() {
   const handleFavorite = async () => {
     try {
       const res = await AddFavoritePost({
-        params: {
-          userId: user?.id,
-          postId: post?.id,
-        },
+        userId: user?.id,
+        postId: post?.id,
       });
       setFavourited((prev) => !prev);
     } catch (error) {

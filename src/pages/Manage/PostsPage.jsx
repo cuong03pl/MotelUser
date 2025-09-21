@@ -11,12 +11,12 @@ export default function PostsPage() {
   const [posts, setPosts] = useState([]);
 
   const [isReload, setIsReload] = useState(false);
-  const user = useSelector((state) => state?.user?.user_data);
+  const user = useSelector((state) => state?.user?.user_data?.data);
   // Lấy ra các bài viết của user đang đăng nhập
   useEffect(() => {
     const fetchAPI = async () => {
       await GetUserPosts(user?.id).then((res) => {
-        setPosts(res?.data);
+        setPosts(res?.data?.data);
       });
     };
 

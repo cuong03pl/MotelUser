@@ -57,7 +57,7 @@ export const CheckHasPaid = async (params) => {
   return res;
 };
 export const GetUserFavorite = async (id) => {
-  const res = await get(`Users/users/${id}/favorites`);
+  const res = await get(`Users/${id}/favorites`);
   return res;
 };
 export const GetUserBookings = async (id) => {
@@ -158,22 +158,22 @@ export const DeletePost = async (id, params) => {
 };
 // login
 export const Login = async (params) => {
-  const res = await post(`Auth/login`, params);
+  const res = await post(`Auths/login`, params);
   return res;
 };
 
 export const Register = async (params) => {
-  const res = await post(`Auth/register`, params);
+  const res = await post(`Auths/register`, params);
   return res;
 };
 
 export const ForgotPassword = async (params) => {
-  const res = await post(`Auth/forgot-password`, params);
+  const res = await post(`Auths/forgot-password`, params);
   return res;
 };
 
 export const ResetPassword = async (params) => {
-  const res = await post(`Auth/reset-password`, params);
+  const res = await post(`Auths/reset-password`, params);
   return res;
 };
 

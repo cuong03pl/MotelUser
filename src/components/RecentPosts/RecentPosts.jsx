@@ -23,7 +23,7 @@ export default function RecentPosts() {
       <div className="flex flex-col items-center gap-2">
         {latestPosts?.map((post, index) => {
           return (
-            <div className="flex gap-2 items-center">
+            <div key={index} className="flex gap-2 items-center">
               <img
                 className="min-w-[80px] h-[80px] rounded-lg block"
                 src={`${process.env.REACT_APP_API_URL}/${post?.imageUrls[0]}`}

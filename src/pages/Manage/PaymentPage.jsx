@@ -20,7 +20,7 @@ import sendTelegramMessage from "../../services/sendTele";
 import { LocationIcon } from "../../components/Icon/Icon";
 export default function PaymentPage() {
   const { postId } = useParams();
-  const user = useSelector((state) => state?.user?.user_data);
+  const user = useSelector((state) => state?.user?.user_data?.data);
   const [isDeposited, setIsDeposited] = useState(false);
   const [post, setPost] = useState(null);
   const [booking, setBooking] = useState(null);
@@ -59,7 +59,8 @@ export default function PaymentPage() {
   const handleDeposit = async () => {
     try {
       const res = await UpdateBookingStatus({
-        params: { postId: post?.id, userId: user?.id },
+        postId: post?.id,
+        userId: user?.id,
         headers: { "Content-Type": "application/json" },
       });
     } catch (error) {

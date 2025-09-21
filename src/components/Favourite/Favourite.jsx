@@ -9,24 +9,24 @@ export default function Favourite({
   onFavorite,
   onlyIcon = false,
 }) {
-  const user = useSelector((state) => state?.user?.user_data);
+  const user = useSelector((state) => state?.user?.user_data?.data);
   const token = useSelector((state) => state?.user?.user_token);
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const [isAnimating, setIsAnimating] = useState(false);
 
   // Xử lý yêu thích bài viết
   const handleFavotite = () => {
     // Kiểm tra đăng nhập
     if (!user || !token) {
-      toast.error('Bạn cần đăng nhập để sử dụng tính năng này', {
-        position: 'bottom-right',
+      toast.error("Bạn cần đăng nhập để sử dụng tính năng này", {
+        position: "bottom-right",
         pauseOnHover: false,
       });
       // Lưu trang hiện tại và redirect về login
-      navigate('/login', { 
-        state: { from: location } 
+      navigate("/login", {
+        state: { from: location },
       });
       return;
     }
@@ -34,7 +34,7 @@ export default function Favourite({
     // Trigger animation nếu user đã đăng nhập
     setIsAnimating(true);
     setTimeout(() => setIsAnimating(false), 300);
-    
+
     onFavorite();
   };
 
@@ -46,13 +46,13 @@ export default function Favourite({
       }`}
     >
       {favourited ? (
-        <HeartFilledIcon 
-          className={`w-6 h-6 transform transition-transform ${isAnimating ? 'scale-125' : ''}`}
+        <HeartFilledIcon
+          className={`w-6 h-6 transform transition-transform ${
+            isAnimating ? "scale-125" : ""
+          }`}
         />
       ) : (
-        <HeartOutlineIcon 
-          className="w-6 h-6 hover:text-red-500 transition-colors"
-        />
+        <HeartOutlineIcon className="w-6 h-6 hover:text-red-500 transition-colors" />
       )}
       {!onlyIcon && <span>Yêu thích</span>}
     </button>

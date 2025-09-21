@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function Header() {
-  const user = useSelector((state) => state?.user?.user_data);
+  const user = useSelector((state) => state?.user?.user_data?.data);
 
   return (
     <nav class="bg-blue text-white py-2 fixed w-full h-[48px] z-99999">

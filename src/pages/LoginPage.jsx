@@ -18,9 +18,9 @@ export default function LoginPage() {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  
+
   const from = location.state?.from || "/";
-  
+
   // validate form đăng nhập
   const schema = yup
     .object({
@@ -53,27 +53,27 @@ export default function LoginPage() {
       position: "bottom-right",
       pauseOnHover: false,
     });
-    
+
   const handleLogin = async () => {
     try {
       const res = await Login({
         email,
         password,
       });
-      
+
       if (res.data) {
         // Lưu token vào Redux
-        dispatch(setUserToken(res.data));
-        
+        dispatch(setUserToken(res.data?.data?.token));
+
         // Giải mã token để lấy thông tin user
-        const user_data = jwtDecode(res.data);
-        
+        const user_data = jwtDecode(res.data?.data?.token);
+
         // Lấy thông tin chi tiết của user từ API
         const userResponse = await GetUserByToken(user_data?.sub);
-        
+
         // Lưu thông tin user vào Redux
         dispatch(setUser(userResponse?.data));
-        
+
         // Chuyển hướng sau khi đã lưu thông tin user
         navigate(from);
       } else {
@@ -237,7 +237,7 @@ export default function LoginPage() {
                       className="w-full rounded-lg border border-stroke bg-transparent py-2 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
                     <span className="absolute right-4 top-2">
-                     <EmailIcon className="w-[22px] h-[22px]" />
+                      <EmailIcon className="w-[22px] h-[22px]" />
                     </span>
                   </div>
                   {errors.email && (
@@ -277,7 +277,7 @@ export default function LoginPage() {
                           onClick={() => setIsShowPass(true)}
                           className=""
                         >
-                         <EyeOpenIcon className="w-[22px] h-[22px]" />
+                          <EyeOpenIcon className="w-[22px] h-[22px]" />
                         </button>
                       )}
                     </span>

@@ -13,7 +13,7 @@ export default function Comment({ slug, postId }) {
   const [comments, setComments] = useState([]);
   const [content, setContent] = useState(null);
   const [isReload, setIsReload] = useState(false);
-  const user = useSelector((state) => state?.user?.user_data);
+  const user = useSelector((state) => state?.user?.user_data?.data);
 
   // toasty hiển thị thông báo lỗi
   const errorNotify = (message) =>

@@ -14,7 +14,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import useSignalR from "../hooks/useSignalR";
 
 const ChatPage = () => {
-  const user = useSelector((state) => state?.user?.user_data);
+  const user = useSelector((state) => state?.user?.user_data?.data);
   const [conversations, setConversations] = useState([]);
   const [currentConversation, setCurrentConversation] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -145,8 +145,6 @@ const ChatPage = () => {
     if (!mountedRef.current || !currentConversation) return;
 
     const fetchMessages = async () => {
-     
-
       try {
         setLoading(true);
         const response = await GetMessages(currentConversation?.id);
@@ -186,7 +184,6 @@ const ChatPage = () => {
   }, [currentConversation, isConnected, joinConversation]);
 
   const handleSelectConversation = (conversation) => {
-
     setCurrentConversation(conversation);
     navigate(`/chat/${conversation?.id}`);
   };

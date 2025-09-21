@@ -7,7 +7,10 @@ import Tags from "../components/Tags/Tags";
 import Filter from "../components/Filter/Filter";
 import ReactPaginate from "react-paginate";
 import { GetPostsByCategory } from "../services/fetchAPI";
-import { ChevronRightSmallIcon, ChevronLeftSmallIcon } from "../components/Icon/Icon";
+import {
+  ChevronRightSmallIcon,
+  ChevronLeftSmallIcon,
+} from "../components/Icon/Icon";
 
 export default function CategoryPage() {
   const { slug } = useParams();
@@ -29,8 +32,9 @@ export default function CategoryPage() {
           maxArea: searchParams.get("maxArea") || null,
         };
         const res = await GetPostsByCategory(slug, { params });
-        setPosts(res?.data?.data);
-        setTotalPage(res?.data?.totalPages);
+
+        setPosts(res?.data?.data?.data);
+        setTotalPage(res?.data?.data?.totalPages);
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
