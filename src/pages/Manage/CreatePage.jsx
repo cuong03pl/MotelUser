@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import sendTelegramMessage from "../../services/sendTele";
 import { convertPrice } from "../../utils/convertPrice";
 
-// config giống summernote 
+// config giống summernote
 const modules = {
   toolbar: [
     [{ font: [] }],
@@ -65,7 +65,7 @@ export default function CreatePage() {
   // Lấy ra các tỉnh thành phố
   useEffect(() => {
     const fetchProvinces = async () => {
-      const response = await fetch("https://provinces.open-api.vn/api/p");
+      const response = await fetch("https://provinces.open-api.vn/api/v1/p");
       const data = await response.json();
       const provinceOptions = data.map((province) => ({
         value: province.name,
@@ -81,7 +81,7 @@ export default function CreatePage() {
   useEffect(() => {
     const fetchDistricts = async () => {
       const response = await fetch(
-        `https://provinces.open-api.vn/api/p/${selectedProvince?.code}?depth=2`
+        `https://provinces.open-api.vn/api/v1/p/${selectedProvince?.code}?depth=2`
       );
       const data = await response.json();
 
@@ -102,7 +102,7 @@ export default function CreatePage() {
   useEffect(() => {
     const fetchDistricts = async () => {
       const response = await fetch(
-        `https://provinces.open-api.vn/api/d/${selectedDistrict?.code}?depth=2`
+        `https://provinces.open-api.vn/api/v1/d/${selectedDistrict?.code}?depth=2`
       );
       const data = await response.json();
       const wardOptions = data?.wards.map((ward) => ({
@@ -186,7 +186,7 @@ export default function CreatePage() {
         position: "bottom-right",
         pauseOnHover: false,
       });
-      
+
     await CreatePost(formData)
       .then(async (res) => {
         const postId = res?.data?.id;
@@ -196,10 +196,22 @@ export default function CreatePage() {
           { headers: { "Content-Type": "application/json" } }
         ).then((res) => {
           // Send Telegram message after successful booking
-          const telegramMessage = `<b>🆕 Đơn hàng mới!</b>\n\n<b>📌 Tiêu đề:</b> <a href="${process.env.REACT_APP_FRONT_URL}/${slugs}">${title}</a>\n<b>💰 Giá:</b> ${convertPrice(price)} đồng/tháng\n<b>📏 Diện tích:</b> ${area}m²\n<b>📍 Địa chỉ:</b> ${selectedInfoMore}, ${selectedWard?.label || ''}, ${selectedDistrict?.label || ''}, ${selectedProvince?.label || ''}\n\n<b>👤 Người đăng:</b> ${user?.fullName || 'Unknown User'}\n\n${/cọc|đặt cọc|tiền cọc|đặt tiền cọc|cộc/i.test(description) ? "⚠️ <b>CHÚ Ý:</b> Bài đăng có đề cập đến CỌC, cần xem xét lại nội dung!" : ""}
+          const telegramMessage = `<b>🆕 Đơn hàng mới!</b>\n\n<b>📌 Tiêu đề:</b> <a href="${
+            process.env.REACT_APP_FRONT_URL
+          }/${slugs}">${title}</a>\n<b>💰 Giá:</b> ${convertPrice(
+            price
+          )} đồng/tháng\n<b>📏 Diện tích:</b> ${area}m²\n<b>📍 Địa chỉ:</b> ${selectedInfoMore}, ${
+            selectedWard?.label || ""
+          }, ${selectedDistrict?.label || ""}, ${
+            selectedProvince?.label || ""
+          }\n\n<b>👤 Người đăng:</b> ${user?.fullName || "Unknown User"}\n\n${
+            /cọc|đặt cọc|tiền cọc|đặt tiền cọc|cộc/i.test(description)
+              ? "⚠️ <b>CHÚ Ý:</b> Bài đăng có đề cập đến CỌC, cần xem xét lại nội dung!"
+              : ""
+          }
           `;
           sendTelegramMessage(telegramMessage);
-          
+
           navigate(`/manage/pay/${slugs}`);
         });
       })

@@ -2,7 +2,7 @@ import { deleteMethod, get, post, put } from "../utils/request";
 
 // get all
 export const GetPostsByCategory = async (slug, params) => {
-  const res = await get(`Posts/GetPostsByCategory/${slug}`, params);
+  const res = await get(`Posts/categories/${slug}/posts`, params);
   return res;
 };
 export const GetCategories = async () => {
@@ -18,31 +18,33 @@ export const GetUserByToken = async (token) => {
   return res;
 };
 export const GetPostsByProvinceSlug = async (id, params) => {
-  const res = await get(`Posts/GetPostsByProvinceSlug/${id}`, { params });
+  const res = await get(`Posts/provinces/${id}/posts`, { params });
   return res;
 };
 
 export const GetUserPosts = async (id) => {
-  const res = await get(`Users/GetUserPosts/${id}`);
+  const res = await get(`Users/${id}/posts`);
   return res;
 };
 
 export const GetBookingByPost = async (id) => {
-  const res = await get(`Booking/GetBookingByPost/${id}`);
+  const res = await get(`Booking/posts/${id}/bookings`);
   return res;
 };
 
 export const GetCountPost = async (id) => {
-  const res = await get(`Posts/GetCount`);
+  const res = await get(`Posts/count`);
   return res;
 };
 export const GetCountUserPost = async (id) => {
-  const res = await get(`Users/countPost/${id}`);
+  const res = await get(`Users/${id}/posts/count`);
   return res;
 };
 
 export const CheckFavorite = async (params) => {
-  const res = await get(`Users/CheckFavorite`, params);
+  const res = await get(
+    `Users/${params.userId}/favorites/${params.postId}/check`
+  );
   return res;
 };
 export const CheckDeposite = async (params) => {
@@ -51,19 +53,19 @@ export const CheckDeposite = async (params) => {
 };
 
 export const CheckHasPaid = async (params) => {
-  const res = await get(`Booking/CheckPayed`, params);
+  const res = await get(`Booking/check-payment`, params);
   return res;
 };
 export const GetUserFavorite = async (id) => {
-  const res = await get(`Users/GetUserFavorite/${id}`);
+  const res = await get(`Users/users/${id}/favorites`);
   return res;
 };
 export const GetUserBookings = async (id) => {
-  const res = await get(`Booking/GetUserBookings/${id}`);
+  const res = await get(`Booking/users/${id}/bookings`);
   return res;
 };
 export const GetApprovedPosts = async (params) => {
-  const res = await get(`Posts/GetApprovedPosts`, { params });
+  const res = await get(`Posts/approved`, { params });
   return res;
 };
 
@@ -73,7 +75,7 @@ export const GetNewsById = async (id) => {
 };
 
 export const GetReviewsByPost = async (slug) => {
-  const res = await get(`Reviews/GetReviewsByPost/${slug}`);
+  const res = await get(`Reviews/posts/${slug}/reviews`);
   return res;
 };
 
@@ -92,18 +94,18 @@ export const GetNews = async (params) => {
 };
 
 export const GetLatestPosts = async () => {
-  const res = await get(`Posts/GetLatestPosts`);
+  const res = await get(`Posts/latest`);
   return res;
 };
 
 export const GetLocations = async () => {
-  const res = await get(`Posts/GetLocations`);
+  const res = await get(`Posts/locations`);
   return res;
 };
 // post
 
 export const AddFavoritePost = async (params) => {
-  const res = await post(`Users/AddFavoritePost`, null, params);
+  const res = await post(`Users/${params.userId}/favorites/${params.postId}`);
   return res;
 };
 export const CreatePost = async (params) => {
@@ -140,7 +142,11 @@ export const UpdateUser = async (id, params) => {
 };
 
 export const UpdateBookingStatus = async (params) => {
-  const res = await put(`Booking/UpdateStatus`, null,params);
+  const res = await put(
+    `Booking/users/${params.userId}/posts/${params.postId}/status`,
+    null,
+    params
+  );
   return res;
 };
 // delete

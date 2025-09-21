@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Tags from "../components/Tags/Tags";
@@ -11,7 +13,6 @@ import { GetApprovedPosts, GetCountPost } from "../services/fetchAPI";
 import AboutUs from "../components/AboutUs/AboutUs";
 import Reviews from "../components/Reviews/Reviews";
 
-
 export default function HomePage() {
   const [posts, setPosts] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -19,19 +20,19 @@ export default function HomePage() {
   const [totalPost, setTotalPost] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  
+
   const currentPage = Number(searchParams.get("page")) || 1;
-  
+
   // Lấy ra các bài viết
   useEffect(() => {
     const fetchAPI = async () => {
       try {
         setLoading(true);
         setError(null);
-        
+
         let params = {
           page: currentPage,
-          pageSize: 20, 
+          pageSize: 20,
           minPrice: searchParams.get("minPrice") || null,
           maxPrice: searchParams.get("maxPrice") || null,
           minArea: searchParams.get("minArea") || null,
@@ -43,10 +44,11 @@ export default function HomePage() {
         const res = await GetApprovedPosts(params);
 
         setTotalPage(res?.data?.totalPages);
-        setPosts(res?.data?.data);
+
+        setPosts(res?.data?.data?.data);
       } catch (error) {
         console.error("Error fetching posts:", error);
-        setError('Không thể tải danh sách bài viết. Vui lòng thử lại sau.');
+        setError("Không thể tải danh sách bài viết. Vui lòng thử lại sau.");
       } finally {
         setLoading(false);
       }
@@ -54,7 +56,7 @@ export default function HomePage() {
 
     fetchAPI();
   }, [searchParams, currentPage]);
-  
+
   // Lấy số lượng bài viết
   useEffect(() => {
     const fetchAPI = async () => {
@@ -68,7 +70,7 @@ export default function HomePage() {
 
     fetchAPI();
   }, []);
-  
+
   const handlePageClick = (event) => {
     const currentParams = Object.fromEntries(searchParams.entries());
     setSearchParams({ ...currentParams, page: event.selected + 1 });
@@ -77,21 +79,19 @@ export default function HomePage() {
 
   return (
     <div className="">
-     
-      
       <div className="flex max-w-[1000px] m-auto mt-10">
         <div className="grid grid-cols-3 gap-4">
           <div className="col-span-2">
             <div className="text-[20px] font-medium mb-2">
               Kênh thông tin Phòng trọ số 1 Việt Nam
             </div>
-  
+
             <div className="">
               <div className="">
                 <Tags />
               </div>
             </div>
-  
+
             {error && (
               <div className="mt-4 p-4 bg-red-50 text-red-600 rounded-lg">
                 {error}
@@ -106,26 +106,23 @@ export default function HomePage() {
               <Posts posts={posts} />
             )}
 
-            
-              <div className="flex justify-center mt-6 mb-6">
-                <ReactPaginate
-                  breakLabel="..."
-                  nextLabel=">"
-                  onPageChange={handlePageClick}
-                  pageRangeDisplayed={5}
-                  pageCount={totalPages}
-                  previousLabel="<"
-                  renderOnZeroPageCount={null}
-                  className="flex items-center gap-2"
-                  pageClassName="px-3 py-1 h-[40px] flex items-center text-[16px] cursor-pointer"
-                  activeClassName="bg-blue text-white rounded-md"
-                  previousClassName="px-3 py-1 rounded-l-md h-[40px] flex items-center text-[16px] cursor-pointer bg-[#ccc]"
-                  nextClassName="px-3 py-1 rounded-r-md h-[40px] flex items-center text-[16px] cursor-pointer bg-[#ccc]"
-                  pageLinkClassName="px-3 py-1 h-[40px] flex items-center"
-                />
-              </div>
-  
-          
+            <div className="flex justify-center mt-6 mb-6">
+              <ReactPaginate
+                breakLabel="..."
+                nextLabel=">"
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={5}
+                pageCount={totalPages}
+                previousLabel="<"
+                renderOnZeroPageCount={null}
+                className="flex items-center gap-2"
+                pageClassName="px-3 py-1 h-[40px] flex items-center text-[16px] cursor-pointer"
+                activeClassName="bg-blue text-white rounded-md"
+                previousClassName="px-3 py-1 rounded-l-md h-[40px] flex items-center text-[16px] cursor-pointer bg-[#ccc]"
+                nextClassName="px-3 py-1 rounded-r-md h-[40px] flex items-center text-[16px] cursor-pointer bg-[#ccc]"
+                pageLinkClassName="px-3 py-1 h-[40px] flex items-center"
+              />
+            </div>
           </div>
           <div className="">
             <Filter />
@@ -136,10 +133,9 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-      
+
       <Reviews />
       <AboutUs />
-
     </div>
   );
 }

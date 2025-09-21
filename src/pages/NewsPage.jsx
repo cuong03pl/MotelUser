@@ -11,7 +11,7 @@ export default function NewsPage() {
   useEffect(() => {
     const fetchAPI = async () => {
       await GetNewsById(id).then((res) => {
-        setNews(res?.data);
+        setNews(res?.data?.data);
       });
     };
 

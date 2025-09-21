@@ -32,7 +32,7 @@ export default function Comment({ slug, postId }) {
   useEffect(() => {
     const fetchAPI = async () => {
       await GetReviewsByPost(slug).then((res) => {
-        setComments(res?.data);
+        setComments(res?.data?.data);
       });
     };
 
@@ -74,8 +74,9 @@ export default function Comment({ slug, postId }) {
               type="submit"
               disabled={!content}
               onClick={() => handleComment(content)}
-              class={`mt-2 px-4 py-2 bg-[#fa6819] text-white rounded-lg hover:opacity-75 ${!content && "opacity-55 cursor-not-allowed"
-                }`}
+              class={`mt-2 px-4 py-2 bg-[#fa6819] text-white rounded-lg hover:opacity-75 ${
+                !content && "opacity-55 cursor-not-allowed"
+              }`}
             >
               Gửi
             </button>

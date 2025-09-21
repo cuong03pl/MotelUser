@@ -9,7 +9,7 @@ export default function RecentPosts() {
     const fetchLatestPosts = async () => {
       try {
         const res = await GetLatestPosts();
-        setLatestPosts(res.data);
+        setLatestPosts(res.data?.data);
       } catch (error) {
         console.error("Lỗi khi lấy bài đăng mới nhất:", error);
       }

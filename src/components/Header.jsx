@@ -3,14 +3,14 @@ import { Link, useParams } from "react-router-dom";
 import routes from "../config/routes";
 import { useSelector } from "react-redux";
 import DropdownUser from "./DropdownUser/DropdownUser";
-import { 
-  FilterIcon, 
-  MobileCloseIcon, 
-  HeartIcon, 
-  PostsIcon, 
-  ManageIcon, 
-  ChatIcon, 
-  MenuIcon 
+import {
+  FilterIcon,
+  MobileCloseIcon,
+  HeartIcon,
+  PostsIcon,
+  ManageIcon,
+  ChatIcon,
+  MenuIcon,
 } from "./Icon/Icon";
 import CustomModal from "./Modal/Modal";
 import FilterModal from "./Modal/FilterModal";
@@ -158,12 +158,13 @@ export default function Header() {
       </div>
       <div className="border-t border-solid border-[#ccc]">
         <ul className=" flex justify-center items-center gap-5">
-          {categories?.map((category, index) => {
+          {categories?.data?.map((category, index) => {
             return (
               <li
                 key={index}
-                className={`hover:text-[#E51F40]  cursor-pointer ${slug && (slug?.includes(category?.slug) ? "text-red" : "")
-                  }`}
+                className={`hover:text-[#E51F40]  cursor-pointer ${
+                  slug && (slug?.includes(category?.slug) ? "text-red" : "")
+                }`}
               >
                 <Link
                   className="py-4 px-2 block"

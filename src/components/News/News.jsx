@@ -14,7 +14,7 @@ export default function News() {
           pageSize: 5,
         },
       }).then((res) => {
-        setNews(res?.data);
+        setNews(res?.data?.data);
       });
     };
 

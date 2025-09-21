@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GetLocations } from "../../services/fetchAPI";
@@ -27,7 +29,7 @@ export default function Tags() {
     <>
       <div className="mb-2 font-medium">Tìm kiếm theo từ khóa</div>
       <ul className="flex items-center gap-2 flex-wrap">
-        {tags?.map((tag, index) => {
+        {tags?.data?.map((tag, index) => {
           return (
             <li key={index}>
               <button

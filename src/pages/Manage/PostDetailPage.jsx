@@ -69,7 +69,7 @@ export default function PostDetailPage() {
   // Lấy ra các tỉnh thành phố
   useEffect(() => {
     const fetchProvinces = async () => {
-      const response = await fetch("https://provinces.open-api.vn/api/p");
+      const response = await fetch("https://provinces.open-api.vn/api/v1/p");
       const data = await response.json();
       const provinceOptions = data.map((province) => ({
         value: province.name,
@@ -86,7 +86,7 @@ export default function PostDetailPage() {
   useEffect(() => {
     const fetchDistricts = async () => {
       const response = await fetch(
-        `https://provinces.open-api.vn/api/p/${selectedProvinceId}?depth=2`
+        `https://provinces.open-api.vn/api/v1/p/${selectedProvinceId}?depth=2`
       );
       const data = await response.json();
 
@@ -106,7 +106,7 @@ export default function PostDetailPage() {
   useEffect(() => {
     const fetchDistricts = async () => {
       const response = await fetch(
-        `https://provinces.open-api.vn/api/d/${selectedDistrictId}?depth=2`
+        `https://provinces.open-api.vn/api/v1/d/${selectedDistrictId}?depth=2`
       );
       const data = await response.json();
       const wardOptions = data?.wards.map((ward) => ({
@@ -217,9 +217,7 @@ export default function PostDetailPage() {
   };
   useEffect(() => {
     const fetchAPI = async () => {
-
       await GetPostById(id).then((res) => {
-
         setSelectedCategory(res?.data?.categoryId);
         setDescription(res?.data?.description);
         setTitle(res?.data?.title);

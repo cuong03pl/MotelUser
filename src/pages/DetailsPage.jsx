@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import RecentPosts from "../components/RecentPosts/RecentPosts";
@@ -21,7 +23,6 @@ import AmenitiesIcons from "../components/AmenitiesIcons/AmenitiesIcons";
 import { toast } from "react-toastify";
 import {
   AddFavoritePost,
-  CheckDeposite,
   CheckFavorite,
   CreateConversation,
   GetCountUserPost,
@@ -30,14 +31,14 @@ import {
   GetUserPosts,
 } from "../services/fetchAPI";
 import { convertPrice } from "../utils/convertPrice";
-import { 
-  LocationIcon, 
-  PhoneIcon, 
-  ChatDotsIcon, 
-  ShareIcon, 
-  WarningIcon, 
-  ArrowLeftIcon, 
-  ArrowRightIcon 
+import {
+  LocationIcon,
+  PhoneIcon,
+  ChatDotsIcon,
+  ShareIcon,
+  WarningIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
 } from "../components/Icon/Icon";
 
 Modal.setAppElement("#root");
@@ -66,8 +67,8 @@ export default function DetailsPage() {
   useEffect(() => {
     const fetchAPI = async () => {
       await GetPostById(id).then((res) => {
-        setPost(res?.data);
-        setSelectedFeatures(res?.data?.amenities);
+        setPost(res?.data?.data);
+        setSelectedFeatures(res?.data?.data?.amenities);
       });
     };
 
@@ -87,7 +88,7 @@ export default function DetailsPage() {
           },
         });
 
-        setRelatePosts(res?.data?.data);
+        setRelatePosts(res?.data?.data?.data);
       } catch (error) {
         console.error("Error fetching related posts:", error);
       }
@@ -103,7 +104,7 @@ export default function DetailsPage() {
     const fetchAPI = async () => {
       try {
         const res = await GetUserPosts(post?.ownerId);
-        setUserPosts(res?.data);
+        setUserPosts(res?.data?.data);
       } catch (error) {
         console.error("Error fetching related posts:", error);
       }
@@ -117,7 +118,7 @@ export default function DetailsPage() {
     if (!post?.ownerId) return;
     const fetchAPI = async () => {
       await GetCountUserPost(post?.ownerId).then((res) => {
-        setCountPost(res?.data);
+        setCountPost(res?.data?.data?.postCount);
       });
     };
     fetchAPI();
@@ -170,21 +171,21 @@ export default function DetailsPage() {
 
   const handleChat = async () => {
     if (!user) {
-      toast.error('Bạn cần đăng nhập để sử dụng tính năng chat', {
-        position: 'bottom-right',
+      toast.error("Bạn cần đăng nhập để sử dụng tính năng chat", {
+        position: "bottom-right",
         pauseOnHover: false,
       });
-      navigate('/login', { state: { from: `/details/${id}` } });
+      navigate("/login", { state: { from: `/details/${id}` } });
       return;
     }
-    
+
     const response = await CreateConversation({
       senderId: user.id,
-      receiverId: post?.ownerId
+      receiverId: post?.ownerId,
     });
 
     navigate(`/chat/${response?.data?.id}`);
-  }
+  };
   return (
     <div className=" max-w-[1000px] m-auto ">
       <div className="grid grid-cols-3 gap-4">
@@ -223,7 +224,9 @@ export default function DetailsPage() {
               <div className="bg-white p-3 rounded-lg">
                 {/* Thông tin bài viết */}
                 <div className="py-5 ">
-                  <h3 className="text-black text-[16px] font-semibold">{post?.title}</h3>
+                  <h3 className="text-black text-[16px] font-semibold">
+                    {post?.title}
+                  </h3>
                   <div className="flex items-center gap-2 py-2">
                     <LocationIcon className="w-[13px] h-[13px]" />
                     <span className="text-[13px]">
@@ -276,7 +279,9 @@ export default function DetailsPage() {
                 </div>
                 <div className="py-5">
                   <h4 className="font-medium text-[18px]">Mô tả chi tiết</h4>
-                  <div dangerouslySetInnerHTML={{ __html: post?.description }} />
+                  <div
+                    dangerouslySetInnerHTML={{ __html: post?.description }}
+                  />
                 </div>
 
                 {/* Vị trí */}
@@ -287,7 +292,8 @@ export default function DetailsPage() {
                       <div className="flex items-center gap-2">
                         <LocationIcon className="w-[16px] h-[16px] text-red-500" />
                         <span className="text-[14px] font-medium">
-                          {post?.location?.addressLine}, {post?.location?.ward}, {post?.location?.district}, {post?.location?.province}
+                          {post?.location?.addressLine}, {post?.location?.ward},{" "}
+                          {post?.location?.district}, {post?.location?.province}
                         </span>
                       </div>
                     </div>
@@ -296,11 +302,12 @@ export default function DetailsPage() {
                 </div>
                 {/* Đặc điểm nổi bật */}
                 <div className="py-5">
-                  <h2 className="text-xl font-semibold mb-4">Đặc điểm nổi bật</h2>
+                  <h2 className="text-xl font-semibold mb-4">
+                    Đặc điểm nổi bật
+                  </h2>
                   <AmenitiesIcons amenities={selectedFeatures} />
                 </div>
               </div>
-
             </div>
           </div>
           <div className="mt-5">
@@ -340,14 +347,13 @@ export default function DetailsPage() {
                       {post?.user?.phoneNumber}{" "}
                     </a>
                   </div>
-                  <div onClick={() => handleChat()} className="flex items-center justify-center gap-2 bg-blue px-3 py-2 rounded-lg text-white w-full cursor-pointer">
+                  <div
+                    onClick={() => handleChat()}
+                    className="flex items-center justify-center gap-2 bg-blue px-3 py-2 rounded-lg text-white w-full cursor-pointer"
+                  >
                     <ChatDotsIcon className="w-[18px] h-[18px]" />
 
-                    <span
-                      className="text-[18px]"
-                    >
-                      Chat
-                    </span>
+                    <span className="text-[18px]">Chat</span>
                   </div>
                 </div>
                 <div class="flex gap-5 items-center py-3 w-full justify-between">

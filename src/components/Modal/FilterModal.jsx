@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useEffect, useState } from "react";
 import { CloseIcon } from "../Icon/Icon";
 import axios from "axios";
@@ -51,7 +53,7 @@ export default function FilterModal({ onClose }) {
   useEffect(() => {
     const fetchAPI = async () => {
       await GetCategories().then((res) => {
-        setCategories(res.data);
+        setCategories(res.data?.data);
       });
     };
     fetchAPI();
@@ -60,13 +62,15 @@ export default function FilterModal({ onClose }) {
   // Lấy ra tất cả các tỉnh thành phố
   useEffect(() => {
     const fetchProvinces = async () => {
-      const response = await fetch("https://provinces.open-api.vn/api/p");
+      const response = await fetch("https://provinces.open-api.vn/api/v1/p");
+
       const data = await response.json();
       const provinceOptions = data.map((province) => ({
         value: province.name,
         label: province.name,
         code: province.code,
       }));
+
       setProvinces(provinceOptions);
     };
 
@@ -76,7 +80,7 @@ export default function FilterModal({ onClose }) {
   useEffect(() => {
     const fetchDistricts = async () => {
       const response = await fetch(
-        `https://provinces.open-api.vn/api/p/${selectedProvince?.code}?depth=2`
+        `https://provinces.open-api.vn/api/v1/p/${selectedProvince?.code}?depth=2`
       );
       const data = await response.json();
 
@@ -97,7 +101,7 @@ export default function FilterModal({ onClose }) {
     try {
       setLoading(true);
       setError(null);
-      
+
       const params = {
         categoryId,
         provinceSlug: selectedProvince?.value,
@@ -112,17 +116,17 @@ export default function FilterModal({ onClose }) {
         Object.entries(params).filter(([_, v]) => v != null && v !== "")
       );
       const queryString = new URLSearchParams(cleanedParams).toString();
-      
-      if (location.pathname.includes('/details/')) {
+
+      if (location.pathname.includes("/details/")) {
         navigate(`/?${queryString}`);
       } else {
         navigate(`?${queryString}`, { replace: true });
       }
-      
+
       onClose();
     } catch (err) {
-      setError('Có lỗi xảy ra khi áp dụng bộ lọc. Vui lòng thử lại.');
-      console.error('Filter error:', err);
+      setError("Có lỗi xảy ra khi áp dụng bộ lọc. Vui lòng thử lại.");
+      console.error("Filter error:", err);
     } finally {
       setLoading(false);
     }
@@ -230,7 +234,7 @@ export default function FilterModal({ onClose }) {
       </div>
 
       <div className="mt-6 flex flex-col gap-3">
-      <button
+        <button
           onClick={handleApplyFilter}
           className="bg-[#fa6819] w-full px-[13px] py-2 rounded-xl text-white"
         >
@@ -243,7 +247,6 @@ export default function FilterModal({ onClose }) {
         >
           Hủy
         </button>
-       
       </div>
     </div>
   );
